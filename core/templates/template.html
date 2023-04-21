@@ -1,0 +1,991 @@
+{% load tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .gender {
+  display: none;
+}
+
+.btn {
+  display: block;
+  text-align: left;
+  /*margin-top: 10px;*/
+  /*border: 1px solid #ccc;*/
+  cursor: pointer;
+  height: 20px;
+  padding: 10px 10px 9px 0px;
+}
+
+.btn:hover {
+  background-color: #ccc;
+  color:white;
+}
+        table {
+  border-radius: 15px;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
+  text-align: left;
+  {#width: 50%;#}
+  font-family: Tahoma, sans-serif;
+  background-color: white;
+  border-collapse: separate;
+            {#width: 222%;               #}
+  {#width: 200%; <!--TODO переделать таблицу и параметры блока под нее, чтобы не юзать 200% -->#}
+}
+.btn_text{
+    margin-top: 10px;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  height: 40px;
+    width: max-content;
+
+<!--  padding: 2px;-->
+}
+p {
+    text-align: right;
+}
+
+#createform{
+
+    position: sticky;
+    padding: 4% 3%;
+    float: right;
+    text-align: center;
+    display: block;
+}
+
+#container {
+    overflow:hidden;
+    position:relative;
+
+    margin:0;
+    padding:0;
+}
+
+#visibility_changer{
+    visibility: visible;
+}
+
+#backgroundsuccess {
+    background-color: lightgreen;
+    float: right;
+    text-align: center;
+    display: block;
+    border: 2px solid grey;
+    animation: cssAnimation 5s forwards;
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    padding: 0.5%;
+}
+
+@keyframes cssAnimation {
+    0%   {opacity: 1;}
+    90%  {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@-webkit-keyframes cssAnimation {
+    0%   {opacity: 1;}
+    90%  {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+#searchtable{
+    float: left;
+    position: relative;
+    width: 15%;
+    block-size: auto;
+}
+
+#searchfield{
+    float: left;
+    /*width: 17%;*/
+<!--    padding: 0.25%;-->
+    /*block-size: auto;*/
+}
+
+#searchbutton{
+    /*display: block;*/
+    /*padding: 0.25%;*/
+    width: 3px;
+    height: 1%;
+}
+
+#block1 {
+    float: left;
+    display: block;
+    width: 27%;
+}
+
+
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: blink;
+            /*background: #cdfeaa;*/
+        }
+        a:focus{
+            /*background: orangered;*/
+        }
+
+        a:active {
+            text-decoration: blink;
+        }
+
+
+
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+/**/
+/*        */
+/*              */
+nav ul ul {
+        display: none;
+      }
+      nav ul li:hover > ul {
+        display: block;
+      }
+      nav ul:after {
+        content: "";
+        clear: both;
+        display: block;
+
+      }
+      nav ul li {
+        float: left;
+        position: relative;
+        list-style-type: none;
+      }
+      nav ul li:hover {
+        background: rgba(19, 20, 123, 0.67);
+      }
+      nav ul li:hover a {
+        color: #fff;
+
+
+      }
+      nav ul li a {
+        display: block;
+        padding: 20px 30px;
+        color: #ffffff;
+        text-decoration: none;
+        background-color: rgba(35, 17, 134, 0.8);
+        font-family: sans-serif;
+        text-align: left;
+      }
+      nav ul ul {
+        background: #5f6975;
+        padding: 0;
+        position: absolute;
+        top: 100%;
+      }
+      nav ul ul li {
+        float: none;
+        position: relative;
+
+      }
+      nav ul ul li a {
+        padding: 15px 10px;
+        color: #ffffff;
+
+          position: relative;
+        text-transform: uppercase;
+      }
+      nav ul ul li a:hover {
+        background: rgba(19, 20, 123, 0.67);
+      }
+
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 15%;
+        height: 30%;
+        text-align: center;
+        align-content: center;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .labelcls {
+        font-family: 'Lucida Console';
+}
+
+    .inputcls {
+        width: 90%;
+        height: 23px
+}
+    .button-6 {
+        align-items: center;
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: .25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: rgba(0, 0, 0, 0.85);
+        cursor: pointer;
+        display: inline-flex;
+        font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 3rem;
+        padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        width: auto;
+        }
+
+    .button-6:hover,
+    .button-6:focus {
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        color: rgba(0, 0, 0, 0.65);
+}
+
+    .button-6:hover {
+        transform: translateY(-1px);
+}
+
+        .button-6:active {
+        background-color: #F0F0F1;
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+        color: rgba(0, 0, 0, 0.65);
+        transform: translateY(0);
+}
+
+    form:not(#empty) {
+  --c: #FF908B;
+  {#--c: rgba(0, 0, 0, 1);    /* the border color */#}
+  --b: 10px;    /* the border thickness*/
+  --g: 5px;     /* the gap on hover */
+
+  padding: calc(var(--g) + var(--b));
+  --_g: #0000 25%,var(--c) 0;
+  background:
+    conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g))
+     var(--_i,200%) 0  /200% var(--_i,var(--b))  no-repeat,
+    conic-gradient(            at bottom var(--b) left  var(--b),var(--_g))
+     0   var(--_i,200%)/var(--_i,var(--b)) 200%  no-repeat;
+  transition: .3s, background-position .3s .3s;
+  cursor: pointer;
+}
+form:hover:not(#empty) {
+  --_i: 100%;
+  transition: .3s, background-size .3s .3s;
+}
+
+        body {
+  z-index: 2;
+  --s: 150px; /* control the size */
+
+  background:
+    linear-gradient(135deg,#0000 18.75%,#CCCCCC 0 31.25%,#0000 0),
+    repeating-linear-gradient(45deg,#CCCCCC -6.25% 6.25%,white 0 18.75%);
+  background-size: var(--s) var(--s);
+}
+        .smcls{
+          z-index: 2;
+  --s: 150px; /* control the size */
+
+  background:
+    linear-gradient(135deg,#0000 18.75%,#CCCCCC 0 31.25%,#0000 0),
+    repeating-linear-gradient(45deg,#CCCCCC -6.25% 6.25%,white 0 18.75%);
+  background-size: var(--s) var(--s);
+        }
+
+
+
+
+
+    </style>
+    <body>
+        <meta charset="UTF-8">
+        <title>title</title>
+
+    <div style="position: relative;
+          right: 40px;">
+    <nav>
+      <ul>
+        <li>
+          <a href="../lk/">Личный Кабинет</a>
+        </li>
+        <li>
+          <a href="../holding/">Холдинги</a>
+          <ul>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/html-basic">HTML Bacis</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/css-basic">CSS Bacis</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/javascript-basic">JavaScript Bacis</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/php-basic">PHP Bacis</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/es6-basic">ES6 Bacis</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="../organization/">Организации</a>
+          <ul>
+            <li>
+              <a href="https://www.w3docs.com/snippets/angularjs.html">Angular JS</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/apache.html">Apache</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/git.html">Git</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/linux.html">Linux</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/nodejs.html">Node.Js</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/symfony.html">Symfony</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="../department/">Отделы</a>
+          <ul>
+            <li>
+              <a href="https://www.w3docs.com/tools/html-encoder/">HTML ENCODER/DECODER</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/css3-maker/border-radius">CSS MAKER</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/password-generator">PASSWORD GENERATOR</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/image-base64">Base 64</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/code-diff/">CODE DIFF</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.w3docs.com/string-functions/">МОЛЫ</a>
+          <ul>
+            <li>
+              <a href="https://www.w3docs.com/tools/string-revers">STRING REVERSE</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/string-word-count">STRING WORD COUNT</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/string-remove-empty-lines">EMPTY LINES REMOVER</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    </div>
+
+    <form action="" id ="empty">
+   <p style="height: 30px"><input type="search" name="search" id="searchfield" placeholder="Поиск по названию">
+   <input type="submit" style="float: left" value="Найти">
+        </form>
+    <button class = button-6 style="
+    width: 150px;
+    height: 40px;" onclick="show()">Режим редактирования</button></p>
+
+    <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" id="close_property">&times;</span>
+<!--    <form style = 'padding-top: 10%' action = false onclick="PropertyAdd()" method="POST" >-->
+  <br>
+      {% for obj in holdings.0.keys %}
+      {% if obj != 'id' %}
+          <div>
+    <label class = labelcls for="{{ obj }}">{{ hol_model | verbose_name:obj }}</label><br>
+    <input class = inputcls name="upper_{{ obj }}" id="{{ obj }}"/>
+  </div>
+      {% endif %}
+      {% endfor %}
+  <div>
+      <br>
+    <button class="button-6" onclick="PropertyAdd()" role="button" style="padding: 15px 32px;">Добавить организацию</button>
+      </div>
+
+<!--</form>-->
+  </div>
+
+</div>
+
+{#<div id="myModaldepartment" class="modal">#}
+{##}
+{#  <!-- Modal content -->#}
+{#  <div class="modal-content" style="height: 35%">#}
+{#    <span class="close" id="close_department">&times;</span>#}
+{#<!--    <form style = 'padding-top: 10%' action = false onclick="PropertyAdd()" method="POST" >-->#}
+{#  <br>#}
+{#      <div>#}
+{#    <label class = labelcls for="department_name">Наименование отдела</label><br>#}
+{#    <input class = inputcls name="department_name" id="department_name"/>#}
+{#  </div>#}
+{#  <div>#}
+{#    <label class = labelcls for="address">Адрес</label><br>#}
+{#    <input class = inputcls name="address" id="address" />#}
+{#  </div>#}
+{#  <div>#}
+{#      <label class = labelcls for="floor">Этаж</label><br>#}
+{#    <input class = inputcls name="floor" id="floor" />#}
+{#  </div>#}
+{##}
+{#  <div>#}
+{#      <label class = labelcls for="cabinet">Кабинет</label><br>#}
+{#    <input class = inputcls name="cabinet" id="cabinet" />#}
+{#  </div>#}
+{#  <label class = labelcls for="organization">Организация</label><br>#}
+{#  <select class = inputcls name="organization">#}
+{#        {% for organization in organizations %}#}
+{#        <option class = labelcls value="{{organization.id}}">{{organization.name}}</option>#}
+{#        {% endfor %}#}
+{#    </select>#}
+{#  <div>#}
+{#      <br>#}
+{#    <button class="button-6" onclick="PropertyAdd()" role="button" style="padding: 15px 32px;">Добавить организацию</button>#}
+{#      </div>#}
+{##}
+{#<!--</form>-->#}
+{#  </div>#}
+{##}
+{#</div>#}
+
+<!--    <form action="./delete/" method="POST">-->
+
+    <div id="block1">
+        <button onclick = "SaveChanges()" style = 'display: none' class="dip button-6">Сохранить Изменения</button>
+    <br>
+    <br>
+    <table style = "margin-left: 30px;width: 1000px">
+    <script>
+
+    </script>
+            {% for obj in query.0.keys %}
+            <th>{{ model | verbose_name:obj }}</th>
+{#            <th style="width: 100px">Кабинет</th>#}
+{#            <th style="width: 120px">Инв Номер</th>#}
+{#            <th style="width: 40%">Имущество</th>#}
+{#            <th style="width: 40px">Кол-во</th>#}
+{#            <th style="width: 30%">Описание</th>#}
+            {% endfor %}
+            <th style="color: red; display:none" class="dip">Удалить</th>
+            <th style="color: red; width: 30%; display:none" class="dip">Изменить</th>
+
+        </tr>
+        {% for q in query %}
+            <tr>
+            {% for k, v in q.items %}
+{#        <tr>#}
+                {% if k == btn_fields.lower_name %}
+            <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/?organization_id={{ q.id }}'><span class = "btn_text">{{ v }}</span></a></th>
+                {% elif k == btn_fields.upper_name%}
+            <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.upper_url }}/{{ q.id }}'><span class = "btn_text">{{ v }}</span></a></th>
+                {% elif k == 'id' %}
+            <th><a style="color: black"><span>{{ v }}</span></a></th>
+                {% else %}
+            <th><a style="color: black" class = "{{ q.id }}"><span>{{ v }}</span></a></th>
+                {% endif %}
+{#            <th><a class = "btn" onclick=handleClick(this) style="color: black" href='../department/?organization_id={{invent_list.pk}}'><span class = "btn_text">{{invent_list.pk}}</span></a></th>#}
+{#            <th><a class = "btn {{invent_list.pk}}" onclick=handleClick(this) style="color: black" href='../department/{{invent_list.MOL.department.id}}'>{{invent_list.MOL.department.cabinet}}</a></th>#}
+{#            <th><a class = "{{invent_list.pk}}">{{invent_list.invent_num}}</a></th>#}
+{#            <th><a class = "btn {{invent_list.pk}}" onclick=handleClick(this) style="color: black" href='../holding/{{invent_list.property.id}}'><span>{{invent_list.property}}</span></a></th>#}
+{#            <th><a class = "{{invent_list.pk}}">{{invent_list.amount}}</a></th>#}
+{#            <th><a class = "{{invent_list.pk}}">{{invent_list.description}}</a></th>#}
+{#        </tr>#}
+            {% endfor %}
+            <th style = 'display:none; z-index: 1; text-align: center' class="dip"><input style="text-align: center; width: 20px; height: 20px; align-content: center; align-self: center" name="{{q.id}}" id="{{q.id}}" type="checkbox"></th>
+            <th style='display:none; z-index: 1; text-align: center' class="dip"><input type="button" onclick="editable_field(this, '{{q.id}}')" value="Изменить"></th>
+            </tr>
+        {% endfor %}
+    {{ query.0|length}}
+    </table>
+    {{query.0.keys|slice:"0:4"}}
+        </div>
+        </form>
+    <script>
+    var submit = []
+    var steps = {{ query.0|length }} - 1
+    console.log(steps)
+            function show() {
+         const table = document.getElementsByTagName('table')[0]
+                table.style.width = '1200px'
+         const a = Array.from(document.getElementsByClassName('dip'))
+                a.forEach(a => {
+  a.style.display = 'table-cell'})
+}           var upper_discard = ''
+            function editable_field(from, el) {
+                from.id = el + 'changebutton'
+
+                var confirm_button = document.createElement("input")
+                confirm_button.type = 'button'
+                confirm_button.value = 'Подтвердить'
+                confirm_button.setAttribute('onclick', `SubmitChanges('${el}')`)
+
+                confirm_button.className = el + 'can_con'
+
+
+                var cancel_button = document.createElement("input")
+                cancel_button.type = 'button'
+                cancel_button.value = 'Отменить'
+                cancel_button.setAttribute('onclick', `DiscardChanges('${el}')`)
+
+                cancel_button.className = el + 'can_con'
+
+
+                from.parentNode.replaceChildren(confirm_button, from)
+                from.style.display = 'none'
+                insertAfter(confirm_button, cancel_button)
+
+                var svg_image = document.createElement('svg');
+                svg_image.innerHTML = '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-5 -5 60.00 60.00" xml:space="preserve" width="25px" height="25px" fill="#000000" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="1.4000000000000001"></g><g id="SVGRepo_iconCarrier"> <circle style="fill:#43B05C;" cx="25" cy="25" r="25"></circle> <line style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="25" y1="13" x2="25" y2="38"></line> <line style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="37.5" y1="25" x2="12.5" y2="25"></line> </g></svg>'
+                svg_image.style = 'align-self: center; cursor: pointer; align-content: center'
+                {#var svg_image_1 = svg_image.cloneNode(true)#}
+
+                for (let step = 0; step < steps; step++){
+                var e = document.getElementsByClassName(el)[0];
+
+                if (step === 2){
+                        var d = document.createElement('select');
+                        d.style = 'align-self: center; width: 150px; height: 20px'
+
+                        d.className = el + 'textfield' + ' property_select'
+
+                        {% for holding in holdings %}
+
+                        var option = document.createElement("option");
+                        option.value = '{{holding.id}}';
+                        option.text = '{{holding.name}}';
+                        upper_discard = e.textContent
+                        if (option.text === e.textContent){
+                            option.selected = true}
+                        d.appendChild(option);
+
+                        {% endfor %}
+
+                        e.parentNode.replaceChild(d, e);
+                        svg_image.id = el + 'add_svg'
+                        svg_image.setAttribute('onclick', `CreateProperty()`)
+                        d.after(svg_image)
+                    }
+
+                {#else if (step === 0){#}
+                {#    var select_field = document.createElement('select');#}
+                {#        select_field.style = 'align-self: center; width: 80px; height: 20px'#}
+                {##}
+                {#        select_field.className = el + 'textfield' + ' cabinet_select'#}
+                {##}
+                {#        {% for department in departments %}#}
+                {##}
+                {#        var option = document.createElement("option");#}
+                {#        option.value = '{{department.id}}';#}
+                {#        option.text = '{{department.cabinet}}';#}
+                {#        department_discard = e.textContent#}
+                {#        if (option.text === e.textContent){#}
+                {#            option.selected = true}#}
+                {#        select_field.appendChild(option);#}
+                {##}
+                {#        {% endfor %}#}
+                {##}
+                {#        e.parentNode.replaceChild(select_field, e);#}
+                {#        svg_image_1.id = el + 'add_svg_1'#}
+                {#        svg_image_1.setAttribute('onclick', `CreateDepartment()`)#}
+                {#        select_field.after(svg_image_1)#}
+
+                else {
+                    var d = document.createElement('input');
+                    d.type = 'text'
+                    d.innerHTML = e.innerHTML
+                    d.value = e.textContent;
+                    d.placeholder = e.textContent;
+                    d.className = el + 'textfield'
+                    e.parentNode.replaceChild(d, e);
+                }
+
+                }
+            }
+
+    {#        function CreateDepartment(){#}
+    {#            // Get the modal#}
+    {#            var modal = document.getElementById("myModaldepartment");#}
+    {##}
+    {#            // Get the <span> element that closes the modal#}
+    {#            var span = document.getElementById("close_department");#}
+    {##}
+    {#            // When the user clicks the button, open the modal#}
+    {#              modal.style.display = "block";#}
+    {##}
+    {##}
+    {#            // When the user clicks on <span> (x), close the modal#}
+    {#            span.onclick = function() {#}
+    {#              modal.style.display = "none";#}
+    {#            }#}
+    {##}
+    {#            // When the user clicks anywhere outside of the modal, close it#}
+    {#            window.onclick = function(event) {#}
+    {#              if (event.target == modal) {#}
+    {#                modal.style.display = "none";#}
+    {#              }#}
+    {#            }#}
+    {#        }#}
+    {##}
+    {#        function DepartmentAdd(){#}
+    {##}
+    {#            let department_name = document.getElementById('department_name')#}
+    {#            let address = document.getElementById('address')#}
+    {#            let floor = document.getElementById('floor')#}
+    {#            let cabinet = document.getElementById('cabinet')#}
+    {#            let organization = document.getElementById('organization')#}
+    {##}
+    {#            var dict = {#}
+    {#                'department_name': department_name.value,#}
+    {#                'address': address.value,#}
+    {#                'floor': floor.value,#}
+    {#                'cabinet': cabinet.value,#}
+    {#                'organization': organization.value,#}
+    {##}
+    {#            }#}
+    {##}
+    {##}
+    {#            var xhr = new XMLHttpRequest();#}
+    {#            xhr.open("POST", 'http://127.0.0.1:8000/department/create/', true);#}
+    {#            xhr.setRequestHeader('Content-Type', 'application/json');#}
+    {#            xhr.responseType = 'json';#}
+    {#            xhr.onload  = function() {#}
+    {#                var jsonResponse = xhr.response;#}
+    {#                var property_select = document.getElementsByClassName('property_select')[0]#}
+    {#                var option = document.createElement("option");#}
+    {#                option.value = jsonResponse['id']#}
+    {#                option.text = name.value#}
+    {#                option.selected = true#}
+    {#                property_select.appendChild(option)#}
+    {#            }#}
+    {#            var modal = document.getElementById("myModal");#}
+    {#            modal.style.display = "none"#}
+    {#            xhr.send(JSON.stringify(dict));#}
+    {##}
+    {##}
+    {##}
+    {##}
+    {#            console.log(123)#}
+    {##}
+    {#}#}
+
+            function CreateProperty(){
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementById("close_property");
+
+                // When the user clicks the button, open the modal
+                  modal.style.display = "block";
+
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                  modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                  if (event.target == modal) {
+                    modal.style.display = "none";
+                  }
+                }
+            }
+
+            function PropertyAdd(){
+
+                let name = document.getElementById('property_name')
+                let u_m = document.getElementById('u_m')
+                let description = document.getElementById('description')
+
+                var dict = {
+                    'name': name.value,
+                    'u_m': u_m.value,
+                    'description': description.value
+                }
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", 'http://127.0.0.1:8000/inner/create/', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'json';
+                xhr.onload  = function() {
+                    var jsonResponse = xhr.response;
+                    var property_select = document.getElementsByClassName('property_select')[0]
+                    var option = document.createElement("option");
+                    option.value = jsonResponse['id']
+                    option.text = name.value
+                    option.selected = true
+                    property_select.appendChild(option)
+                }
+                var modal = document.getElementById("myModal");
+                modal.style.display = "none"
+                xhr.send(JSON.stringify(dict));
+
+
+
+
+                console.log(123)
+
+    }
+
+            function ChangeButtonReturn(el){
+                var d = el + 'can_con'
+                // window.alert(d)
+                const can_con = Array.from(document.getElementsByClassName(d));
+                can_con.forEach(box => {
+                    box.remove();
+            });
+                var from = document.getElementById(el + 'changebutton')
+                from.style.display = 'table-cell'
+                // can_con[0].remove()
+                // can_con[1].remove()
+            }
+
+            function DiscardChanges(el){
+
+                for (let step = 0; step < steps; step++){
+                    var d = document.getElementsByClassName(el+'textfield')[0];
+                    var e = document.createElement('a');
+                    e.className = "btn " + el
+                    e.setAttribute('onclick', 'handleClick(this)')
+                    e.style.color = 'black'
+                    e.textContent = d.placeholder
+                    if (step === 2){
+                        e.textContent = upper_discard
+                    }
+                    // TODO доделать href
+                    d.parentNode.replaceChild(e, d);
+                }
+                    var add_svg = document.getElementById(el + 'add_svg')
+                    {#var add_svg_1 = document.getElementById(el + 'add_svg_1')#}
+
+                    add_svg.remove()
+                    {#add_svg_1.remove()#}
+                    ChangeButtonReturn(el);
+                }
+
+
+            function SubmitChanges(el){
+                // var dict = new Map()1
+                    const dict = {}
+                    var element = document.getElementsByClassName(el+'textfield');
+{#                    {% with list=query|dict_id_pop %}#}
+                    dict['id'] = el
+                    {% for i in query.0|dict_id_pop %}
+                         dict['{{i}}'] = element[{{ forloop.counter0 }}].value
+                    {#const dict = {'id': el,#}
+                    {#    cabinet: element[0].options[element[0].selectedIndex].text,#}
+                    {#    department_id: element[0].value,#}
+                    {#    inv_num: element[1].value,#}
+                    {#    property_id: element[2].value,#}
+                    {#    property_name: element[2].options[element[2].selectedIndex].text,#}
+                    {#    amount: element[3].value,#}
+                    {#    description: element[4].value#}
+                    {#}#}
+
+                    {% endfor %}
+{#                    {% endwith %}#}
+
+                    submit.push(dict)
+                    // window.alert(submit[0].get('name'))
+
+                for (let step = 0; step < steps; step++){
+                    var d = document.getElementsByClassName(el+'textfield')[0];
+                    var e = document.createElement('a');
+                    e.className = "btn " + el
+                    e.setAttribute('onclick', 'handleClick(this)')
+                    e.style.color = 'black'
+                    e.textContent = d.value
+                    if (step === 2 ) {
+                        e.textContent = d.options[d.selectedIndex].text
+                    }
+                    {#if (step === 0) {#}
+                    {#    e.textContent = d.options[d.selectedIndex].text#}
+
+                    // TODO доделать href
+                    d.parentNode.replaceChild(e, d);
+                }
+                    var add_svg = document.getElementById(el + 'add_svg')
+                    {#var add_svg_1 = document.getElementById(el + 'add_svg_1')#}
+
+                    add_svg.remove()
+                    {#add_svg_1.remove()#}
+                    ChangeButtonReturn(el);
+                }
+
+            function PageReload() {
+                // if (flag)
+                window.location.href = '.'
+    }
+
+                    // document.write(submit.get('name'), submit.get('address'), submit.get('holding'));
+
+
+
+            function SaveChanges(){
+                // window.alert(submit)
+
+                let response = fetch('./update/', {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(submit)
+                });
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", './update/', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(submit));
+                const elements = document.querySelectorAll('input[type=checkbox]:checked')
+
+                var xhr1_list = []
+
+                elements.forEach(element =>{
+                    xhr1_list.push(element.id)
+                })
+
+                xhr.addEventListener("loadend", PageReload)
+
+                var xhr1 = new XMLHttpRequest();
+                xhr1.open("POST", './delete/', true);
+                xhr1.setRequestHeader('Content-Type', 'application/json');
+                xhr1.send(JSON.stringify(xhr1_list));
+
+                //    TODO Опасное место может набнутся
+                }
+
+            function None(button){
+                button.onclick.disabled = true
+            }
+
+            function insertAfter(referenceNode, newNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+
+
+        </script>
+
+    <div id="createform">
+    <form style="background-color: white; box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" action="create/?redirect_back=True" method="POST" >
+    {% for i in query.0.keys %}
+  <div>
+    {% if i == btn_fields.upper_name %}
+        {{ model | verbose_name:i }}<br>
+        <select name="current_{{ i }}" style="width: 177px">
+        {% for holding in holdings %}
+            <option value="{{holding.id}}">{{holding.name}}</option>
+        {% endfor %}
+        </select>
+    {% else %}
+    <label for="current_{{ i }}">{{ model | verbose_name:i }}</label><br>
+    <input name="current_{{ i }}" id="current_{{ i }}"/>
+  </div>
+    {% endif %}
+    {% endfor %}
+{#        <div>#}
+{#    <label for="cabinet">Кабинет</label><br>#}
+{#    <input name="cabinet" id="cabinet"/>#}
+{#  </div>#}
+{#  <div>#}
+{#      <label for="inv_num">Инв номер</label><br>#}
+{#      <input name="inv_num" id="inv_num"/>#}
+{#  </div>#}
+{#    Имущество<br>#}
+{#    <select name="property" style="width: 177px">#}
+{#        <option onclick="CreateProperty()">Добавить Холдинг...</option>#}
+{#        {% for property in properties %}#}
+{#        <option value="{{property.id}}">{{property.name}}</option>#}
+{#        {% endfor %}#}
+{#    </select>#}
+{#    <div>#}
+{#      <label for="amount">Кол-во</label><br>#}
+{#      <input name="amount" id="amount" />#}
+{#  </div>#}
+{#    <div>#}
+{#      <label for="description">Описание</label><br>#}
+{#      <input name="description" id="description" />#}
+{#  </div>#}
+  <div>
+      <br>
+    <button style="padding: 3%" class="button-6">Добавить организацию</button>
+      </div>
+      <div>
+      <div id='container'>
+      {% if success_create %}
+      <br><div id="backgroundsuccess">Организация успешно создана</div>
+      {% endif %}
+      </div>
+      </div>
+</form>
+        </div>
+</head>
+
+
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .gender {
+  display: none;
+}
+
+.btn {
+  display: block;
+  padding: 10px;
+  /*border: 1px solid #ccc;*/
+  cursor: pointer;
+  height: 26px;
+}
+
+.btn:hover {
+  background-color: #ccc;
+  color:white;
+}
+        table {
+  font-family: arial, sans-serif;
+  border-collapse: separate;
+  width: 280%; <!--TODO переделать таблицу и параметры блока под нее, чтобы не юзать 200% -->
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  height: 40px;
+<!--  padding: 2px;-->
+}
+p {
+    text-align: right;
+}
+
+#createform{
+
+    position: sticky;
+    padding: 4% 3%;
+    float: right;
+    text-align: center;
+    display: block;
+}
+
+#container {
+    overflow:hidden;
+    position:relative;
+
+    margin:0;
+    padding:0;
+}
+
+#visibility_changer{
+    visibility: visible;
+}
+
+#backgroundsuccess {
+    background-color: lightgreen;
+    float: right;
+    text-align: center;
+    display: block;
+    border: 2px solid grey;
+    animation: cssAnimation 5s forwards;
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    padding: 0.5%;
+}
+
+@keyframes cssAnimation {
+    0%   {opacity: 1;}
+    90%  {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@-webkit-keyframes cssAnimation {
+    0%   {opacity: 1;}
+    90%  {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+#searchtable{
+    float: left;
+    position: relative;
+    width: 15%;
+    block-size: auto;
+}
+
+#searchfield{
+    float: left;
+    /*width: 17%;*/
+<!--    padding: 0.25%;-->
+    /*block-size: auto;*/
+}
+
+#searchbutton{
+    /*display: block;*/
+    /*padding: 0.25%;*/
+    width: 3px;
+    height: 1%;
+}
+
+#block1 {
+    float: left;
+    display: block;
+    width: 27%;
+}
+
+
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: blink;
+            /*background: #cdfeaa;*/
+        }
+        a:focus{
+            /*background: orangered;*/
+        }
+
+        a:active {
+            text-decoration: blink;
+        }
+
+
+
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+/**/
+/*        */
+/*              */
+nav ul ul {
+        display: none;
+      }
+      nav ul li:hover > ul {
+        display: block;
+      }
+      nav ul:after {
+        content: "";
+        clear: both;
+        display: block;
+
+      }
+      nav ul li {
+        float: left;
+        position: relative;
+        list-style-type: none;
+      }
+      nav ul li:hover {
+        background: rgba(19, 20, 123, 0.67);
+      }
+      nav ul li:hover a {
+        color: #fff;
+
+
+      }
+      nav ul li a {
+        display: block;
+        padding: 20px 30px;
+        color: #ffffff;
+        text-decoration: none;
+        background-color: rgba(35, 17, 134, 0.8);
+        font-family: sans-serif;
+      }
+      nav ul ul {
+        background: #5f6975;
+        padding: 0;
+        position: absolute;
+        top: 100%;
+      }
+      nav ul ul li {
+        float: none;
+        position: relative;
+
+      }
+      nav ul ul li a {
+        padding: 15px 10px;
+        color: #ffffff;
+
+          position: relative;
+        text-transform: uppercase;
+      }
+      nav ul ul li a:hover {
+        background: rgba(19, 20, 123, 0.67);
+      }
+
+    </style>
+
+        <meta charset="UTF-8">
+        <title>title</title>
+    <body>
+    <div style="position: relative;
+          right: 40px;">
+    <nav>
+      <ul>
+        <li>
+          <a href="https://www.w3docs.com/">Личный Кабинет</a>
+        </li>
+        <li>
+          <a href="../holding/">Холдинги</a>
+          <ul>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/html-basic">HTML Bacis</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/css-basic">CSS Bacis</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/javascript-basic">JavaScript Bacis</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/php-basic">PHP Bacis</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/quiz-start/es6-basic">ES6 Bacis</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="../organization/">Организации</a>
+          <ul>
+            <li>
+              <a href="https://www.w3docs.com/snippets/angularjs.html">Angular JS</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/apache.html">Apache</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/git.html">Git</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/linux.html">Linux</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/nodejs.html">Node.Js</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/snippets/symfony.html">Symfony</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="../department/">Отделы</a>
+          <ul>
+            <li>
+              <a href="https://www.w3docs.com/tools/html-encoder/">HTML ENCODER/DECODER</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/css3-maker/border-radius">CSS MAKER</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/password-generator">PASSWORD GENERATOR</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/image-base64">Base 64</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/code-diff/">CODE DIFF</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.w3docs.com/string-functions/">МОЛЫ</a>
+          <ul>
+            <li>
+              <a href="https://www.w3docs.com/tools/string-revers">STRING REVERSE</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/string-word-count">STRING WORD COUNT</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/string-remove-empty-lines">EMPTY LINES REMOVER</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    </div>
+
+    <form action="" style="">
+   <p style="height: 30px"><input type="search" name="search" id="searchfield" placeholder="Поиск по названию">
+   <input type="submit" style="float: left" value="Найти">
+        </form>
+    <button style="
+    width: 120px;
+    height: 40px;" onclick="show()">Режим редактирования</button></p>
+
+<!--    <form action="./delete/" method="POST">-->
+
+    <div id="block1">
+        <button onclick = "SaveChanges()" id = 'save_change' style = 'visibility: hidden' class="dip">Сохранить Изменения</button>
+    <table>
+
+            <th style="width: 40px">id</th>
+            <th style="width: 200px">Название</th>
+            <th>Адрес</th>
+            <th style="color: red; visibility: hidden" class="dip">Удалить</th>
+            <th style="color: red; visibility: hidden; width: 200px" class="dip">Изменить</th>
+        </tr>
+        {% for holding in holdings %}
+        <tr>
+            <th><a class = "btn" onclick=handleClick(this) style="color: black" href='../organization/?holding_id={{holding.pk}}'><span>{{holding.pk}}</span></a></th>
+            <th><a class = "btn {{holding.pk}}" onclick=handleClick(this) style="color: black" href='../organization/?holding_id={{holding.pk}}'><span>{{holding.name}}</span></a></th>
+            <th><a class = "{{holding.pk}}">{{holding.address}}</a></th>
+            <th style = 'visibility: hidden; width: 80px; height: 38px; text-align: center' class="dip"><input style="text-align: center; width: 20px; height: 20px; align-content: center; align-self: center" name="{{holding.pk}}" id="{{holding.pk}}" type="checkbox"></th>
+            <th style='visibility: hidden; text-align: center' class="dip"><input type="button" onclick="editable_field(this, '{{holding.pk}}')" value="Изменить"></th>
+        </tr>
+        {% endfor %}
+
+    </table>
+        </div>
+        </form>
+    <script>
+    var submit = []
+
+            function show() {
+         const a = Array.from(document.getElementsByClassName('dip'))
+                a.forEach(a => {
+  a.style.visibility = 'visible'})
+}
+            function editable_field(from, el) {
+                // from.style.color = 'black'
+                // from.value = 'Подтвердить'
+                // from.onclick.disabled = true
+                from.id = el + 'changebutton'
+                var confirm_button = document.createElement("input")
+                confirm_button.type = 'button'
+                confirm_button.value = 'Подтвердить'
+                confirm_button.setAttribute('onclick', `SubmitChanges('${el}')`)
+
+                confirm_button.className = el + 'can_con'
+
+
+                var cancel_button = document.createElement("input")
+                cancel_button.type = 'button'
+                cancel_button.value = 'Отменить'
+                cancel_button.setAttribute('onclick', `DiscardChanges('${el}')`)
+
+                cancel_button.className = el + 'can_con'
+
+                // from.innerHTML = confirm_button.innerHTML
+
+
+
+                from.parentNode.replaceChildren(confirm_button, from)
+                from.style.visibility = 'hidden'
+                insertAfter(confirm_button, cancel_button)
+
+                for (let step = 0; step < 3; step++){
+                var e = document.getElementsByClassName(el)[0];
+
+
+                var d = document.createElement('input');
+                d.type = 'text'
+                d.innerHTML = e.innerHTML
+                d.value = e.textContent;
+                d.placeholder = e.textContent;
+                d.className = el + 'textfield'
+
+                e.parentNode.replaceChild(d, e);
+                }
+
+
+
+            }
+
+            function ChangeButtonReturn(el){
+                var from = document.getElementById(el + 'changebutton')
+                from.style.visibility = 'visible'
+                var d = el + 'can_con'
+                // window.alert(d)
+                const can_con = Array.from(document.getElementsByClassName(d));
+                can_con.forEach(box => {
+                    box.remove();
+});
+                // can_con[0].remove()
+                // can_con[1].remove()
+            }
+
+            function DiscardChanges(classname){
+
+                for (let step = 0; step < 2; step++){
+                    var d = document.getElementsByClassName(classname+'textfield')[0];
+                    var e = document.createElement('a');
+                    e.className = "btn " + classname
+                    e.setAttribute('onclick', 'handleClick(this)')
+                    e.style.color = 'black'
+                    e.textContent = d.placeholder
+                    // TODO доделать href
+                    d.parentNode.replaceChild(e, d);
+                }
+                    ChangeButtonReturn(classname);
+                }
+
+
+            function SubmitChanges(el){
+                // var dict = new Map()1
+
+                    var element = document.getElementsByClassName(el+'textfield');
+
+                    const dict = {'id': el,
+                        name: element[0].value,
+                        address: element[1].value,
+                    }
+                    submit.push(dict)
+                    // window.alert(submit[0].get('name'))
+
+                for (let step = 0; step < 2; step++){
+                    var d = document.getElementsByClassName(el+'textfield')[0];
+                    var e = document.createElement('a');
+                    e.className = "btn " + el
+                    e.setAttribute('onclick', 'handleClick(this)')
+                    e.style.color = 'black'
+                    e.textContent = d.value
+                    // TODO доделать href
+                    d.parentNode.replaceChild(e, d);
+                }
+                    ChangeButtonReturn(el);
+                }
+
+    //         var flag = false
+    //
+    //                 // document.write(submit.get('name'), submit.get('address'), submit.get('holding'));
+            function PageReload() {
+                // if (flag)
+                window.location.href = '.'
+    }
+
+
+
+            function SaveChanges(){
+            // window.alert(submit)
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", 'http://127.0.0.1:8000/holding/update/', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(submit));
+
+            const elements = document.querySelectorAll('input[type=checkbox]:checked')
+
+            xhr.addEventListener("loadend", PageReload)
+
+            var xhr1_list = []
+
+            elements.forEach(element =>{
+                xhr1_list.push(element.id)
+
+            })
+                // flag = true
+                // console.log('123')
+
+            // var xhr1 = new XMLHttpRequest();
+            // xhr1.open("POST", 'http://127.0.0.1:8000/organization/delete/', true);
+            // xhr1.setRequestHeader('Content-Type', 'application/json');
+            // xhr1.send(JSON.stringify(xhr1_list));
+
+            //    TODO Опасное место может набнутся
+            }
+
+            // document.getElementById('save_change').addEventListener('click', PageReload)
+
+            function None(button){
+                button.onclick.disabled = true
+            }
+
+            function insertAfter(referenceNode, newNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+
+
+        </script>
+
+    <div id="createform">
+    <form action="create/?redirect_back=True" method="POST" >
+  <div>
+    <label for="name">Название</label><br>
+    <input name="name" id="name"/>
+  </div>
+  <div>
+    <label for="address">Адрес</label><br>
+    <input name="address" id="address" />
+  </div>
+  <div>
+      Холдинг<br>
+    <select name="holding">
+        <option onclick="">Добавить Холдинг...</option>
+        {% for hold in holdings %}
+        <option>{{hold.name}}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <div>
+      <br>
+    <button style="padding: 3%">Добавить организацию</button>
+      </div>
+      <div>
+      <div id='container'>
+      {% if success_create %}
+      <br><div id="backgroundsuccess">Организация успешно создана</div>
+      {% endif %}
+      </div>
+      </div>
+</form>
+        </div>
+</head>
+
+</body>
+</html>

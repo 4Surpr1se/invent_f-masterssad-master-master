@@ -1,0 +1,1850 @@
+{
+"corp_1":[
+ {
+  "cabinet": 109,
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Клавиатура",
+  "invent_num": "TEH\/1-01-01\/001585"
+ },
+ {
+  "cabinet": 109,
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Клавиатура",
+  "invent_num": "TEH\/1-01-01\/001595",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Клавиатура + мышь",
+  "invent_num": "TEH\/1-01-01\/001586"
+ },
+ {
+  "cabinet": 109,
+  "name": "Коммутатор TP-Link TL-SG 1016D(16 портов)",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 109,
+  "name": "Компьютер в сборе ASRock-H110M-DGS\/1",
+  "invent_num": "TEH\/1-01-01\/001587"
+ },
+ {
+  "cabinet": 109,
+  "name": "Компьютер в сборе ASRock-H110M-DGS\/3",
+  "invent_num": "TEH\/1-01-01\/001589"
+ },
+ {
+  "cabinet": 109,
+  "name": "Ламинатор",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 109,
+  "name": "Ламинатор",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 109,
+  "name": "Монитор BENQ 27",
+  "invent_num": "TEH\/1-01-01\/001593",
+  "description": "Монитор BENQ GW2270-T"
+ },
+ {
+  "cabinet": 109,
+  "name": "Монитор BENQ 27",
+  "invent_num": "TEH\/1-01-01\/001591",
+  "description": "Монитор Philips 223V5LSB"
+ },
+ {
+  "cabinet": 109,
+  "name": "Монитор BENQ 27",
+  "invent_num": "TEH\/1-01-01\/001590",
+  "description": "Монитор Philips 223V5LSB"
+ },
+ {
+  "cabinet": 109,
+  "name": "Монитор BENQ 27",
+  "invent_num": "TEH\/1-01-01\/001592",
+  "description": "LG 22MP58D"
+ },
+ {
+  "cabinet": 109,
+  "name": "Монитор АОС",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Мышь компьютерная",
+  "invent_num": "TEH\/1-01-01\/001594"
+ },
+ {
+  "cabinet": 109,
+  "name": "Принтер МФУ LaserJet Pro M426fdw RU\/1",
+  "invent_num": "TEH\/1-01-01\/001596",
+  "description": "Принтер HP M428dw"
+ },
+ {
+  "cabinet": 109,
+  "name": "Принтер МФУ LaserJet Pro M426fdw RU\/4",
+  "invent_num": "TEH\/2-02-09\/005219"
+ },
+ {
+  "cabinet": 109,
+  "name": "Принтер МФУ LaserJet Pro M426fdw RU\/5",
+  "invent_num": "TEH\/1-01-01\/005205"
+ },
+ {
+  "cabinet": 109,
+  "name": "Принтер МФУ LaserJet Pro M426fdw RU\/6",
+  "invent_num": "TEH\/1-01-C1\/001618"
+ },
+ {
+  "cabinet": 109,
+  "name": "Принтер МФУ LaserJet Pro MFP M477fnw",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Процессор INTEL Xeon",
+  "invent_num": "TEH\/1-01-01\/001570",
+  "description": "Системный блок"
+ },
+ {
+  "cabinet": 109,
+  "name": "Процессор INTEL Xeon",
+  "invent_num": "TEH\/1-01-01\/001599",
+  "description": "Системный блок"
+ },
+ {
+  "cabinet": 109,
+  "name": "Процессор INTEL Xeon",
+  "invent_num": "TEH\/1-01-01\/001600"
+ },
+ {
+  "cabinet": 109,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 109,
+  "name": "Системный блок DIOS ",
+  "description": "отсутствует позиция"
+ },
+ {
+  "cabinet": 109,
+  "name": "телефон Gigaset A540 IP",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 109,
+  "name": "Телефон -SIP 2 линии",
+  "invent_num": "TEH\/1-01-01\/001602"
+ },
+ {
+  "cabinet": 109,
+  "name": "Телефон -SIP 2 линии",
+  "invent_num": "TEH\/1-01-01\/001601"
+ },
+ {
+  "cabinet": 237,
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 237,
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 237,
+  "name": "Ламинатор",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 237,
+  "name": "Монитор BENQ",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 237,
+  "name": "Моноблок Lenovo S\/N MP1FOE15",
+  "invent_num": "TEH\/1-02-12\/005193"
+ },
+ {
+  "cabinet": 237,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 237,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 237,
+  "name": "Принтер HP",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 237,
+  "name": "Принтер Ricoh",
+  "invent_num": "TEH\/1-02-12\/005195"
+ },
+ {
+  "cabinet": 237,
+  "name": "Роутер D-Link",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": 237,
+  "name": "Системный блок ",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "ИБП (стабилизатор напряжения)",
+  "invent_num": "TEH\/1-01-Д1\/001628"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "ИБП IPPON",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "ИБП IPPON",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "ИБП АРС Back-UPS 500",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Клавиатура ",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Клавиатура ",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Коммутатор D-Link DGS-1008D",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Коммутатор D-Link DGS-1008D",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Коммутатор D-Link DGS-1008D",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001636",
+  "description": "Системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "TEH\/1-01-Д1\/001643",
+  "description": "Моноблок Lenovo"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001644",
+  "description": "Системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001642",
+  "description": "Системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001638",
+  "description": "Системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001637",
+  "description": "Системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001641",
+  "description": "Моноблок Lenovo"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001640",
+  "description": "Монитор LG 32MP58HQ, клавиатура, мышь, системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001634",
+  "description": "Монитор LG 32MP58HQ, клавиатура, мышь, системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001635",
+  "description": "Монитор LG 32MP58HQ, клавиатура, мышь, системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "TEH\/1-01-Д1\/001633",
+  "description": "Монитор LG 32MP58HQ, клавиатура, мышь, системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Монитор Samsung",
+  "invent_num": "ТЕН\/1-01-Д1\/005201"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Монитор Samsung S19A100N",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Мышь hp",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Принтер МФУ LaserJet Pro M426fdw RU\/5",
+  "invent_num": "ТЕН\/1-01-Д1\/001647",
+  "description": "Принтер Color LaserJet Pro MFP M477fnw"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Роутер D-Link DIR-825",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "ТЕН\/1-01-Д1\/001632",
+  "description": "Монитор LG 32MP58HQ, клавиатура, мышь, системный блок"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Системный блок  НР",
+  "description": "Отсутствует инвентарный номер Начальник смены"
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "телефон Gigaset A540 IP",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "ИБП АРС Back-UPS 500",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Телефон Yealink T19 E2",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская",
+  "name": "Телефон Yealink T19 E2",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Клавиатура ",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Монитор DELL",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Монитор LG 34 UM58",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Монитор Samsung LS19A100",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Монитор АОС",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Монитор АОС E2050Sw",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Монитор АОС E2260S",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Диспетчерская ",
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Кабинет ген. Директора (109)",
+  "name": "коммутатор D-Link",
+  "description": "отсутсвует"
+ },
+ {
+  "cabinet": "Кабинет ген. Директора (109)",
+  "name": "Клавиатура + мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Кабинет ген. Директора (109)",
+  "name": "Монитор LG 27\"",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Кабинет ген. Директора (109)",
+  "name": "Роутер D-Link DIR-825",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Кабинет ген. Директора (109)",
+  "name": "Системный блок ",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Кабинет ген. Директора (109)",
+  "name": "Телевизор econ",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Кабинет ген. Директора (109)",
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Клавиатура + мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Клавиатура + мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Клавиатура + мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Клавиатура + мышь",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Коммутатор D-Link",
+  "invent_num": "PR\/1--\/01000"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips 21,5",
+  "invent_num": "K1TPC003",
+  "description": "Системный блок Intel NUC"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips 21,5",
+  "invent_num": "K1TPC003",
+  "description": "Системный блок DIOS  Факт есть инв.номер одинаковый"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips 21,5",
+  "invent_num": "K1TPC005",
+  "description": "Системный блок DIOS"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Монитор BENQ GW2270-B",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Монитор BENQ GW2270-T",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Монитор BENQ GW2270-T"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Монитор Philips 223V5LBS"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Принтер Brother DCP-L8410CDW",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Принтер LaserJet Pro MFP M426fdn",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Принтер МФУ Kyocera M6630 цвет. А4",
+  "invent_num": "TEH\/1-01-P1\/005204"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Принтер МФУ LaserJet Pro MFP M426fdn",
+  "invent_num": "TEH\/1-01-01\/005255",
+  "description": "наклеен еще один инвентарный номер ТЕН\/1\/- -\/ 001556"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Процессор INTEL Pentium Dual-Core G4560, LGA 1151 OEM",
+  "invent_num": "TEH\/1--\/001551",
+  "description": "Системный блок DIOS"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Процессор INTEL Pentium Dual-Core G4560, LGA 1151 OEM",
+  "invent_num": "TEH\/1--\/001550"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Системный блок Intel NUC",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Веб-камера Logitech c922 pro Stream",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Веб-камера Logitech c922 pro Stream",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Веб-камера Logitech c922 pro Stream",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Веб-камера Logitech c922 pro Stream",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Телефон -SIP 2 линии",
+  "invent_num": "\/1--\/000002"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Телефон -SIP 2 линии",
+  "invent_num": "\/1--\/000003"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Коммутатор D-Link TL-SF1008D",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "TEH\/1-01-C1\/001616"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "TEH\/1-01-C1\/001615",
+  "description": "Системный блок DELL"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Монитор BENQ"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Монитор BENQ FP91G"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Обогреватель polaris",
+  "invent_num": "TEH\/1-01-C1\/001617"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Принтер МФУ лазерное Kyocera ECOSYS M3040dn",
+  "invent_num": "TEH\/1--01-30\/005489"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Принтер, M Brother DCP-T310 InkBenefit Plus Струйн",
+  "invent_num": "TEH\/1--01-30\/005490",
+  "description": "Принтер Brother DCP-1610WR"
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Роутер Mercusys ",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Телефон -SIP 2 линии",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Склад",
+  "name": "Телефон -SIP 2 линии",
+  "invent_num": "TEH\/1-01-01\/001620"
+ },
+ {
+  "cabinet": "Тех. служба",
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": "Тех. служба",
+  "name": "Коммутатор Cisco(24 порта)",
+  "description": "Отсутствует инвентарный номер "
+ },
+ {
+  "cabinet": "Тех. служба",
+  "name": "Компьютер в сборе BENQ\/4",
+  "invent_num": "TEH\/1--\/001623"
+ },
+ {
+  "cabinet": "Тех. служба",
+  "name": "Монитор BENQ GW2270-T"
+ },
+ {
+  "cabinet": "Тех. служба",
+  "name": "Принтер МФУ Brother DCP-L2500DR",
+  "invent_num": "TEH\/1-01-Э1\/005224",
+  "description": "Системный блок фактически"
+ },
+ {
+  "cabinet": "Тех. служба",
+  "name": "Телефон -SIP 2 линии",
+  "invent_num": "TEH\/1--\/001625"
+ },
+ {
+  "cabinet": "Тех. служба",
+  "name": "Принтер МФУ Laser Pro M428dw (1)",
+  "invent_num": "ТЕН\/1--\/001624",
+  "description": "Принтер Brother "
+ }
+],
+"corp_2":[
+ {
+  "cabinet": 201,
+  "name": "Компьютер в сборе ",
+  "invent_num": "TEH\/2-02-01\/005366"
+ },
+ {
+  "cabinet": 201,
+  "name": "Монитор BENQ"
+ },
+ {
+  "cabinet": 201,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 201,
+  "name": "ИБП"
+ },
+ {
+  "cabinet": 201,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Принтер МФУ LaserJet Pro M428dw A4",
+  "invent_num": "TEH\/2-02-01\/005221"
+ },
+ {
+  "cabinet": 201,
+  "name": "Монитор ASUS S\/N D5LMQS063134",
+  "invent_num": "TEH\/2-02-01\/005188",
+  "description": "Монитор LG 27MK430H"
+ },
+ {
+  "cabinet": 201,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Роутер D-link",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Клавиатура Microsoft",
+  "invent_num": "TEH\/2-02-01\/005187"
+ },
+ {
+  "cabinet": 201,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "ИБП АРС Back-UPS 500",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "D-Link коммутатор",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Принтер МФУ LaserJet Pro M428dw A4",
+  "invent_num": "TEH\/2-02-01\/005485"
+ },
+ {
+  "cabinet": 201,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 201,
+  "name": "Монитор BENQ GW2270-T",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 203,
+  "name": "Монитор BENQ 27",
+  "invent_num": "TEH\/2-02-03\/005240",
+  "description": "Монитор BENQ GL 2760-T"
+ },
+ {
+  "cabinet": 203,
+  "name": "Телефон IP Yealink черный",
+  "invent_num": "TEH\/2-02-03\/005234"
+ },
+ {
+  "cabinet": 203,
+  "name": "Компьютер в сборе",
+  "invent_num": "TEH\/2-02-03\/005230"
+ },
+ {
+  "cabinet": 203,
+  "name": "Принтер Kyocera M2030",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 203,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 204,
+  "name": "Роутер ASUS RT-N12",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 204,
+  "name": "TP-Link TL-SF1008D",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 204,
+  "name": "D-Link DIR-825",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 204,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 204,
+  "name": "Телефон IP Yealink черный",
+  "invent_num": "PR\/1-02-10\/000998"
+ },
+ {
+  "cabinet": 204,
+  "name": "Samsung LS24D300HS",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 204,
+  "name": "Монитор LG 27",
+  "invent_num": "TEH\/1-02-10\/005273"
+ },
+ {
+  "cabinet": 204,
+  "name": "Телефон IP Yealink черный",
+  "invent_num": "PR\/1-02-10\/000004"
+ },
+ {
+  "cabinet": 204,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 204,
+  "name": "Монитор"
+ },
+ {
+  "cabinet": 204,
+  "name": "Комутатор ASUS"
+ },
+ {
+  "cabinet": 204,
+  "name": "Комутатор TP-Link"
+ },
+ {
+  "cabinet": 204,
+  "name": "Компьютер в сборе, процессор i5, ОЗУ 8",
+  "invent_num": "TEH\/2-02-04\/005495"
+ },
+ {
+  "cabinet": 204,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 204,
+  "name": "Принтер CANON IR 3025",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 204,
+  "name": "Принтер CANON IPF 670",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "монитор benq gw2270-t",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "Switch TRENDnet TE100-S55E",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "Системный блок в составе CM8068403358811SR3Q",
+  "invent_num": "TEH\/1-02-14\/000001"
+ },
+ {
+  "cabinet": 205,
+  "name": "Монитор",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "Принтер HP 178",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 205,
+  "name": "Принтер, марка-модель: SAMSUNG XPRESS M20",
+  "invent_num": "TEH\/2-02-05\/005263"
+ },
+ {
+  "cabinet": 205,
+  "name": "Роутер D-Link DIR-825",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "switch d-link 8 портов",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Клавиатура беспроводная Logitech",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Коммутатор Cisco 48 портов",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Коммутатор TP-Link",
+  "invent_num": "TEH\/2-02-08\/005374"
+ },
+ {
+  "cabinet": 208,
+  "name": "Компьютер в сборе",
+  "invent_num": "TEH\/2-14-15\/005308"
+ },
+ {
+  "cabinet": 208,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 208,
+  "name": "Монитор ASUS VE247",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Монитор BENQ\/4",
+  "invent_num": "TEH\/2-02-03\/005241",
+  "description": "Монитор BENQ"
+ },
+ {
+  "cabinet": 208,
+  "name": "Монитор LG 27\"",
+  "invent_num": "TEH\/2-14-15\/005309"
+ },
+ {
+  "cabinet": 208,
+  "name": "Монитор Philips",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Монитор Philips",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Монитор Samsung",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Мышь беспроводная Logitech",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Мышь беспроводная Logitech",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Ноутбук Lenovo",
+  "description": "Отсутствует инвентарный номер\/ еще 1 отдавали Юле, а потом Гольц"
+ },
+ {
+  "cabinet": 208,
+  "name": "Принтер HP Color LaserJet Pro M254dw",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Принтер HP Color LaserJet Pro MFP M477fn",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Принтер HP Color LaserJet Pro MFP M479fnw",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Принтер Brother",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Роутер MikroTik",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Коммутатор D-Link",
+  "invent_num": "TEH\/2-02-08\/005373"
+ },
+ {
+  "cabinet": 208,
+  "name": "ИБП (выпрямитель)"
+ },
+ {
+  "cabinet": 208,
+  "name": "ИБП (выпрямитель)"
+ },
+ {
+  "cabinet": 208,
+  "name": "Системный блок ZALMAN",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Системный блок Intel NUC",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Системный блок Intel NUC",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Телефон Yealink",
+  "description": "PR\/102-13\/000999"
+ },
+ {
+  "cabinet": 208,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 208,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Блок системный ZALMAN",
+  "invent_num": "TEH\/2-02-09\/005196"
+ },
+ {
+  "cabinet": 209,
+  "name": "ИБП",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips 21,5\/6",
+  "invent_num": "K2TPC001"
+ },
+ {
+  "cabinet": 209,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 209,
+  "name": "Монитор Philips 21,5"
+ },
+ {
+  "cabinet": 209,
+  "name": "Монитор BENQ 27",
+  "invent_num": "TEH\/2-02-09\/005301",
+  "description": "Монитор BENQ"
+ },
+ {
+  "cabinet": 209,
+  "name": "Монитор BENQ\/4",
+  "invent_num": "TEH\/2-02-09\/005198"
+ },
+ {
+  "cabinet": 209,
+  "name": "Монитор Philips 223V5LSBI01",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Принтер МФУ LaserJet Pro M428dw",
+  "invent_num": "TEH\/2-02-01\/005222"
+ },
+ {
+  "cabinet": 209,
+  "name": "Принтер HP Color LaserJet Pro M477(1)",
+  "invent_num": "TEH\/2-02-01\/001555"
+ },
+ {
+  "cabinet": 209,
+  "name": "Роутер D-Link",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Системный блок в составе CM8068403358811SR3Q",
+  "invent_num": "TEH\/2-02-09\/005302"
+ },
+ {
+  "cabinet": 209,
+  "name": "телефон Gigaset A540 IP",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Принтер I-sensys MF4410",
+  "invent_num": "ГАЗПРОМ",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 209,
+  "name": "Мышь компьютерная",
+  "invent_num": "TEH\/2-02-09\/005199"
+ },
+ {
+  "cabinet": 209,
+  "name": "Клавиатура ",
+  "invent_num": "TEH\/2-02-09\/005197"
+ },
+ {
+  "cabinet": 224,
+  "name": "Creative A4 Laminator",
+  "description": "не наш"
+ },
+ {
+  "cabinet": 224,
+  "name": "Color Laser Jet Pro MFP M477fnw",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 224,
+  "name": "Принтер Kyocera ECOSYS M6630cidn",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 224,
+  "name": "Системный блок ",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 224,
+  "name": "Монитор Philips ",
+  "invent_num": "уточнить входит ли ",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 224,
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 224,
+  "name": "Компьютер в сборе ASUS PRIME B250M-A LGA1151\/5",
+  "invent_num": "K1\/TC001"
+ },
+ {
+  "cabinet": 224,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 224,
+  "name": "ИБП"
+ },
+ {
+  "cabinet": 224,
+  "name": "Монитор Philips "
+ },
+ {
+  "cabinet": 224,
+  "name": "Коммутатор D-Link DES-1005C",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 224,
+  "name": "Роутер TP-Link",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 301,
+  "name": "Принтер HP M479fnw"
+ },
+ {
+  "cabinet": 301,
+  "name": "Монитор Samsung",
+  "invent_num": "TEH\/2-03-01\/005208"
+ },
+ {
+  "cabinet": 301,
+  "name": "Ноутбук HP 250",
+  "invent_num": "TEH\/2-03-01\/005225"
+ },
+ {
+  "cabinet": 301,
+  "name": "Телефон Yealink",
+  "invent_num": "TEH\/2-03-01\/001652"
+ },
+ {
+  "cabinet": 301,
+  "name": "Телефон Yealink"
+ },
+ {
+  "cabinet": 301,
+  "name": "Коммутатор D-link"
+ },
+ {
+  "cabinet": 301,
+  "name": "Уничтожитель документов ProfiOffice"
+ },
+ {
+  "cabinet": 303,
+  "name": "Switch TP-Link",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Биометрический контрольный считыватель PERCo-IR18 co",
+  "invent_num": "TEH\/2-02-05\/001544"
+ },
+ {
+  "cabinet": 303,
+  "name": "ИБП (стабилизатор напряжения)",
+  "invent_num": "TEH\/2-02-05\/001546"
+ },
+ {
+  "cabinet": 303,
+  "name": "ИБП (стабилизатор напряжения)",
+  "invent_num": "TEH\/2-03-03\/001115"
+ },
+ {
+  "cabinet": 303,
+  "name": "Клавиатура ",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Клавиатура ",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 303,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 303,
+  "name": "Компьютер в сборе ASUS PRIME B250M-A LGA1151\/1",
+  "invent_num": "K2T303001",
+  "description": "Монитор BENQ GW2270-B"
+ },
+ {
+  "cabinet": 303,
+  "name": "Компьютер в сборе ASUS PRIME B250M-A LGA1151\/2",
+  "invent_num": "K2T303002"
+ },
+ {
+  "cabinet": 303,
+  "name": "Компьютер в сборе ASUS PRIME B250M-A LGA1151\/4",
+  "invent_num": "K2T303004",
+  "description": "абсолютно все другое"
+ },
+ {
+  "cabinet": 303,
+  "name": "Монитор BENQ GL2760-T",
+  "description": "Драпкина монитор"
+ },
+ {
+  "cabinet": 303,
+  "name": "Монитор BENQ GW2270",
+  "description": "Отсутствует инвентарный номер Кирьянов"
+ },
+ {
+  "cabinet": 303,
+  "name": "Монитор BENQ GW2270-T",
+  "description": "Максим"
+ },
+ {
+  "cabinet": 303,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Мышь",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Принтер МФУ 1102P743NLO Kyocera M8124cidn цветной",
+  "invent_num": "K2T303005"
+ },
+ {
+  "cabinet": 303,
+  "name": "Принтер пластиковых карт",
+  "invent_num": "TEH\/2-02-05\/001546"
+ },
+ {
+  "cabinet": 303,
+  "name": "Роутер TP-Link",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Системный блок  IN-WIN",
+  "invent_num": "Эмиль",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Системный блок в составе CM8068403358811SR3Q",
+  "invent_num": "TEH\/2-02-05\/001547",
+  "description": "Драпкина системник"
+ },
+ {
+  "cabinet": 303,
+  "name": "Считыватель Z-2",
+  "invent_num": "\/2-02-05\/000002"
+ },
+ {
+  "cabinet": 303,
+  "name": "Считыватель Z-2",
+  "invent_num": "\/2-02-05\/000001"
+ },
+ {
+  "cabinet": 303,
+  "name": "Телефон Gigaset A540 IP",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Телефон IP YEALINK черный",
+  "invent_num": "PR\/2-03-03\/000011"
+ },
+ {
+  "cabinet": 303,
+  "name": "Телефон IP YEALINK черный",
+  "invent_num": "PR\/2-02-01\/001002",
+  "description": "проверить инвентарный "
+ },
+ {
+  "cabinet": 303,
+  "name": "Телефон IP YEALINK черный",
+  "invent_num": "PR\/2-03-03\/000010"
+ },
+ {
+  "cabinet": 303,
+  "name": "Уничтожитель бумаги",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 303,
+  "name": "Уничтожитель бумаги ",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 315,
+  "name": "ИБП",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 315,
+  "name": "ИБП"
+ },
+ {
+  "cabinet": 315,
+  "name": "ИБП"
+ },
+ {
+  "cabinet": 315,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 315,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 315,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 315,
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": 315,
+  "name": "Клавиатура+мышь",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 315,
+  "name": "Компьютер в сборе Intel Pentium\/1",
+  "invent_num": "K2T315001"
+ },
+ {
+  "cabinet": 315,
+  "name": "Компьютер в сборе Intel Pentium\/2",
+  "invent_num": "К2Т315002"
+ },
+ {
+  "cabinet": 315,
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips 21,5\/1 с",
+  "invent_num": "K1ТРС001"
+ },
+ {
+  "cabinet": 315,
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips 21,5\/2 с",
+  "invent_num": "К1ТРС002"
+ },
+ {
+  "cabinet": 315,
+  "name": "Монитор HP 24W",
+  "description": "не учитывать"
+ },
+ {
+  "cabinet": 315,
+  "name": "Монитор Philips",
+  "description": "не учитывать"
+ },
+ {
+  "cabinet": 315,
+  "name": "Монитор Samsung",
+  "invent_num": "TEH\/2-03-15\/005492"
+ },
+ {
+  "cabinet": 315,
+  "name": "Монитор АОС"
+ },
+ {
+  "cabinet": 315,
+  "name": "Монитор АОС",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 315,
+  "name": "Принтер HP LaserJet Enterprise MFP M631",
+  "invent_num": "ТЕН\/2-03-15\/315004",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 315,
+  "name": "Принтер термотрансферный",
+  "invent_num": "TEH\/2-03-15\/001518"
+ },
+ {
+  "cabinet": 315,
+  "name": "Роутер netis",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 315,
+  "name": "Системный блок Intel NUC",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 315,
+  "name": "Телефон Gigaset",
+  "invent_num": "PR\/2-03-15\/000005"
+ },
+ {
+  "cabinet": 315,
+  "name": "Телефон IP YEALINK черный",
+  "invent_num": "PR\/2-03-15\/000007"
+ },
+ {
+  "cabinet": 315,
+  "name": "Телефон IP YEALINK черный",
+  "invent_num": "PR\/2-03-15\/000006"
+ },
+ {
+  "cabinet": 315,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 315,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 329,
+  "name": "Принтер HP M428dw",
+  "invent_num": "TEH\/2-03-29\/005220"
+ },
+ {
+  "cabinet": 329,
+  "name": "Моноблок Asus",
+  "invent_num": "K2T316001"
+ },
+ {
+  "cabinet": 329,
+  "name": "Моноблок Asus",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 329,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 329,
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": 329,
+  "name": "Уничтожитель документов ProfiOffice",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "секретарь",
+  "name": "монитор HP 1CA83AA",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "секретарь",
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "секретарь",
+  "name": "Телефон Yealink"
+ },
+ {
+  "cabinet": "секретарь",
+  "name": "Принтер HP 479"
+ },
+ {
+  "cabinet": "секретарь",
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "switch d-link",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Клавиатура + мышь"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Компьютер в сборе",
+  "invent_num": "TEH\/2-02-03\/005231"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips21,5\/6",
+  "invent_num": "K2TPC001"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips21,5\/7",
+  "invent_num": "K2TPC002"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Компьютер в сборе Платформа Intel, монитор Philips21,5\/8",
+  "invent_num": "K2TPC003"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Монитор"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Монитор"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Монитор"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Монитор",
+  "invent_num": "откуда"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Мышь + клавиатура",
+  "invent_num": "TEH\/2-02-03\/005228"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Принтер HP m426",
+  "invent_num": "TЕН\/2-01-Р2\/005254",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен регистрация",
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен регистрация",
+  "name": "Монитор BENQ GW2470-T",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен регистрация",
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен регистрация",
+  "name": "Мышь + клавиатура",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен регистрация",
+  "name": "Системный блок",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен регистрация",
+  "name": "Монитор BENQ GW 2270-B",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен регистрация",
+  "name": "Принтер МФУ LaserJet Pro M428dw",
+  "invent_num": "TEH\/2-02-05\/005223"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Принтер HP m426",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "роутер D-link",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "считыватель z-2",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "считыватель z-2",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "телефон Gigaset A540 IP",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшен",
+  "name": "Телефон Yealink",
+  "description": "Отсутствует инвентарный номер"
+ },
+ {
+  "cabinet": "ресепшн регистрация",
+  "name": "Сканер EPSON V370"
+ }
+]
+}
