@@ -1,35 +1,35 @@
 import json
 from abc import abstractmethod
 
-from django.db import transaction
-from django.http import JsonResponse, HttpResponse
+from django.db import transaction, models
+from django.http import JsonResponse, HttpResponse, QueryDict
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import filters, status
+from rest_framework import filters, status, serializers
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView
-from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from core.serializer import OrganizationSerializer, OrganizationCreateSerializer, DepartmentSerializer, \
+from core.serializer import OrganizationSerializer, DepartmentSerializer, \
     DepartmentCreateSerializer, HoldingCreateSerializer, HoldingSerializer, PropertySerializer, \
-    OrganizationSerializer, OrganizationUpdateSerializer
+    OrganizationSerializer, OrganizationCreateUpdateSerializer, DepartmentCreateUpdateSerializer, \
+    HoldingCreateUpdateSerializer
 from .fixture import script
 from .models import Holding, Organization, Department, MOL, Property, InventoryList
 
 
 # ModelViewSet
 class ModelViewSetMixin(ModelViewSet):
-    # serializer_class = DepartmentSerializer(many=True)
-    renderer_classes = [TemplateHTMLRenderer]
+    renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
 
-    @property
-    @abstractmethod
-    def upper_queryset(self):
-        pass
+    # @property
+    # @abstractmethod
+    # def upper_queryset(self):
+    #     pass
 
     @property
     @abstractmethod
@@ -46,142 +46,125 @@ class ModelViewSetMixin(ModelViewSet):
         return Response({'organizations': [queryset]}, template_name='organization.html')
 
     def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()  # TODO мб поменять queryset на self.queryset,
+        # TODO если при выполнении каждого запроса он заново инициируется, то так и нужно сделать
         if query_name := request.query_params.get('search'):
-            queryset = self.get_queryset().filter(**{f'{self.search_filter}__contains': query_name})  # TODO
+            queryset = queryset.filter(**{f'{self.search_filter}__contains': query_name})  # TODO
 
-        elif upper_query := request.query_params.get(f'{self.upper_query_filter}_id'):
-            queryset = self.get_queryset().filter(**{f'{self.upper_query_filter}__id': upper_query})
+        if upper_query := request.query_params.get(f'{self.upper_query_filter}_id'):
+            queryset = queryset.filter(**{f'{self.upper_query_filter}__id': upper_query})
 
-        else:
-            queryset = self.get_queryset()
+        return Response(self.template_dict(request, queryset), template_name='template.html')
 
+    def template_dict(self, request, queryset, *args, **kwargs):
         serializer = self.get_serializer(queryset, many=True)
-
-        btn_fields = {
+        upper_serializer = self.upper_serializer_class(self.upper_queryset, many=True) if hasattr(self, 'upper_serializer_class') else None
+        return_dict = {
+            'btn_fields': {
                 'lower_name': self.search_filter,
-                'lower_url': 'department',
+                'lower_url': self.lower_url,
                 'upper_name': self.upper_query_filter,
-                'upper_url': 'holding'
-            }
+                'upper_url': self.upper_url  # TODO Переделать, чтобы можно было ввести upper_url и при его
+                # TODO отсутствии вставлялся self.upper_query_filter и вообще в целом сделать чтобы словарь собирался
+                # TODO через кастом класс где-нибудь за сценой
 
-        ser_hol = HoldingSerializer(self.upper_queryset, many=True)
-        return Response({'btn_fields': btn_fields, 'model': self.model, 'query': serializer.data,
-                         'organizations': queryset, 'holdings': ser_hol.data, 'hol_model': Holding,
-                         'success_create': bool(request.query_params.get('success_create'))},  # TODO переделать
-                        template_name='template.html')
+            },
+            'query': serializer.data,
+            'upper_query': upper_serializer.data if upper_serializer is not None else None,
+            'model': queryset.model,  # TODO мб все-таки стоит оставить self.model
+            'model_name': queryset.model.__name__.lower(),  # TODO мб можно избавиться
+            # TODO если можно будет достававть имя в шаблоне
+            'upper_model': self.upper_queryset.model if hasattr(self, 'upper_queryset') else None,
+            'success_create': bool(request.query_params.get('success_create'))  # TODO переделать
+        }
+
+        return return_dict
+
+
 
     def create(self, request, *args, **kwargs):
-
         organization = super().create(request, *args, **kwargs)
 
-        if request.META.get('HTTP_REFERER').split('?')[0] == 'http://127.0.0.1:8000/organization/':  # TODO убрать отношение к МЕТА данным
-            return redirect("http://127.0.0.1:8000/organization/?success_create=True")
-        else:
-            return organization
+        return organization
 
-    def perform_destroy(self, instance):
-        instance.is_deleted = True
-        instance.save()
-        return instance
-
-    def destroy(self, request, *args, **kwargs):
-        for instance in request.data:
-            self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-    # def get_serializer(self, *args, **kwargs):
-    #     if self.action == 'update': # TODO Реализовать через Meta.list_serializer_class
-    #         # kwargs['many'] = True
-    #         return OrganizationUpdateSerializer
-    #     else:
-    #         return super(ModelViewSetMixin, self).get_serializer(*args, **kwargs)
     def get_serializer_class(self):
-        if self.action == 'update':
-            return OrganizationUpdateSerializer
+        if self.action == 'update':  # TODO Реализовать через Meta.list_serializer_class
+            return self.create_update_serializer_class
+        elif self.action == 'create':
+            return self.create_update_serializer_class
         else:
-            return super().get_serializer()
+            return super(ModelViewSetMixin, self).get_serializer_class()
 
     def get_object(self):
         if self.action == 'update':
-            return [x for x in Organization.objects.filter(id__in=[x['id'] for x in self.request.data])]
+            print([x for x in self.queryset.filter(id__in=[x['id'] for x in self.request.data])])
+            return [x for x in self.queryset.filter(id__in=[x['id'] for x in self.request.data])]
         else:
-            return super().get_object()
+            return super(ModelViewSetMixin, self).get_object()
 
     def get_serializer(self, *args, **kwargs):
         if self.action == 'update':
-            serializer_class = self.update_serializer
-            self.renderer_classes = None
+            print(123)
+            serializer_class = self.create_update_serializer_class
+            self.renderer_classes = None  # ?????
             kwargs.setdefault('context', self.get_serializer_context())
+            print(self.get_serializer_context())
             kwargs['many'] = True
             return serializer_class(*args, **kwargs)
+        else:
+            return super(ModelViewSetMixin, self).get_serializer(*args, **kwargs)
 
-    # def perform_update(self, serializer):
-    #     for s in serializer:
-    #         s.save()
-    # def update(self, request, *args, **kwargs):
-    #     print(self.get_object(), 231321321)
-    #     self.get_serializer(Holding, request.data)
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-    # super().update()
-    # super().get_serializer()
+    @action(methods=['DELETE'], detail=False)
+    def delete(self, request):
+        delete_id = request.data['id']
+        query_before_update = list(self.queryset.filter(id__in=delete_id))
+        delete_list = self.queryset.filter(id__in=delete_id).update(is_deleted=True)
 
-    # def update(self, request, *args, **kwargs):
-    #     pass
-        # TODO через fetch можно сделать
-
-    # super().get_object()
-
-# class HoldingModelViewSet(ModelViewSetMixin):
-#     queryset = Holding.objects.all()
-#     model = Holding
-#     upper_query_filter = 'holding'
-#     search_filter = 'name'
-#     upper_queryset = Holding.objects.all()
-
-
-class Udsa(UpdateAPIView):
-    lookup_field = ''
-    model = Organization
-    queryset = Organization.objects.filter(is_deleted=False)
-    # serializer_class = OrganizationafSerializer
-
-    # def get_serializer_class(self):
-    #     # if self.action == 'update':
-    #     return OrganizationafSerializer
-    #     # else:
-    #     #     return super().get_serializer()
-
-    # def get_serializer(self, *args, **kwargs):
-    #     """
-    #     Return the serializer instance that should be used for validating and
-    #     deserializing input, and for serializing output.
-    #     """
-    #     serializer_class = OrganizationafSerializer
-    #     kwargs.setdefault('context', self.get_serializer_context())
-    #     kwargs['many'] = True
-    #     return serializer_class(*args, **kwargs)
-
-    # def get_object(self):
-    #     # print(self.request.data)
-    #     # if self.action == 'update':
-    #     # return
-    #     return [x for x in Organization.objects.filter(id__in=[x['id'] for x in self.request.data])]
-    #     # else:
-    #     #     return super().get_object()
-
-    def perform_update(self, serializer):
-        print(serializer)
-        serializer.save()
+        return Response(self.serializer_class(query_before_update, many=True).data)
 
 
 class OrganizationModelViewSet(ModelViewSetMixin):
     queryset = Organization.objects.filter(is_deleted=False)
     model = Organization
     serializer_class = OrganizationSerializer
-    update_serializer = OrganizationUpdateSerializer
+    create_update_serializer_class = OrganizationCreateUpdateSerializer
     upper_query_filter = 'holding'
     search_filter = 'name'
+    lower_url = 'dep'
+    upper_url = 'hol'
     upper_queryset = Holding.objects.all()
+    upper_serializer_class = HoldingSerializer
+
+
+class DepartmentModelViewSet(ModelViewSetMixin):
+    queryset = Department.objects.filter(is_deleted=False)
+    model = Department  # TODO НУЖНО ЛИ?
+    serializer_class = DepartmentSerializer
+    create_update_serializer_class = DepartmentCreateUpdateSerializer
+    upper_query_filter = 'organization'
+    search_filter = 'name'
+    lower_url = 'mol'
+    upper_url = 'org'
+    upper_queryset = Organization.objects.filter(is_deleted=False)
+    upper_serializer_class = OrganizationSerializer
+
+
+class HoldingModelViewSet(ModelViewSetMixin):
+    queryset = Holding.objects.filter(is_deleted=False)
+    model = Holding  # TODO НУЖНО ЛИ?
+    serializer_class = HoldingSerializer
+    create_update_serializer_class = HoldingCreateUpdateSerializer
+    upper_query_filter = ''
+    search_filter = 'name'
+    lower_url = 'org'
+    upper_url = ''
+    # upper_queryset = Organization.objects.filter(is_deleted=False)
+    # upper_serializer_class = OrganizationSerializer
+
+
+
+
+# ==================================================================================== #
 
 
 class OrganizationRetrieve(RetrieveAPIView):
@@ -216,18 +199,19 @@ class OrganizationList(ListAPIView):
                         template_name='organization.html')
 
 
-class OrganizationCreate(CreateAPIView):
-    model = Organization
-    serializer_class = OrganizationCreateSerializer
-
-    def post(self, request, *args, **kwargs):
-
-        organization = self.create(request, *args, **kwargs)
-
-        if request.META.get('HTTP_REFERER').split('?')[0] == 'http://127.0.0.1:8000/organization/':  # TODO убрать отношение к МЕТА данным
-            return redirect("http://127.0.0.1:8000/organization/?success_create=True")
-        else:
-            return organization
+# class OrganizationCreate(CreateAPIView):
+#     model = Organization
+#     serializer_class = OrganizationCreateSerializer
+#
+#     def post(self, request, *args, **kwargs):
+#
+#         organization = self.create(request, *args, **kwargs)
+#
+#         if request.META.get('HTTP_REFERER').split('?')[
+#             0] == 'http://127.0.0.1:8000/organization/':  # TODO убрать отношение к МЕТА данным
+#             return redirect("http://127.0.0.1:8000/organization/?success_create=True")
+#         else:
+#             return organization
 
         # def perform_des
 
@@ -339,14 +323,14 @@ class HoldingCreate(CreateAPIView):
     serializer_class = HoldingCreateSerializer
 
     def post(self, request, *args, **kwargs):
-
+        print(321321)
         holding = self.create(request, *args, **kwargs)
 
-        if request.META.get('HTTP_REFERER').split('?')[
-            0] == 'http://127.0.0.1:8000/holding/':  # TODO убрать отношение к МЕТА данным и изменить так, чтобы работало на сервере
-            return redirect("http://127.0.0.1:8000/holding/?success_create=True")
-        else:
-            return holding
+        # if request.META.get('HTTP_REFERER').split('?')[
+        #     0] == 'http://127.0.0.1:8000/holding/':  # TODO убрать отношение к МЕТА данным и изменить так, чтобы работало на сервере
+        #     return redirect("http://127.0.0.1:8000/holding/?success_create=True")
+        # else:
+        return holding
 
 
 class HoldingUpdate(CreateAPIView):

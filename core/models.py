@@ -5,6 +5,7 @@ from django.db import models
 class Holding(models.Model):
     name = models.CharField(verbose_name='Имя', max_length=255, unique=True)
     address = models.CharField(verbose_name='адрес', max_length=255)
+    is_deleted = models.BooleanField(verbose_name='Удален', default=False)
 
     def __str__(self):
         return self.name
@@ -27,6 +28,7 @@ class Department(models.Model):
     floor = models.CharField(verbose_name='Этаж', max_length=255)
     cabinet = models.CharField(verbose_name='Кабинет', max_length=255)
     organization = models.ForeignKey(Organization, verbose_name="организация", on_delete=models.PROTECT)
+    is_deleted = models.BooleanField(verbose_name='Удален', default=False)
 
     def __str__(self):
         return self.name
@@ -37,6 +39,7 @@ class MOL(models.Model):
     phone_num = models.CharField(verbose_name='Номер телефона', max_length=255)
     department = models.ForeignKey(Department, verbose_name='Отдел', on_delete=models.PROTECT)
     post = models.CharField(verbose_name='Должность', max_length=255)
+    is_deleted = models.BooleanField(verbose_name='Удален', default=False)
 
     def __str__(self):
         return self.FIO
@@ -46,6 +49,7 @@ class Property(models.Model):
     name = models.CharField(verbose_name='Наименование', max_length=255)
     u_m = models.CharField(verbose_name='Единица измерения', max_length=255)
     description = models.CharField(verbose_name='Описание', max_length=255)
+    is_deleted = models.BooleanField(verbose_name='Удален', default=False)
 
     def __str__(self):
         return self.name
@@ -59,6 +63,7 @@ class InventoryList(models.Model):
     MOL = models.ForeignKey(MOL, verbose_name='МОЛ', on_delete=models.PROTECT)
     property = models.ForeignKey(Property, verbose_name='Имущество', on_delete=models.PROTECT)
     description = models.CharField(verbose_name='Описание', max_length=255, default='')
+    is_deleted = models.BooleanField(verbose_name='Удален', default=False)
 
     def __str__(self):
         return self.invent_num

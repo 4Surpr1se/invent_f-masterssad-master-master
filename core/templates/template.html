@@ -436,7 +436,7 @@ form:hover:not(#empty) {
       </ul>
     </nav>
     </div>
-
+    {{ upper_model }} {{ upper_query }}
     <form action="" id ="empty">
    <p style="height: 30px"><input type="search" name="search" id="searchfield" placeholder="Поиск по названию">
    <input type="submit" style="float: left" value="Найти">
@@ -445,19 +445,17 @@ form:hover:not(#empty) {
     width: 150px;
     height: 40px;" onclick="show()">Режим редактирования</button></p>
 
-    <!-- The Modal -->
 <div id="myModal" class="modal">
 
-  <!-- Modal content -->
   <div class="modal-content">
     <span class="close" id="close_property">&times;</span>
-<!--    <form style = 'padding-top: 10%' action = false onclick="PropertyAdd()" method="POST" >-->
+
   <br>
-      {% for obj in holdings.0.keys %}
+      {% for obj in upper_query.0.keys %}
       {% if obj != 'id' %}
           <div>
-    <label class = labelcls for="{{ obj }}">{{ hol_model | verbose_name:obj }}</label><br>
-    <input class = inputcls name="upper_{{ obj }}" id="{{ obj }}"/>
+    <label class = labelcls for="{{ obj }}">{{ upper_model | verbose_name:obj }}</label><br>
+    <input class = inputcls name="upper_{{ obj }}" id="upper_{{ obj }}"/>
   </div>
       {% endif %}
       {% endfor %}
@@ -466,53 +464,11 @@ form:hover:not(#empty) {
     <button class="button-6" onclick="PropertyAdd()" role="button" style="padding: 15px 32px;">Добавить организацию</button>
       </div>
 
-<!--</form>-->
   </div>
 
 </div>
 
-{#<div id="myModaldepartment" class="modal">#}
-{##}
-{#  <!-- Modal content -->#}
-{#  <div class="modal-content" style="height: 35%">#}
-{#    <span class="close" id="close_department">&times;</span>#}
-{#<!--    <form style = 'padding-top: 10%' action = false onclick="PropertyAdd()" method="POST" >-->#}
-{#  <br>#}
-{#      <div>#}
-{#    <label class = labelcls for="department_name">Наименование отдела</label><br>#}
-{#    <input class = inputcls name="department_name" id="department_name"/>#}
-{#  </div>#}
-{#  <div>#}
-{#    <label class = labelcls for="address">Адрес</label><br>#}
-{#    <input class = inputcls name="address" id="address" />#}
-{#  </div>#}
-{#  <div>#}
-{#      <label class = labelcls for="floor">Этаж</label><br>#}
-{#    <input class = inputcls name="floor" id="floor" />#}
-{#  </div>#}
-{##}
-{#  <div>#}
-{#      <label class = labelcls for="cabinet">Кабинет</label><br>#}
-{#    <input class = inputcls name="cabinet" id="cabinet" />#}
-{#  </div>#}
-{#  <label class = labelcls for="organization">Организация</label><br>#}
-{#  <select class = inputcls name="organization">#}
-{#        {% for organization in organizations %}#}
-{#        <option class = labelcls value="{{organization.id}}">{{organization.name}}</option>#}
-{#        {% endfor %}#}
-{#    </select>#}
-{#  <div>#}
-{#      <br>#}
-{#    <button class="button-6" onclick="PropertyAdd()" role="button" style="padding: 15px 32px;">Добавить организацию</button>#}
-{#      </div>#}
-{##}
-{#<!--</form>-->#}
-{#  </div>#}
-{##}
-{#</div>#}
-
-<!--    <form action="./delete/" method="POST">-->
-
+    {{ model_name }}
     <div id="block1">
         <button onclick = "SaveChanges()" style = 'display: none' class="dip button-6">Сохранить Изменения</button>
     <br>
@@ -536,23 +492,15 @@ form:hover:not(#empty) {
         {% for q in query %}
             <tr>
             {% for k, v in q.items %}
-{#        <tr>#}
                 {% if k == btn_fields.lower_name %}
             <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/?organization_id={{ q.id }}'><span class = "btn_text">{{ v }}</span></a></th>
                 {% elif k == btn_fields.upper_name%}
-            <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.upper_url }}/{{ q.id }}'><span class = "btn_text">{{ v }}</span></a></th>
+            <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.upper_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
                 {% elif k == 'id' %}
             <th><a style="color: black"><span>{{ v }}</span></a></th>
                 {% else %}
             <th><a style="color: black" class = "{{ q.id }}"><span>{{ v }}</span></a></th>
                 {% endif %}
-{#            <th><a class = "btn" onclick=handleClick(this) style="color: black" href='../department/?organization_id={{invent_list.pk}}'><span class = "btn_text">{{invent_list.pk}}</span></a></th>#}
-{#            <th><a class = "btn {{invent_list.pk}}" onclick=handleClick(this) style="color: black" href='../department/{{invent_list.MOL.department.id}}'>{{invent_list.MOL.department.cabinet}}</a></th>#}
-{#            <th><a class = "{{invent_list.pk}}">{{invent_list.invent_num}}</a></th>#}
-{#            <th><a class = "btn {{invent_list.pk}}" onclick=handleClick(this) style="color: black" href='../holding/{{invent_list.property.id}}'><span>{{invent_list.property}}</span></a></th>#}
-{#            <th><a class = "{{invent_list.pk}}">{{invent_list.amount}}</a></th>#}
-{#            <th><a class = "{{invent_list.pk}}">{{invent_list.description}}</a></th>#}
-{#        </tr>#}
             {% endfor %}
             <th style = 'display:none; z-index: 1; text-align: center' class="dip"><input style="text-align: center; width: 20px; height: 20px; align-content: center; align-self: center" name="{{q.id}}" id="{{q.id}}" type="checkbox"></th>
             <th style='display:none; z-index: 1; text-align: center' class="dip"><input type="button" onclick="editable_field(this, '{{q.id}}')" value="Изменить"></th>
@@ -560,12 +508,13 @@ form:hover:not(#empty) {
         {% endfor %}
     {{ query.0|length}}
     </table>
-    {{query.0.keys|slice:"0:4"}}
+    {{query.0.keys | selection_step:btn_fields.upper_name}}
         </div>
         </form>
     <script>
     var submit = []
-    var steps = {{ query.0|length }} - 1
+    var steps = {{ query.0|length }} - 1 {# TODO при пустом квери упадет, поэтому нужно не прогружатть таблицу в таком случае#}
+    var selection_step = {{ query.0.keys | selection_step:btn_fields.upper_name }}
     console.log(steps)
             function show() {
          const table = document.getElementsByTagName('table')[0]
@@ -605,17 +554,17 @@ form:hover:not(#empty) {
                 for (let step = 0; step < steps; step++){
                 var e = document.getElementsByClassName(el)[0];
 
-                if (step === 2){
+                if (step === selection_step){
                         var d = document.createElement('select');
                         d.style = 'align-self: center; width: 150px; height: 20px'
 
                         d.className = el + 'textfield' + ' property_select'
 
-                        {% for holding in holdings %}
+                        {% for instance in upper_query %}
 
                         var option = document.createElement("option");
-                        option.value = '{{holding.id}}';
-                        option.text = '{{holding.name}}';
+                        option.value = '{{instance.id}}';
+                        option.text = '{{instance.name}}';
                         upper_discard = e.textContent
                         if (option.text === e.textContent){
                             option.selected = true}
@@ -629,28 +578,6 @@ form:hover:not(#empty) {
                         d.after(svg_image)
                     }
 
-                {#else if (step === 0){#}
-                {#    var select_field = document.createElement('select');#}
-                {#        select_field.style = 'align-self: center; width: 80px; height: 20px'#}
-                {##}
-                {#        select_field.className = el + 'textfield' + ' cabinet_select'#}
-                {##}
-                {#        {% for department in departments %}#}
-                {##}
-                {#        var option = document.createElement("option");#}
-                {#        option.value = '{{department.id}}';#}
-                {#        option.text = '{{department.cabinet}}';#}
-                {#        department_discard = e.textContent#}
-                {#        if (option.text === e.textContent){#}
-                {#            option.selected = true}#}
-                {#        select_field.appendChild(option);#}
-                {##}
-                {#        {% endfor %}#}
-                {##}
-                {#        e.parentNode.replaceChild(select_field, e);#}
-                {#        svg_image_1.id = el + 'add_svg_1'#}
-                {#        svg_image_1.setAttribute('onclick', `CreateDepartment()`)#}
-                {#        select_field.after(svg_image_1)#}
 
                 else {
                     var d = document.createElement('input');
@@ -665,71 +592,6 @@ form:hover:not(#empty) {
                 }
             }
 
-    {#        function CreateDepartment(){#}
-    {#            // Get the modal#}
-    {#            var modal = document.getElementById("myModaldepartment");#}
-    {##}
-    {#            // Get the <span> element that closes the modal#}
-    {#            var span = document.getElementById("close_department");#}
-    {##}
-    {#            // When the user clicks the button, open the modal#}
-    {#              modal.style.display = "block";#}
-    {##}
-    {##}
-    {#            // When the user clicks on <span> (x), close the modal#}
-    {#            span.onclick = function() {#}
-    {#              modal.style.display = "none";#}
-    {#            }#}
-    {##}
-    {#            // When the user clicks anywhere outside of the modal, close it#}
-    {#            window.onclick = function(event) {#}
-    {#              if (event.target == modal) {#}
-    {#                modal.style.display = "none";#}
-    {#              }#}
-    {#            }#}
-    {#        }#}
-    {##}
-    {#        function DepartmentAdd(){#}
-    {##}
-    {#            let department_name = document.getElementById('department_name')#}
-    {#            let address = document.getElementById('address')#}
-    {#            let floor = document.getElementById('floor')#}
-    {#            let cabinet = document.getElementById('cabinet')#}
-    {#            let organization = document.getElementById('organization')#}
-    {##}
-    {#            var dict = {#}
-    {#                'department_name': department_name.value,#}
-    {#                'address': address.value,#}
-    {#                'floor': floor.value,#}
-    {#                'cabinet': cabinet.value,#}
-    {#                'organization': organization.value,#}
-    {##}
-    {#            }#}
-    {##}
-    {##}
-    {#            var xhr = new XMLHttpRequest();#}
-    {#            xhr.open("POST", 'http://127.0.0.1:8000/department/create/', true);#}
-    {#            xhr.setRequestHeader('Content-Type', 'application/json');#}
-    {#            xhr.responseType = 'json';#}
-    {#            xhr.onload  = function() {#}
-    {#                var jsonResponse = xhr.response;#}
-    {#                var property_select = document.getElementsByClassName('property_select')[0]#}
-    {#                var option = document.createElement("option");#}
-    {#                option.value = jsonResponse['id']#}
-    {#                option.text = name.value#}
-    {#                option.selected = true#}
-    {#                property_select.appendChild(option)#}
-    {#            }#}
-    {#            var modal = document.getElementById("myModal");#}
-    {#            modal.style.display = "none"#}
-    {#            xhr.send(JSON.stringify(dict));#}
-    {##}
-    {##}
-    {##}
-    {##}
-    {#            console.log(123)#}
-    {##}
-    {#}#}
 
             function CreateProperty(){
                 // Get the modal
@@ -756,20 +618,27 @@ form:hover:not(#empty) {
             }
 
             function PropertyAdd(){
-
-                let name = document.getElementById('property_name')
-                let u_m = document.getElementById('u_m')
-                let description = document.getElementById('description')
+                {% for field in upper_query.0.keys %}
+                    let {{ field }} = document.getElementById('upper_{{ field }}')
+                {% endfor %}
+                {# TODO поля могут быть не текст филд а селектион #}
+                {#let name = document.getElementById('property_name')#}
+                {#let u_m = document.getElementById('u_m')#}
+                {#let description = document.getElementById('description')#}
 
                 var dict = {
-                    'name': name.value,
-                    'u_m': u_m.value,
-                    'description': description.value
+                    {% for field in upper_query.0.keys %}
+                        {% if field != 'id' %}
+                    '{{ field }}': {{ field }}.value,
+                        {% endif %}
+                    {#'u_m': u_m.value,#}
+                    {#'description': description.value#}
+                    {% endfor %}
                 }
 
 
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", 'http://127.0.0.1:8000/inner/create/', true);
+                xhr.open("POST", 'http://127.0.0.1:8000/{{btn_fields.upper_name}}/create/', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.responseType = 'json';
                 xhr.onload  = function() {
@@ -814,16 +683,18 @@ form:hover:not(#empty) {
                     e.setAttribute('onclick', 'handleClick(this)')
                     e.style.color = 'black'
                     e.textContent = d.placeholder
-                    if (step === 2){
+                    if (step === selection_step){
                         e.textContent = upper_discard
                     }
                     // TODO доделать href
                     d.parentNode.replaceChild(e, d);
                 }
+                {% if upper_query != '' %}
                     var add_svg = document.getElementById(el + 'add_svg')
                     {#var add_svg_1 = document.getElementById(el + 'add_svg_1')#}
 
                     add_svg.remove()
+                {% endif %}
                     {#add_svg_1.remove()#}
                     ChangeButtonReturn(el);
                 }
@@ -845,12 +716,13 @@ form:hover:not(#empty) {
                     {#    property_name: element[2].options[element[2].selectedIndex].text,#}
                     {#    amount: element[3].value,#}
                     {#    description: element[4].value#}
-                    {#}#}
+
 
                     {% endfor %}
 {#                    {% endwith %}#}
 
                     submit.push(dict)
+                    console.log(submit)
                     // window.alert(submit[0].get('name'))
 
                 for (let step = 0; step < steps; step++){
@@ -860,7 +732,7 @@ form:hover:not(#empty) {
                     e.setAttribute('onclick', 'handleClick(this)')
                     e.style.color = 'black'
                     e.textContent = d.value
-                    if (step === 2 ) {
+                    if (step === selection_step ) {
                         e.textContent = d.options[d.selectedIndex].text
                     }
                     {#if (step === 0) {#}
@@ -869,10 +741,12 @@ form:hover:not(#empty) {
                     // TODO доделать href
                     d.parentNode.replaceChild(e, d);
                 }
+                {% if upper_query != None %}
                     var add_svg = document.getElementById(el + 'add_svg')
                     {#var add_svg_1 = document.getElementById(el + 'add_svg_1')#}
 
                     add_svg.remove()
+                {% endif %}
                     {#add_svg_1.remove()#}
                     ChangeButtonReturn(el);
                 }
@@ -884,12 +758,39 @@ form:hover:not(#empty) {
 
                     // document.write(submit.get('name'), submit.get('address'), submit.get('holding'));
 
+            function CreateObj(){
+                {% for field in query.0.keys %}
+                    let {{ field }} = document.getElementById('current_{{ field }}')
+                {% endfor %}
+                {# TODO поля могут быть не текст филд а селектион #}
+                {#let name = document.getElementById('property_name')#}
+                {#let u_m = document.getElementById('u_m')#}
+                {#let description = document.getElementById('description')#}
+
+                var dict = {
+                    {% for field in query.0.keys %}
+                        {% if field != 'id' %}
+                    '{{ field }}': {{ field }}.value,
+                        {% endif %}
+                    {#'u_m': u_m.value,#}
+                    {#'description': description.value#}
+                    {% endfor %}
+                }
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'json';
+                xhr.onload = PageReload
+                xhr.send(JSON.stringify(dict));}
+
 
 
             function SaveChanges(){
                 // window.alert(submit)
-
-                let response = fetch('./update/', {
+                console.log(submit)
+                let update_response = fetch('./update/', {
                 method: 'PUT',
                 headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -897,10 +798,12 @@ form:hover:not(#empty) {
                 body: JSON.stringify(submit)
                 });
 
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", './update/', true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify(submit));
+                {#update_response.finally(PageReload)#}
+
+                {#var xhr = new XMLHttpRequest();#}
+                {#xhr.open("POST", './update/', true);#}
+                {#xhr.setRequestHeader('Content-Type', 'application/json');#}
+                {#xhr.send(JSON.stringify(submit));#}
                 const elements = document.querySelectorAll('input[type=checkbox]:checked')
 
                 var xhr1_list = []
@@ -909,15 +812,32 @@ form:hover:not(#empty) {
                     xhr1_list.push(element.id)
                 })
 
-                xhr.addEventListener("loadend", PageReload)
+                let delete_reponse = fetch('./delete/', {
+                method: 'DELETE',
+                headers: {
+                'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify({'id': xhr1_list})
+                })
 
-                var xhr1 = new XMLHttpRequest();
-                xhr1.open("POST", './delete/', true);
-                xhr1.setRequestHeader('Content-Type', 'application/json');
-                xhr1.send(JSON.stringify(xhr1_list));
+
+                {#var xhr1_list = []#}
+                {##}
+                {#elements.forEach(element =>{#}
+                {#    xhr1_list.push(element.id)#}
+                {#})#}
+
+                {#xhr.addEventListener("loadend", PageReload)#}
+
+                    {#var xhr1 = new XMLHttpRequest();#}
+                    {#xhr1.open("POST", './delete/', true);#}
+                    {#xhr1.setRequestHeader('Content-Type', 'application/json');#}
+                    {#xhr1.send(JSON.stringify(xhr1_list));#}
 
                 //    TODO Опасное место может набнутся
                 }
+
+            {#const form = document.getElementById('current_form')#}
+            {#form.addEventListener("submit", CreateObj())#}
 
             function None(button){
                 button.onclick.disabled = true
@@ -931,21 +851,22 @@ form:hover:not(#empty) {
 
         </script>
 
-    <div id="createform">
-    <form style="background-color: white; box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" action="create/?redirect_back=True" method="POST" >
+    <div id="createform" >
+    <form action = "javascript:void(0)" id = 'current_form' style="background-color: white; box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" >
     {% for i in query.0.keys %}
   <div>
     {% if i == btn_fields.upper_name %}
         {{ model | verbose_name:i }}<br>
-        <select name="current_{{ i }}" style="width: 177px">
-        {% for holding in holdings %}
-            <option value="{{holding.id}}">{{holding.name}}</option>
+        <select id="current_{{ i }}" name="current_{{ i }}" style="width: 177px">
+        {% for instance in upper_query %}
+            <option value="{{instance.id}}">{{instance.name}}</option>
         {% endfor %}
         </select>
+        </div>
     {% else %}
     <label for="current_{{ i }}">{{ model | verbose_name:i }}</label><br>
     <input name="current_{{ i }}" id="current_{{ i }}"/>
-  </div>
+    </div>
     {% endif %}
     {% endfor %}
 {#        <div>#}
@@ -973,7 +894,7 @@ form:hover:not(#empty) {
 {#  </div>#}
   <div>
       <br>
-    <button style="padding: 3%" class="button-6">Добавить организацию</button>
+    <button onclick = "CreateObj()" style="padding: 3%" type = 'submit' class="button-6">Добавить организацию</button>
       </div>
       <div>
       <div id='container'>
@@ -984,6 +905,10 @@ form:hover:not(#empty) {
       </div>
 </form>
         </div>
+        <script>
+            {#const form = document.getElementById('current_form');#}
+            {#form.addEventListener("submit", CreateObj)#}
+        </script>
 </head>
 
 

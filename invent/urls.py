@@ -19,18 +19,24 @@ from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
 from core import views
-from core.views import OrganizationRetrieve, OrganizationList, OrganizationCreate, DepartmentRetrieve, DepartmentList, \
+from core.views import OrganizationRetrieve, OrganizationList, DepartmentRetrieve, DepartmentList, \
     DepartmentCreate, HoldingRetrieve, HoldingList, HoldingCreate, OrganizationDelete, OrganizationUpdate, Inner, \
-    InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, Udsa
+    InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, DepartmentModelViewSet, HoldingModelViewSet
 
 router = DefaultRouter()
 router.register('org', OrganizationModelViewSet, basename='org')
+
+router_department = DefaultRouter()
+router.register('dep', DepartmentModelViewSet, basename='dep')
+
+router_holding = DefaultRouter()
+router.register('hol', HoldingModelViewSet, basename='hol')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('organization/<pk>', OrganizationRetrieve.as_view()),
     path('organization/', OrganizationList.as_view()),
-    path('organization/create/', OrganizationCreate.as_view()),
     path('department/<pk>', DepartmentRetrieve.as_view(), ),
     path('department/', DepartmentList.as_view()),
     path('department/create/', DepartmentCreate.as_view()),
@@ -42,9 +48,10 @@ urlpatterns = [
     path('organization/update/', OrganizationUpdate.as_view()),
     path('inner/', Inner.as_view()),
     path('inner/update/', InnerUpdate.as_view()),
-    path('inner/create/', PropertyCreate.as_view()),
+    path('property/create/', PropertyCreate.as_view()),
     path('holding/update/', HoldingUpdate.as_view()),
     path('', include(router.urls)),
-    path('s/update/', Udsa.as_view())
+    path('', include(router_department.urls)),
+    path('', include(router_holding.urls)),
 ]
 
