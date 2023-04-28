@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Holding(models.Model):
-    name = models.CharField(verbose_name='Имя', max_length=255, unique=True)
+    name = models.CharField(verbose_name='Имя', max_length=255)
     address = models.CharField(verbose_name='адрес', max_length=255)
     is_deleted = models.BooleanField(verbose_name='Удален', default=False)
 
@@ -34,7 +34,7 @@ class Department(models.Model):
         return self.name
 
 
-class MOL(models.Model):
+class Mol(models.Model):
     FIO = models.CharField(verbose_name='ФИО', max_length=255)
     phone_num = models.CharField(verbose_name='Номер телефона', max_length=255)
     department = models.ForeignKey(Department, verbose_name='Отдел', on_delete=models.PROTECT)
@@ -60,7 +60,7 @@ class InventoryList(models.Model):
     serial_num = models.CharField(verbose_name='Серийный номер', max_length=255)
     amount = models.IntegerField(verbose_name='Количество')  # переделать на другой тайп филд
     account_date = models.DateTimeField(verbose_name='аккаунт_дата', null=True)
-    MOL = models.ForeignKey(MOL, verbose_name='МОЛ', on_delete=models.PROTECT)
+    mol = models.ForeignKey(Mol, verbose_name='МОЛ', on_delete=models.PROTECT)
     property = models.ForeignKey(Property, verbose_name='Имущество', on_delete=models.PROTECT)
     description = models.CharField(verbose_name='Описание', max_length=255, default='')
     is_deleted = models.BooleanField(verbose_name='Удален', default=False)

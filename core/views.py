@@ -17,19 +17,20 @@ from rest_framework.viewsets import ModelViewSet
 from core.serializer import OrganizationSerializer, DepartmentSerializer, \
     DepartmentCreateSerializer, HoldingCreateSerializer, HoldingSerializer, PropertySerializer, \
     OrganizationSerializer, OrganizationCreateUpdateSerializer, DepartmentCreateUpdateSerializer, \
-    HoldingCreateUpdateSerializer
+    HoldingCreateUpdateSerializer, MolCreateUpdateSerializer, MolSerializer, InventoryListSerializer, \
+    InventoryListCreateUpdateSerializer, PropertyCreateUpdateSerializer
 from .fixture import script
-from .models import Holding, Organization, Department, MOL, Property, InventoryList
+from .models import Holding, Organization, Department, Mol, Property, InventoryList
 
 
 # ModelViewSet
 class ModelViewSetMixin(ModelViewSet):
     renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
 
-    # @property
-    # @abstractmethod
-    # def upper_queryset(self):
-    #     pass
+    @property
+    @abstractmethod
+    def create_update_serializer_class(self):
+        pass
 
     @property
     @abstractmethod
@@ -46,22 +47,21 @@ class ModelViewSetMixin(ModelViewSet):
         return Response({'organizations': [queryset]}, template_name='organization.html')
 
     def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()  # TODO мб поменять queryset на self.queryset,
-        # TODO если при выполнении каждого запроса он заново инициируется, то так и нужно сделать
+        self.queryset = self.get_queryset()
         if query_name := request.query_params.get('search'):
-            queryset = queryset.filter(**{f'{self.search_filter}__contains': query_name})  # TODO
+            self.queryset = self.queryset.filter(**{f'{self.search_filter}__contains': query_name})  # TODO
 
         if upper_query := request.query_params.get(f'{self.upper_query_filter}_id'):
-            queryset = queryset.filter(**{f'{self.upper_query_filter}__id': upper_query})
+            self.queryset = self.queryset.filter(**{f'{self.upper_query_filter}__id': upper_query})
 
-        return Response(self.template_dict(request, queryset), template_name='template.html')
+        return Response(self.template_dict(request), template_name='template.html')
 
-    def template_dict(self, request, queryset, *args, **kwargs):
-        serializer = self.get_serializer(queryset, many=True)
+    def template_dict(self, request, *args, **kwargs):
+        serializer = self.get_serializer(self.queryset, many=True)
         upper_serializer = self.upper_serializer_class(self.upper_queryset, many=True) if hasattr(self, 'upper_serializer_class') else None
         return_dict = {
             'btn_fields': {
-                'lower_name': self.search_filter,
+                'lower_name': self.lower_name if hasattr(self, 'lower_name') else self.search_filter,
                 'lower_url': self.lower_url,
                 'upper_name': self.upper_query_filter,
                 'upper_url': self.upper_url  # TODO Переделать, чтобы можно было ввести upper_url и при его
@@ -71,16 +71,14 @@ class ModelViewSetMixin(ModelViewSet):
             },
             'query': serializer.data,
             'upper_query': upper_serializer.data if upper_serializer is not None else None,
-            'model': queryset.model,  # TODO мб все-таки стоит оставить self.model
-            'model_name': queryset.model.__name__.lower(),  # TODO мб можно избавиться
+            'model': self.queryset.model,  # TODO мб все-таки стоит оставить self.model
+            'model_name': self.queryset.model.__name__.lower(),  # TODO мб можно избавиться
             # TODO если можно будет достававть имя в шаблоне
             'upper_model': self.upper_queryset.model if hasattr(self, 'upper_queryset') else None,
             'success_create': bool(request.query_params.get('success_create'))  # TODO переделать
         }
 
         return return_dict
-
-
 
     def create(self, request, *args, **kwargs):
         organization = super().create(request, *args, **kwargs)
@@ -97,18 +95,15 @@ class ModelViewSetMixin(ModelViewSet):
 
     def get_object(self):
         if self.action == 'update':
-            print([x for x in self.queryset.filter(id__in=[x['id'] for x in self.request.data])])
             return [x for x in self.queryset.filter(id__in=[x['id'] for x in self.request.data])]
         else:
             return super(ModelViewSetMixin, self).get_object()
 
     def get_serializer(self, *args, **kwargs):
         if self.action == 'update':
-            print(123)
             serializer_class = self.create_update_serializer_class
             self.renderer_classes = None  # ?????
             kwargs.setdefault('context', self.get_serializer_context())
-            print(self.get_serializer_context())
             kwargs['many'] = True
             return serializer_class(*args, **kwargs)
         else:
@@ -158,12 +153,46 @@ class HoldingModelViewSet(ModelViewSetMixin):
     search_filter = 'name'
     lower_url = 'org'
     upper_url = ''
+
+class MolModelViewSet(ModelViewSetMixin):
+    queryset = Mol.objects.filter(is_deleted=False)
+    model = Mol  # TODO НУЖНО ЛИ?
+    serializer_class = MolSerializer
+    create_update_serializer_class = MolCreateUpdateSerializer
+    upper_query_filter = 'department'
+    search_filter = 'name'
+    lower_url = 'inv'
+    lower_name = 'FIO'
+    upper_url = 'dep'
+    upper_queryset = Department.objects.filter(is_deleted=False)
+    upper_serializer_class = DepartmentSerializer
+
+
+class InventoryListModelViewSet(ModelViewSetMixin):
+    queryset = InventoryList.objects.filter(is_deleted=False)
+    model = InventoryList  # TODO НУЖНО ЛИ?
+    serializer_class = InventoryListSerializer
+    create_update_serializer_class = InventoryListCreateUpdateSerializer
+    upper_query_filter = 'mol'
+    search_filter = 'invent_num'
+    lower_url = 'prop'
+    lower_name = 'property'
+    upper_url = 'mol'
+    upper_queryset = Mol.objects.filter(is_deleted=False)
+    upper_serializer_class = MolSerializer
+
+
+class PropertyModelViewSet(ModelViewSetMixin):
+    queryset = Property.objects.filter(is_deleted=False)
+    model = Property  # TODO НУЖНО ЛИ?
+    serializer_class = PropertySerializer
+    create_update_serializer_class = PropertyCreateUpdateSerializer
+    upper_query_filter = ''
+    search_filter = ''
+    lower_url = ''
+    upper_url = ''
     # upper_queryset = Organization.objects.filter(is_deleted=False)
     # upper_serializer_class = OrganizationSerializer
-
-
-
-
 # ==================================================================================== #
 
 
@@ -356,7 +385,7 @@ class Inner(ListAPIView):
     def list(self, request, *args, **kwargs):
         queryset = InventoryList.objects.all()
         if query_name := request.query_params.get('search'):
-            queryset = InventoryList.objects.filter(MOL__department__cabinet__contains=query_name)
+            queryset = InventoryList.objects.filter(Mol__department__cabinet__contains=query_name)
         # TODO мб придется переделывать,/
         properties = Property.objects.all().order_by('name')
         departments = Department.objects.all()
@@ -377,7 +406,7 @@ class InnerUpdate(CreateAPIView):
     def post(self, request, *args, **kwargs):
         for inv_row in request.data:
             obj = InventoryList.objects.get(pk=inv_row['id'])
-            obj.MOL = MOL.objects.filter(department__id=inv_row['department_id']).first()
+            obj.Mol = Mol.objects.filter(department__id=inv_row['department_id']).first()
             obj.invent_num = inv_row['inv_num']
             obj.property = Property.objects.get(pk=inv_row['property_id'])
             obj.amount = inv_row['amount']

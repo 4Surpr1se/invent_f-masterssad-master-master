@@ -21,7 +21,8 @@ from rest_framework.routers import DefaultRouter
 from core import views
 from core.views import OrganizationRetrieve, OrganizationList, DepartmentRetrieve, DepartmentList, \
     DepartmentCreate, HoldingRetrieve, HoldingList, HoldingCreate, OrganizationDelete, OrganizationUpdate, Inner, \
-    InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, DepartmentModelViewSet, HoldingModelViewSet
+    InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, DepartmentModelViewSet, HoldingModelViewSet, \
+    MolModelViewSet, InventoryListModelViewSet, PropertyModelViewSet
 
 router = DefaultRouter()
 router.register('org', OrganizationModelViewSet, basename='org')
@@ -32,6 +33,14 @@ router.register('dep', DepartmentModelViewSet, basename='dep')
 router_holding = DefaultRouter()
 router.register('hol', HoldingModelViewSet, basename='hol')
 
+router_mol = DefaultRouter()
+router.register('mol', MolModelViewSet, basename='mol')
+
+router_inventorylist = DefaultRouter()
+router.register('inv', InventoryListModelViewSet, basename='inv')
+
+router_property = DefaultRouter()
+router.register('prop', PropertyModelViewSet, basename='prop')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -53,5 +62,9 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(router_department.urls)),
     path('', include(router_holding.urls)),
+    path('', include(router_mol.urls)),
+    path('', include(router_inventorylist.urls)),
+    path('', include(router_property.urls)),
+
 ]
 

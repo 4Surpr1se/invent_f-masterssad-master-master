@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Organization, Holding, Department, Property
+from core.models import Organization, Holding, Department, Property, Mol, InventoryList
 
 
 class ListUpdateSerializer(serializers.ListSerializer):
@@ -75,6 +75,71 @@ class DepartmentSerializer(serializers.ModelSerializer):
 # ==================================================================================== #
 
 
+class MolCreateUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Mol
+        fields = '__all__'
+        list_serializer_class = ListUpdateSerializer
+
+
+class MolSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer(read_only=True)
+
+    class Meta:
+        model = Mol
+        fields = ['id', 'FIO', 'phone_num', 'post', 'department']
+
+
+class MolWithNameSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='FIO')
+
+    class Meta:
+        model = Mol
+        fields = ['id', 'name', 'phone_num', 'post', 'department']
+
+# ==================================================================================== #
+
+class InventoryListCreateUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = InventoryList
+        fields = '__all__'
+        list_serializer_class = ListUpdateSerializer
+
+
+class InventoryListSerializer(serializers.ModelSerializer):
+    mol = MolWithNameSerializer(read_only=True)
+    property = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+
+    class Meta:
+        model = InventoryList
+        fields = ['id', 'invent_num', 'serial_num', 'amount', 'account_date', 'property', 'description', 'mol']
+
+
+# ==================================================================================== #
+
+class PropertyCreateUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Property
+        fields = '__all__'
+        list_serializer_class = ListUpdateSerializer
+
+
+class PropertySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Property
+        fields = ['id', 'name', 'u_m', 'description']
+
+
+# ==================================================================================== #
+
+
 class DepartmentCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -92,8 +157,3 @@ class HoldingCreateSerializer(serializers.ModelSerializer):
         model = Holding
         fields = '__all__'
 
-
-class PropertySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Property
-        fields = '__all__'

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Holding, Organization, Department, MOL, Property, InventoryList
+from core.models import Holding, Organization, Department, Mol, Property, InventoryList
 
 
 class HoldingAdmin(admin.ModelAdmin):
@@ -17,7 +17,7 @@ class DepartmentAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-class MOLAdmin(admin.ModelAdmin):
+class MolAdmin(admin.ModelAdmin):
     list_display = ("FIO", "phone_num", "department", "post")
     search_fields = ("FIO",)
 
@@ -28,14 +28,14 @@ class PropertyAdmin(admin.ModelAdmin):
 
 
 class InventoryListAdmin(admin.ModelAdmin):
-    list_display = ("invent_num", "serial_num", "amount", "account_date", "MOL", "property", "description")
+    list_display = ("invent_num", "serial_num", "amount", "account_date", "mol", "property", "description")
     search_fields = ("invent_num",)
 
 
 admin.site.register(Holding, HoldingAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Department, DepartmentAdmin)
-admin.site.register(MOL, MOLAdmin)
+admin.site.register(Mol, MolAdmin)
 admin.site.register(Property, PropertyAdmin)
 admin.site.register(InventoryList, InventoryListAdmin)
 

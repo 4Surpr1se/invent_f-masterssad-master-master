@@ -357,7 +357,7 @@ form:hover:not(#empty) {
           <a href="../lk/">Личный Кабинет</a>
         </li>
         <li>
-          <a href="../holding/">Холдинги</a>
+          <a href="../hol/">Холдинги</a>
           <ul>
             <li>
               <a href="https://www.w3docs.com/quiz-start/html-basic">HTML Bacis</a>
@@ -377,7 +377,7 @@ form:hover:not(#empty) {
           </ul>
         </li>
         <li>
-          <a href="../organization/">Организации</a>
+          <a href="../org/">Организации</a>
           <ul>
             <li>
               <a href="https://www.w3docs.com/snippets/angularjs.html">Angular JS</a>
@@ -400,7 +400,7 @@ form:hover:not(#empty) {
           </ul>
         </li>
         <li>
-          <a href="../department/">Отделы</a>
+          <a href="../dep/">Отделы</a>
           <ul>
             <li>
               <a href="https://www.w3docs.com/tools/html-encoder/">HTML ENCODER/DECODER</a>
@@ -420,7 +420,7 @@ form:hover:not(#empty) {
           </ul>
         </li>
         <li>
-          <a href="https://www.w3docs.com/string-functions/">МОЛЫ</a>
+          <a href="../mol">МОЛЫ</a>
           <ul>
             <li>
               <a href="https://www.w3docs.com/tools/string-revers">STRING REVERSE</a>
@@ -436,7 +436,6 @@ form:hover:not(#empty) {
       </ul>
     </nav>
     </div>
-    {{ upper_model }} {{ upper_query }}
     <form action="" id ="empty">
    <p style="height: 30px"><input type="search" name="search" id="searchfield" placeholder="Поиск по названию">
    <input type="submit" style="float: left" value="Найти">
@@ -444,19 +443,34 @@ form:hover:not(#empty) {
     <button class = button-6 style="
     width: 150px;
     height: 40px;" onclick="show()">Режим редактирования</button></p>
-
+    {{ upper_query.0 }}
 <div id="myModal" class="modal">
 
   <div class="modal-content">
     <span class="close" id="close_property">&times;</span>
 
   <br>
-      {% for obj in upper_query.0.keys %}
-      {% if obj != 'id' %}
-          <div>
-    <label class = labelcls for="{{ obj }}">{{ upper_model | verbose_name:obj }}</label><br>
-    <input class = inputcls name="upper_{{ obj }}" id="upper_{{ obj }}"/>
+      {% for k, v in upper_query.0.items %}
+      {% if k != 'id' %}
+          {% if v.id != None %}
+      <div>
+    <label class = labelcls for="{{ k }}">{{ upper_model | verbose_name:k }}</label><br>
+      <select class = inputcls name="upper_{{ k }}" id="upper_{{ k }}">
+          {% for upper_foreign_key in upper_query %}
+              {% for key, value in upper_foreign_key.items %}
+                  {% if value.id != None %}
+                      <option class = labelcls value="{{value.id}}">{{value.name}}</option>
+                  {% endif %}
+              {% endfor %}
+          {% endfor %}
+      </select>
+      </div>
+          {% else %}
+      <div>
+    <label class = labelcls for="{{ k }}">{{ upper_model | verbose_name:k }}</label><br>
+    <input class = inputcls name="upper_{{ k }}" id="upper_{{ k }}"/>
   </div>
+              {% endif %}
       {% endif %}
       {% endfor %}
   <div>
@@ -493,7 +507,7 @@ form:hover:not(#empty) {
             <tr>
             {% for k, v in q.items %}
                 {% if k == btn_fields.lower_name %}
-            <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/?organization_id={{ q.id }}'><span class = "btn_text">{{ v }}</span></a></th>
+            <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/?{{ model_name }}_id={{ q.id }}'><span class = "btn_text">{{ v }}</span></a></th>
                 {% elif k == btn_fields.upper_name%}
             <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.upper_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
                 {% elif k == 'id' %}
@@ -511,6 +525,7 @@ form:hover:not(#empty) {
     {{query.0.keys | selection_step:btn_fields.upper_name}}
         </div>
         </form>
+        {{ query.0|length }} {{ query.0.keys | selection_step:btn_fields.upper_name }}
     <script>
     var submit = []
     var steps = {{ query.0|length }} - 1 {# TODO при пустом квери упадет, поэтому нужно не прогружатть таблицу в таком случае#}
@@ -638,7 +653,7 @@ form:hover:not(#empty) {
 
 
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", 'http://127.0.0.1:8000/{{btn_fields.upper_name}}/create/', true);
+                xhr.open("POST", '../{{ btn_fields.upper_url }}/', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.responseType = 'json';
                 xhr.onload  = function() {
@@ -689,7 +704,7 @@ form:hover:not(#empty) {
                     // TODO доделать href
                     d.parentNode.replaceChild(e, d);
                 }
-                {% if upper_query != '' %}
+                {% if upper_query != None %}
                     var add_svg = document.getElementById(el + 'add_svg')
                     {#var add_svg_1 = document.getElementById(el + 'add_svg_1')#}
 
@@ -722,7 +737,6 @@ form:hover:not(#empty) {
 {#                    {% endwith %}#}
 
                     submit.push(dict)
-                    console.log(submit)
                     // window.alert(submit[0].get('name'))
 
                 for (let step = 0; step < steps; step++){
@@ -798,7 +812,7 @@ form:hover:not(#empty) {
                 body: JSON.stringify(submit)
                 });
 
-                {#update_response.finally(PageReload)#}
+                update_response.finally(PageReload)
 
                 {#var xhr = new XMLHttpRequest();#}
                 {#xhr.open("POST", './update/', true);#}
@@ -859,7 +873,11 @@ form:hover:not(#empty) {
         {{ model | verbose_name:i }}<br>
         <select id="current_{{ i }}" name="current_{{ i }}" style="width: 177px">
         {% for instance in upper_query %}
+            {% if instance.name == None%}
+            <option value="{{instance.id}}">{{instance.FIO}}</option>
+            {% else %}
             <option value="{{instance.id}}">{{instance.name}}</option>
+            {% endif %}
         {% endfor %}
         </select>
         </div>
