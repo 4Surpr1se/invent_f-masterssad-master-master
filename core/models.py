@@ -1,4 +1,8 @@
 from django.db import models
+
+from core.model_validators import validate_account_date
+
+
 # TODO Добавить миксин под все модели
 
 
@@ -59,7 +63,7 @@ class InventoryList(models.Model):
     invent_num = models.CharField(verbose_name='Ивентарный номер', max_length=255, default='Отсутствует')
     serial_num = models.CharField(verbose_name='Серийный номер', max_length=255)
     amount = models.IntegerField(verbose_name='Количество')  # переделать на другой тайп филд
-    account_date = models.DateTimeField(verbose_name='аккаунт_дата', null=True)
+    account_date = models.DateTimeField(verbose_name='аккаунт_дата', null=True, blank=True)
     mol = models.ForeignKey(Mol, verbose_name='МОЛ', on_delete=models.PROTECT)
     property = models.ForeignKey(Property, verbose_name='Имущество', on_delete=models.PROTECT)
     description = models.CharField(verbose_name='Описание', max_length=255, default='')
@@ -67,3 +71,20 @@ class InventoryList(models.Model):
 
     def __str__(self):
         return self.invent_num
+
+
+class OperationType(models.IntegerChoices):
+    purchase = 1, "Закупка"
+    displacement = 2, "Перемещение"
+    write_off = 3, "Списание"
+
+
+class Operation(models.Model):
+    inventory_list = models.ForeignKey(InventoryList, verbose_name='Инвертарная запись', on_delete=models.PROTECT)
+    data_time = models.DateTimeField(verbose_name='аккаунт_дата', null=True)
+    waybill = models.CharField(verbose_name='Накладная', max_length=255)
+    fromm = models.ForeignKey(Department, verbose_name='Из отдела', related_name='fromm', on_delete=models.PROTECT)
+    to = models.ForeignKey(Department, verbose_name='В отдел', on_delete=models.PROTECT)
+    type = models.PositiveSmallIntegerField(verbose_name='Тип операции', choices=OperationType.choices,
+                                            default=OperationType.displacement)
+    is_deleted = models.BooleanField(verbose_name='Удален', default=False)

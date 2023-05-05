@@ -226,7 +226,7 @@ nav ul ul {
         padding: 20px;
         border: 1px solid #888;
         width: 15%;
-        height: 30%;
+        height: 45%; {# TODO чтобы высчиывался в зависимости от количества строк и таблицу так же, чтобы от количества столобцов и строк #}
         text-align: center;
         align-content: center;
     }
@@ -345,6 +345,10 @@ form:hover:not(#empty) {
 
 
     </style>
+{% if query.0.keys is None %}
+    {% get_query_keys serializer as query %}
+
+{% endif %}
     <body>
         <meta charset="UTF-8">
         <title>title</title>
@@ -433,9 +437,25 @@ form:hover:not(#empty) {
             </li>
           </ul>
         </li>
+        <li>
+          <a href="../inv">Инвентарный Список</a>
+          <ul>
+            <li>
+              <a href="../prop">Имущества</a>
+            </li>
+            <li>
+              <a href="../oper">Операции</a>
+            </li>
+            <li>
+              <a href="https://www.w3docs.com/tools/string-remove-empty-lines">EMPTY LINES REMOVER</a>
+            </li>
+          </ul>
+        </li>
+
       </ul>
     </nav>
     </div>
+        {{ query }}
     <form action="" id ="empty">
    <p style="height: 30px"><input type="search" name="search" id="searchfield" placeholder="Поиск по названию">
    <input type="submit" style="float: left" value="Найти">
@@ -443,7 +463,6 @@ form:hover:not(#empty) {
     <button class = button-6 style="
     width: 150px;
     height: 40px;" onclick="show()">Режим редактирования</button></p>
-    {{ upper_query.0 }}
 <div id="myModal" class="modal">
 
   <div class="modal-content">
@@ -456,7 +475,7 @@ form:hover:not(#empty) {
       <div>
     <label class = labelcls for="{{ k }}">{{ upper_model | verbose_name:k }}</label><br>
       <select class = inputcls name="upper_{{ k }}" id="upper_{{ k }}">
-          {% for upper_foreign_key in upper_query %}
+          {% for upper_foreign_key in upper_query %} {# TODO Доделать #}
               {% for key, value in upper_foreign_key.items %}
                   {% if value.id != None %}
                       <option class = labelcls value="{{value.id}}">{{value.name}}</option>
@@ -481,8 +500,36 @@ form:hover:not(#empty) {
   </div>
 
 </div>
+    {% if extra_select %}
+        {% for instance in extra_select %}
+    <div id="extra_myModal_{{ forloop.counter }}" class="modal">
 
-    {{ model_name }}
+      <div class="modal-content">
+        <span class="close" id="extra_close_property_{{ forloop.counter }}">&times;</span>
+
+      <br>
+          {% dict_get extra_query_keys instance as dict_get_query %}
+          {% dict_get extra_query instance as extra_queryset %}
+          {% for k in dict_get_query %}
+          {% if k != 'id' %}
+      <div>
+        <label class = labelcls for="extra_{{ forloop.parentloop.counter }}_{{ k }}">{{ extra_queryset.model | verbose_name:k }}</label><br>
+        <input class = inputcls name="extra_{{ forloop.parentloop.counter }}_{{ k }}" id="extra_{{ forloop.parentloop.counter }}_{{ k }}"/>
+      </div>
+          {% endif %}
+          {% endfor %}
+
+      <div>
+          <br>
+        <button class="button-6" onclick="Extra_Add_{{ forloop.counter }}()" role="button" style="padding: 15px 32px;">Добавить организацию</button>
+          </div>
+
+      </div>
+
+    </div>
+        {% endfor %}
+        {% endif %}
+
     <div id="block1">
         <button onclick = "SaveChanges()" style = 'display: none' class="dip button-6">Сохранить Изменения</button>
     <br>
@@ -506,12 +553,17 @@ form:hover:not(#empty) {
         {% for q in query %}
             <tr>
             {% for k, v in q.items %}
+
                 {% if k == btn_fields.lower_name %}
             <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/?{{ model_name }}_id={{ q.id }}'><span class = "btn_text">{{ v }}</span></a></th>
                 {% elif k == btn_fields.upper_name%}
             <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.upper_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
                 {% elif k == 'id' %}
             <th><a style="color: black"><span>{{ v }}</span></a></th>
+                {% elif k == dep_field.0 %}
+            <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
+                 {% elif k == dep_field.1 %}
+            <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
                 {% else %}
             <th><a style="color: black" class = "{{ q.id }}"><span>{{ v }}</span></a></th>
                 {% endif %}
@@ -521,7 +573,7 @@ form:hover:not(#empty) {
             </tr>
         {% endfor %}
     {{ query.0|length}}
-    </table>
+        </table>
     {{query.0.keys | selection_step:btn_fields.upper_name}}
         </div>
         </form>
@@ -530,6 +582,11 @@ form:hover:not(#empty) {
     var submit = []
     var steps = {{ query.0|length }} - 1 {# TODO при пустом квери упадет, поэтому нужно не прогружатть таблицу в таком случае#}
     var selection_step = {{ query.0.keys | selection_step:btn_fields.upper_name }}
+ {% if extra_select %}
+    {% for instance in extra_select %}
+    var extra_step_{{ forloop.counter }} = {{ query.0.keys | selection_step:instance }}
+    {% endfor %}
+ {% endif %}
     console.log(steps)
             function show() {
          const table = document.getElementsByTagName('table')[0]
@@ -592,7 +649,35 @@ form:hover:not(#empty) {
                         svg_image.setAttribute('onclick', `CreateProperty()`)
                         d.after(svg_image)
                     }
+            {% if extra_select %}
+                {% for instance in extra_select %}
+                else if (step === extra_step_{{ forloop.counter }}) {
+                    var select_element = document.createElement('select');
+                        select_element.style = 'align-self: center; width: 150px; height: 20px'
 
+                        select_element.className = el + 'textfield' + ' extra_property_select_{{ forloop.counter }}'
+
+                        {% dict_get extra_query instance as dict_get_query %}
+                        {% for i in dict_get_query %}
+
+                        var option = document.createElement("option");
+                        option.value = '{{i.id}}';
+                        option.text = '{{i.name}}';
+                        extra_discard_{{ forloop.parentloop.counter }} = e.textContent
+                        if (option.text === e.textContent){
+                            option.selected = true}
+                        select_element.appendChild(option);
+
+                        {% endfor %}
+                        e.parentNode.replaceChild(select_element, e);
+                        var extra_svg_image_{{ forloop.counter }} = svg_image.cloneNode(true)
+
+                        extra_svg_image_{{ forloop.counter }}.id = el + 'extra_add_svg_{{ forloop.counter }}'
+                        extra_svg_image_{{ forloop.counter }}.setAttribute('onclick', `ExtraCreate_{{ forloop.counter }}()`)
+                        select_element.after(extra_svg_image_{{ forloop.counter }})
+            }
+                {% endfor %}
+            {% endif %}
 
                 else {
                     var d = document.createElement('input');
@@ -607,6 +692,79 @@ form:hover:not(#empty) {
                 }
             }
 
+    {% if extra_select %}
+    {% for instance in extra_select %}
+            function ExtraCreate_{{ forloop.counter }}(){
+                // Get the modal
+                var modal = document.getElementById("extra_myModal_{{ forloop.counter }}");
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementById("extra_close_property_{{ forloop.counter }}");
+
+                // When the user clicks the button, open the modal
+                  modal.style.display = "block";
+
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                  modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                  if (event.target == modal) {
+                    modal.style.display = "none";
+                  }
+                }
+            }
+
+            function Extra_Add_{{ forloop.counter }}(){
+                {% dict_get extra_query_keys instance as dict_get_query %}
+                {% for field in dict_get_query %}
+                    let {{ field }} = document.getElementById('extra_{{ forloop.parentloop.counter }}_{{ field }}')
+                {% endfor %}
+                {# TODO поля могут быть не текст филд а селектион #}
+                {#let name = document.getElementById('property_name')#}
+                {#let u_m = document.getElementById('u_m')#}
+                {#let description = document.getElementById('description')#}
+
+                var dict = {
+                    {% for field in dict_get_query %}
+                        {% if field != 'id' %}
+                    '{{ field }}': {{ field }}.value,
+                        {% endif %}
+                    {#'u_m': u_m.value,#}
+                    {#'description': description.value#}
+                    {% endfor %}
+                }
+
+
+                var xhr = new XMLHttpRequest();
+                {% dict_get extra_url instance as extra_url_instance %}
+                xhr.open("POST", '../{{ extra_url_instance }}/', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'json';
+                xhr.onload  = function() {
+                    var jsonResponse = xhr.response;
+                    var extra_property_select_{{ forloop.counter }} = document.getElementsByClassName('extra_property_select_{{ forloop.counter }}')[0]
+                    var option = document.createElement("option");
+                    option.value = jsonResponse['id']
+                    option.text = name.value
+                    option.selected = true
+                    extra_property_select_{{ forloop.counter }}.appendChild(option)
+                }
+                var modal = document.getElementById("extra_myModal_{{ forloop.counter }}");
+                modal.style.display = "none"
+                xhr.send(JSON.stringify(dict));
+
+
+
+
+                console.log(123)
+
+    }
+    {% endfor %}
+    {% endif %}
 
             function CreateProperty(){
                 // Get the modal
@@ -701,6 +859,13 @@ form:hover:not(#empty) {
                     if (step === selection_step){
                         e.textContent = upper_discard
                     }
+                    {% if extra_select %}
+                    {% for instance in extra_select %}
+                    if (step === extra_step_{{ forloop.counter }}) {
+                        e.textContent = extra_discard_{{ forloop.counter }}
+                    }
+                    {% endfor %}
+                    {% endif %}
                     // TODO доделать href
                     d.parentNode.replaceChild(e, d);
                 }
@@ -709,6 +874,12 @@ form:hover:not(#empty) {
                     {#var add_svg_1 = document.getElementById(el + 'add_svg_1')#}
 
                     add_svg.remove()
+                {% endif %}
+                {% if extra_select != None %}
+                    {% for inst in extra_select %}
+                        var extra_add_svg_{{ forloop.counter }} = document.getElementById(el + 'extra_add_svg_{{ forloop.counter }}')
+                        extra_add_svg_{{ forloop.counter }}.remove()
+                    {% endfor %}
                 {% endif %}
                     {#add_svg_1.remove()#}
                     ChangeButtonReturn(el);
@@ -723,14 +894,7 @@ form:hover:not(#empty) {
                     dict['id'] = el
                     {% for i in query.0|dict_id_pop %}
                          dict['{{i}}'] = element[{{ forloop.counter0 }}].value
-                    {#const dict = {'id': el,#}
-                    {#    cabinet: element[0].options[element[0].selectedIndex].text,#}
-                    {#    department_id: element[0].value,#}
-                    {#    inv_num: element[1].value,#}
-                    {#    property_id: element[2].value,#}
-                    {#    property_name: element[2].options[element[2].selectedIndex].text,#}
-                    {#    amount: element[3].value,#}
-                    {#    description: element[4].value#}
+
 
 
                     {% endfor %}
@@ -749,6 +913,14 @@ form:hover:not(#empty) {
                     if (step === selection_step ) {
                         e.textContent = d.options[d.selectedIndex].text
                     }
+                    {% if extra_select %}
+                    {% for instance in extra_select %}
+                    if (step === extra_step_{{ forloop.counter }}) {
+                        e.textContent = d.options[d.selectedIndex].text
+                    }
+                    {% endfor %}
+                    {% endif %}
+
                     {#if (step === 0) {#}
                     {#    e.textContent = d.options[d.selectedIndex].text#}
 
@@ -760,6 +932,12 @@ form:hover:not(#empty) {
                     {#var add_svg_1 = document.getElementById(el + 'add_svg_1')#}
 
                     add_svg.remove()
+                {% endif %}
+                {% if extra_select != None %}
+                    {% for inst in extra_select %}
+                        var extra_add_svg_{{ forloop.counter }} = document.getElementById(el + 'extra_add_svg_{{ forloop.counter }}')
+                        extra_add_svg_{{ forloop.counter }}.remove()
+                    {% endfor %}
                 {% endif %}
                     {#add_svg_1.remove()#}
                     ChangeButtonReturn(el);
@@ -864,7 +1042,7 @@ form:hover:not(#empty) {
 
 
         </script>
-
+    {{ extra_select }}
     <div id="createform" >
     <form action = "javascript:void(0)" id = 'current_form' style="background-color: white; box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" >
     {% for i in query.0.keys %}
@@ -873,11 +1051,22 @@ form:hover:not(#empty) {
         {{ model | verbose_name:i }}<br>
         <select id="current_{{ i }}" name="current_{{ i }}" style="width: 177px">
         {% for instance in upper_query %}
-            {% if instance.name == None%}
+            {% if instance.FIO != None%} {# TODO сделать нормально через tags #}
             <option value="{{instance.id}}">{{instance.FIO}}</option>
+            {% elif instance.invent_num != None%}
+            <option value="{{instance.id}}">{{instance.invent_num}}</option>
             {% else %}
             <option value="{{instance.id}}">{{instance.name}}</option>
             {% endif %}
+        {% endfor %}
+        </select>
+        </div>
+    {% elif i in extra_select %}
+        {{ model | verbose_name:i }}<br>
+        <select id="current_{{ i }}" name="current_{{ i }}" style="width: 177px">
+        {% dict_get extra_query i as dict_get_query %}
+        {% for query in dict_get_query %}
+            <option value="{{query.id}}">{{query.name}}</option>
         {% endfor %}
         </select>
         </div>
@@ -887,29 +1076,7 @@ form:hover:not(#empty) {
     </div>
     {% endif %}
     {% endfor %}
-{#        <div>#}
-{#    <label for="cabinet">Кабинет</label><br>#}
-{#    <input name="cabinet" id="cabinet"/>#}
-{#  </div>#}
-{#  <div>#}
-{#      <label for="inv_num">Инв номер</label><br>#}
-{#      <input name="inv_num" id="inv_num"/>#}
-{#  </div>#}
-{#    Имущество<br>#}
-{#    <select name="property" style="width: 177px">#}
-{#        <option onclick="CreateProperty()">Добавить Холдинг...</option>#}
-{#        {% for property in properties %}#}
-{#        <option value="{{property.id}}">{{property.name}}</option>#}
-{#        {% endfor %}#}
-{#    </select>#}
-{#    <div>#}
-{#      <label for="amount">Кол-во</label><br>#}
-{#      <input name="amount" id="amount" />#}
-{#  </div>#}
-{#    <div>#}
-{#      <label for="description">Описание</label><br>#}
-{#      <input name="description" id="description" />#}
-{#  </div>#}
+
   <div>
       <br>
     <button onclick = "CreateObj()" style="padding: 3%" type = 'submit' class="button-6">Добавить организацию</button>

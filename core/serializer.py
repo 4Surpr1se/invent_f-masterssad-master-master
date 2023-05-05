@@ -1,6 +1,10 @@
-from rest_framework import serializers
+import datetime
+import re
 
-from core.models import Organization, Holding, Department, Property, Mol, InventoryList
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+
+from core.models import Organization, Holding, Department, Property, Mol, InventoryList, Operation, OperationType
 
 
 class ListUpdateSerializer(serializers.ListSerializer):
@@ -15,11 +19,11 @@ class ListUpdateSerializer(serializers.ListSerializer):
             obj[0].save()
         return instance
 
+
 # ==================================================================================== #
 
 
 class HoldingCreateUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Holding
         fields = '__all__'
@@ -27,7 +31,6 @@ class HoldingCreateUpdateSerializer(serializers.ModelSerializer):
 
 
 class HoldingSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Holding
         fields = ['id', 'name', 'address']
@@ -37,7 +40,6 @@ class HoldingSerializer(serializers.ModelSerializer):
 
 
 class OrganizationCreateUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Organization
         fields = '__all__'
@@ -45,7 +47,6 @@ class OrganizationCreateUpdateSerializer(serializers.ModelSerializer):
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
-
     holding = HoldingSerializer(read_only=True)
 
     class Meta:
@@ -57,7 +58,6 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
 
 class DepartmentCreateUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Department
         fields = '__all__'
@@ -76,7 +76,6 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class MolCreateUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Mol
         fields = '__all__'
@@ -98,14 +97,33 @@ class MolWithNameSerializer(serializers.ModelSerializer):
         model = Mol
         fields = ['id', 'name', 'phone_num', 'post', 'department']
 
+
 # ==================================================================================== #
 
 class InventoryListCreateUpdateSerializer(serializers.ModelSerializer):
+    account_date = serializers.CharField(allow_blank=True)
 
     class Meta:
         model = InventoryList
         fields = '__all__'
         list_serializer_class = ListUpdateSerializer
+
+    def validate(self, attrs):
+        if attrs.get('account_date') in ['', None, 'None']:
+            attrs['account_date'] = None
+            return super().validate(attrs)
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z', attrs.get('account_date')) is None:
+            raise ValidationError({'account_date': "дата указана в неверном формате"}, code=400)
+        else:
+            return super().validate(attrs)
+
+    # @staticmethod # TODO понять почему не работает
+    # def validate_account_date(value):
+    #     print(2313213123213211)
+    #     if value == '':
+    #         value = None
+    #
+    #     return value
 
 
 class InventoryListSerializer(serializers.ModelSerializer):
@@ -120,10 +138,17 @@ class InventoryListSerializer(serializers.ModelSerializer):
         fields = ['id', 'invent_num', 'serial_num', 'amount', 'account_date', 'property', 'description', 'mol']
 
 
+class InventoryListWithNameSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='invent_num')
+
+    class Meta:
+        model = InventoryList
+        fields = ['id', 'name', 'serial_num', 'amount', 'account_date', 'property', 'description', 'mol']
+
+
 # ==================================================================================== #
 
 class PropertyCreateUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Property
         fields = '__all__'
@@ -131,7 +156,6 @@ class PropertyCreateUpdateSerializer(serializers.ModelSerializer):
 
 
 class PropertySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Property
         fields = ['id', 'name', 'u_m', 'description']
@@ -139,9 +163,34 @@ class PropertySerializer(serializers.ModelSerializer):
 
 # ==================================================================================== #
 
+class OperationCreateUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Operation
+        fields = '__all__'
+        list_serializer_class = ListUpdateSerializer
+
+
+class TypeRepr(serializers.Field):
+    def to_representation(self, value: Operation):
+        return value.get_type_display()
+
+
+class OperationSerializer(serializers.ModelSerializer):
+    inventory_list = InventoryListWithNameSerializer(read_only=True)
+    fromm = DepartmentSerializer(read_only=True)
+    to = DepartmentSerializer(read_only=True)
+
+    type = TypeRepr(source='*')
+
+    class Meta:
+        model = Operation
+        fields = ['id', 'inventory_list', 'data_time', 'waybill', 'fromm', 'to', 'type']
+
+
+# ==================================================================================== #
+
 
 class DepartmentCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Department
         fields = '__all__'
@@ -152,8 +201,6 @@ class OrganizationDeleteSerializer(serializers.ModelSerializer):
 
 
 class HoldingCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Holding
         fields = '__all__'
-

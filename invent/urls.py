@@ -22,7 +22,7 @@ from core import views
 from core.views import OrganizationRetrieve, OrganizationList, DepartmentRetrieve, DepartmentList, \
     DepartmentCreate, HoldingRetrieve, HoldingList, HoldingCreate, OrganizationDelete, OrganizationUpdate, Inner, \
     InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, DepartmentModelViewSet, HoldingModelViewSet, \
-    MolModelViewSet, InventoryListModelViewSet, PropertyModelViewSet
+    MolModelViewSet, InventoryListModelViewSet, PropertyModelViewSet, OperationModelViewSet
 
 router = DefaultRouter()
 router.register('org', OrganizationModelViewSet, basename='org')
@@ -41,6 +41,9 @@ router.register('inv', InventoryListModelViewSet, basename='inv')
 
 router_property = DefaultRouter()
 router.register('prop', PropertyModelViewSet, basename='prop')
+
+router_operation = DefaultRouter()
+router.register('oper', OperationModelViewSet, basename='oper')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -65,6 +68,6 @@ urlpatterns = [
     path('', include(router_mol.urls)),
     path('', include(router_inventorylist.urls)),
     path('', include(router_property.urls)),
-
+    path('', include(router_operation.urls)),
 ]
 
