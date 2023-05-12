@@ -28,10 +28,11 @@ def verbose_name(the_object, the_field):
 @register.filter
 def dict_id_pop(the_dict: dict):
     try:
-        the_dict.pop('id')
-        return the_dict.keys()
-    except AttributeError:
-        pass
+        return_list = list(the_dict)
+        return_list.remove('id')
+        return return_list
+    except ValueError:
+        return the_dict
 
 @register.filter
 def selection_step(the_list, upper_name: str):
@@ -52,4 +53,10 @@ def dict_get(the_dict, the_key):
 def get_query_keys(the_serializer):
     print(the_serializer)
     return [{'keys': the_serializer}]
+@register.filter
+def pdf_name(file: str):
+    try:
+        return file.split('/media/uploads/')[1]
+    except AttributeError:
+        return ''
 

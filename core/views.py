@@ -259,8 +259,6 @@ class OperationModelViewSet(ModelViewSetMixin):
 
     def template_dict(self, request, *args, **kwargs):
 
-
-        print(Operation.objects.first().type)
         return_dict = super().template_dict(request, *args, **kwargs)
         return_dict["extra_select"] = ["fromm", "to",
                                        "type"]  # TODO создать класс который через __init__ будет это распределять по словарям

@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <style>
         .gender {
   display: none;
@@ -340,11 +341,34 @@ form:hover:not(#empty) {
   background-size: var(--s) var(--s);
         }
 
+.alert {
+  position: fixed;
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  right: 10px;
+  display: none;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+  color: black;
+}
 
 
 
 
     </style>
+
 {% if query.0.keys is None %}
     {% get_query_keys serializer as query %}
 
@@ -352,7 +376,10 @@ form:hover:not(#empty) {
     <body>
         <meta charset="UTF-8">
         <title>title</title>
-
+    <div class="alert" id="alert_button">
+  <span class="closebtn" id="alert_span" onclick="this.parentElement.style.display='none';">&times;</span>
+  <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+</div>
     <div style="position: relative;
           right: 40px;">
     <nav>
@@ -455,7 +482,6 @@ form:hover:not(#empty) {
       </ul>
     </nav>
     </div>
-        {{ query }}
     <form action="" id ="empty">
    <p style="height: 30px"><input type="search" name="search" id="searchfield" placeholder="Поиск по названию">
    <input type="submit" style="float: left" value="Найти">
@@ -564,6 +590,9 @@ form:hover:not(#empty) {
             <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
                  {% elif k == dep_field.1 %}
             <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
+                 {% elif k == "pdf_file" %}
+            <th><a style="color: black" class = "btn {{ q.id }}" href = '{{v}}'>{{ v|pdf_name }}</a></th>
+
                 {% else %}
             <th><a style="color: black" class = "{{ q.id }}"><span>{{ v }}</span></a></th>
                 {% endif %}
@@ -572,13 +601,11 @@ form:hover:not(#empty) {
             <th style='display:none; z-index: 1; text-align: center' class="dip"><input type="button" onclick="editable_field(this, '{{q.id}}')" value="Изменить"></th>
             </tr>
         {% endfor %}
-    {{ query.0|length}}
         </table>
-    {{query.0.keys | selection_step:btn_fields.upper_name}}
         </div>
         </form>
-        {{ query.0|length }} {{ query.0.keys | selection_step:btn_fields.upper_name }}
-    <script>
+
+ <script>{#  TODO НЕ РАБОТАЕТ!!!#}
     var submit = []
     var steps = {{ query.0|length }} - 1 {# TODO при пустом квери упадет, поэтому нужно не прогружатть таблицу в таком случае#}
     var selection_step = {{ query.0.keys | selection_step:btn_fields.upper_name }}
@@ -587,7 +614,49 @@ form:hover:not(#empty) {
     var extra_step_{{ forloop.counter }} = {{ query.0.keys | selection_step:instance }}
     {% endfor %}
  {% endif %}
-    console.log(steps)
+    window.onload = function() {
+    var success = sessionStorage.getItem("success");
+    console.log(success)
+    var error = sessionStorage.getItem("error");
+    var error_response = sessionStorage.getItem("error_response")
+    var show_reponse = sessionStorage.getItem("show_reponse");
+    var response = sessionStorage.getItem("reponse")
+
+
+    if (success === "true") {
+        sessionStorage.setItem("success", "false");
+        sendNotification("success", "dsa");
+    }
+
+    if (error === "true") {
+        sessionStorage.setItem("error", "false");
+        sendNotification('error', 'New error alert!');
+    }
+
+    if (show_reponse === "true") {
+        sessionStorage.setItem("show_reponse", "false");
+        sendNotification('info', response);
+    }
+}
+
+function sendNotification(type, text) {
+    var alert_div = document.getElementById("alert_button")
+    var alert_span = document.getElementById("alert_span")
+
+    if (type === "success") {
+        alert_div.style.display = "block"
+        alert_div.style.backgroundColor = "#00cc66"
+    }
+
+    else if (type === "error") {
+        alert_div.style.display = "block"
+    }
+
+    alert_div.textContent = text
+    alert_div.appendChild(alert_span)
+}
+
+
             function show() {
          const table = document.getElementsByTagName('table')[0]
                 table.style.width = '1200px'
@@ -821,7 +890,19 @@ form:hover:not(#empty) {
                     option.value = jsonResponse['id']
                     option.text = name.value
                     option.selected = true
-                    property_select.appendChild(option)
+                    if ([200, 201].includes(xhr.status)) {
+                        property_select.appendChild(option)
+                    }
+                    else {
+                        var alert_div = document.getElementById("alert_button")
+                        var alert_span = document.getElementById("alert_span")
+                        alert_div.style.display = "block"
+                        alert_div.style.backgroundColor = "#f44336"
+                        alert_div.textContent = "Не удалось создать {{ btn_fields.upper_name }}"
+                        alert_div.appendChild(alert_span)
+
+                    }
+
                 }
                 var modal = document.getElementById("myModal");
                 modal.style.display = "none"
@@ -887,21 +968,26 @@ form:hover:not(#empty) {
 
 
             function SubmitChanges(el){
-                // var dict = new Map()1
-                    const dict = {}
+                const dict = {}
+                    var is_required_tocreate = true
                     var element = document.getElementsByClassName(el+'textfield');
-{#                    {% with list=query|dict_id_pop %}#}
-                    dict['id'] = el
-                    {% for i in query.0|dict_id_pop %}
-                         dict['{{i}}'] = element[{{ forloop.counter0 }}].value
 
+                    for (const elem of submit){
+                        if (elem['id'] === el){
+                            {% for l in query.0.keys|dict_id_pop %}
+                                elem['{{l}}'] = element[{{ forloop.counter0 }}].value
+                            {% endfor %}
+                            is_required_tocreate = false
+                        }
+                    }
 
-
-                    {% endfor %}
-{#                    {% endwith %}#}
-
-                    submit.push(dict)
-                    // window.alert(submit[0].get('name'))
+                    if (is_required_tocreate === true) {
+                        dict['id'] = el
+                        {% for i in query.0.keys|dict_id_pop %}
+                            dict['{{i}}'] = element[{{ forloop.counter0 }}].value
+                        {% endfor %}
+                        submit.push(dict)
+                    }
 
                 for (let step = 0; step < steps; step++){
                     var d = document.getElementsByClassName(el+'textfield')[0];
@@ -946,56 +1032,74 @@ form:hover:not(#empty) {
             function PageReload() {
                 // if (flag)
                 window.location.href = '.'
+
     }
 
                     // document.write(submit.get('name'), submit.get('address'), submit.get('holding'));
 
-            function CreateObj(){
+            function CreateObj() {
                 {% for field in query.0.keys %}
                     let {{ field }} = document.getElementById('current_{{ field }}')
                 {% endfor %}
                 {# TODO поля могут быть не текст филд а селектион #}
-                {#let name = document.getElementById('property_name')#}
-                {#let u_m = document.getElementById('u_m')#}
-                {#let description = document.getElementById('description')#}
+
 
                 var dict = {
                     {% for field in query.0.keys %}
                         {% if field != 'id' %}
-                    '{{ field }}': {{ field }}.value,
+                            '{{ field }}': {{ field }}.value,
                         {% endif %}
-                    {#'u_m': u_m.value,#}
-                    {#'description': description.value#}
                     {% endfor %}
                 }
+                console.log(dict)
+
+                let create_response = fetch('', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(dict)
+                }).then(response => post_error_handler(response))
+
+            }
 
 
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", '', true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.responseType = 'json';
-                xhr.onload = PageReload
-                xhr.send(JSON.stringify(dict));}
+             function post_error_handler(response) {
 
+              if ([200, 201].includes(response.status)) {
+                    sessionStorage.setItem("success", "true");
+                    PageReload()
+              }
+              else if (response.status === 400) {
+                    sessionStorage.setItem("error", "true");
 
+                    sessionStorage.setItem("error_response", response.json().toString()) {# TODO доделать если есть необходимость#}
+                    PageReload()
+                            }
+              else {
+                  sessionStorage.setItem("show_response", "true")
+                  sessionStorage.setItem("response", response.statusText)
+                  PageReload()
+      }
 
-            function SaveChanges(){
+            }
+            if (sessionStorage.getItem("error") === "true") {
+                sessionStorage.setItem("success", "false");
+            }
+
+             function SaveChanges(){
                 // window.alert(submit)
-                console.log(submit)
+                {#console.log(submit)#}
                 let update_response = fetch('./update/', {
                 method: 'PUT',
                 headers: {
                 'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(submit)
-                });
+                }).then(response => post_error_handler(response))
 
-                update_response.finally(PageReload)
+                console.log(update_response.status)
 
-                {#var xhr = new XMLHttpRequest();#}
-                {#xhr.open("POST", './update/', true);#}
-                {#xhr.setRequestHeader('Content-Type', 'application/json');#}
-                {#xhr.send(JSON.stringify(submit));#}
                 const elements = document.querySelectorAll('input[type=checkbox]:checked')
 
                 var xhr1_list = []
@@ -1009,23 +1113,10 @@ form:hover:not(#empty) {
                 headers: {
                 'Content-Type': 'application/json;charset=utf-8'},
                 body: JSON.stringify({'id': xhr1_list})
-                })
+                }).then(response => post_error_handler(response))
 
 
-                {#var xhr1_list = []#}
-                {##}
-                {#elements.forEach(element =>{#}
-                {#    xhr1_list.push(element.id)#}
-                {#})#}
-
-                {#xhr.addEventListener("loadend", PageReload)#}
-
-                    {#var xhr1 = new XMLHttpRequest();#}
-                    {#xhr1.open("POST", './delete/', true);#}
-                    {#xhr1.setRequestHeader('Content-Type', 'application/json');#}
-                    {#xhr1.send(JSON.stringify(xhr1_list));#}
-
-                //    TODO Опасное место может набнутся
+                //    TODO Здесь тоже хандлить ошибки
                 }
 
             {#const form = document.getElementById('current_form')#}
@@ -1045,11 +1136,12 @@ form:hover:not(#empty) {
     {{ extra_select }}
     <div id="createform" >
     <form action = "javascript:void(0)" id = 'current_form' style="background-color: white; box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" >
-    {% for i in query.0.keys %}
+    {% for i in query.0.keys|dict_id_pop %}
   <div>
     {% if i == btn_fields.upper_name %}
         {{ model | verbose_name:i }}<br>
-        <select id="current_{{ i }}" name="current_{{ i }}" style="width: 177px">
+        <input list="listsds" id="current_{{ i }}" name="current_{{ i }}">
+        <datalist id="listsds" name="current_{{ i }}" style="width: 177px">
         {% for instance in upper_query %}
             {% if instance.FIO != None%} {# TODO сделать нормально через tags #}
             <option value="{{instance.id}}">{{instance.FIO}}</option>
@@ -1059,7 +1151,7 @@ form:hover:not(#empty) {
             <option value="{{instance.id}}">{{instance.name}}</option>
             {% endif %}
         {% endfor %}
-        </select>
+        </datalist>
         </div>
     {% elif i in extra_select %}
         {{ model | verbose_name:i }}<br>

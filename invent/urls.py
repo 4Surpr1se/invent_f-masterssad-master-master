@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
@@ -23,6 +24,7 @@ from core.views import OrganizationRetrieve, OrganizationList, DepartmentRetriev
     DepartmentCreate, HoldingRetrieve, HoldingList, HoldingCreate, OrganizationDelete, OrganizationUpdate, Inner, \
     InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, DepartmentModelViewSet, HoldingModelViewSet, \
     MolModelViewSet, InventoryListModelViewSet, PropertyModelViewSet, OperationModelViewSet
+from invent import settings
 
 router = DefaultRouter()
 router.register('org', OrganizationModelViewSet, basename='org')
@@ -70,4 +72,7 @@ urlpatterns = [
     path('', include(router_property.urls)),
     path('', include(router_operation.urls)),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

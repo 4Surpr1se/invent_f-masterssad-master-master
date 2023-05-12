@@ -87,4 +87,5 @@ class Operation(models.Model):
     to = models.ForeignKey(Department, verbose_name='В отдел', on_delete=models.PROTECT)
     type = models.PositiveSmallIntegerField(verbose_name='Тип операции', choices=OperationType.choices,
                                             default=OperationType.displacement)
+    pdf_file = models.FileField(upload_to="uploads/", default='', blank=True, null=True)  # uploads/%Y/%m/%d/ = MEDIA_ROOT/uploads/2015/01/30
     is_deleted = models.BooleanField(verbose_name='Удален', default=False)

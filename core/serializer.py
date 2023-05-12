@@ -164,10 +164,24 @@ class PropertySerializer(serializers.ModelSerializer):
 # ==================================================================================== #
 
 class OperationCreateUpdateSerializer(serializers.ModelSerializer):
+    data_time = serializers.CharField(allow_blank=True)
+    pdf_file = serializers.FileField(allow_null=True)
+
     class Meta:
         model = Operation
         fields = '__all__'
         list_serializer_class = ListUpdateSerializer
+
+    def validate(self, attrs):
+        if attrs.get('pdf_file') in ['', None, 'None']:
+            attrs['pdf_file'] = None
+        if attrs.get('data_time') in ['', None, 'None']:
+            attrs['data_time'] = None
+            return super().validate(attrs)
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z', attrs.get('data_time')) is None:
+            raise ValidationError({'data_time': "дата указана в неверном формате"}, code=400)
+        else:
+            return super().validate(attrs)
 
 
 class TypeRepr(serializers.Field):
@@ -184,7 +198,7 @@ class OperationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Operation
-        fields = ['id', 'inventory_list', 'data_time', 'waybill', 'fromm', 'to', 'type']
+        fields = ['id', 'inventory_list', 'data_time', 'waybill', 'fromm', 'to', 'pdf_file', 'type']
 
 
 # ==================================================================================== #
