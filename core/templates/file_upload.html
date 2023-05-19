@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label for="inputi">
+<input type="file" id="inputi" name="inputi">
+</label>
+    <label for="texti">
+    <input type="text" id="texti" name="texti">
+</label>
+
+<button onclick="Create()">РАБОТАТЬ</button>
+<script>
+    function Create(){
+        let file = document.getElementById("inputi").files[0];
+        let text = document.getElementById("texti");
+let req = new XMLHttpRequest();
+let formData = new FormData();
+console.log(formData)
+        console.log(text.value)
+formData.append("file", file);
+formData.append("text", text.value);
+req.open("POST", './');
+req.send(formData)}
+</script>
+</body>
+</html>
