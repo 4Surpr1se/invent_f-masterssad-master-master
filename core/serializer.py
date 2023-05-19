@@ -162,15 +162,22 @@ class PropertySerializer(serializers.ModelSerializer):
 
 
 # ==================================================================================== #
+class OperationListSerializer(ListUpdateSerializer):
+
+
+    def update(self, instance, validated_data):
+        for obj in validated_data:
+            del obj['pdf_file']
+        return super().update(instance, validated_data)
+
 
 class OperationCreateUpdateSerializer(serializers.ModelSerializer):
     data_time = serializers.CharField(allow_blank=True)
-    pdf_file = serializers.FileField(allow_null=True)
 
     class Meta:
         model = Operation
-        fields = '__all__'
-        list_serializer_class = ListUpdateSerializer
+        exclude = ('id', 'pdf_file')
+        list_serializer_class = OperationListSerializer
 
     def validate(self, attrs):
         if attrs.get('pdf_file') in ['', None, 'None']:
@@ -198,7 +205,7 @@ class OperationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Operation
-        fields = ['id', 'inventory_list', 'data_time', 'waybill', 'fromm', 'to', 'pdf_file', 'type']
+        fields = ['id', 'inventory_list', 'data_time', 'fromm', 'to', 'pdf_file', 'type']
 
 
 # ==================================================================================== #

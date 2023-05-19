@@ -57,6 +57,6 @@ def get_query_keys(the_serializer):
 def pdf_name(file: str):
     try:
         return file.split('/media/uploads/')[1]
-    except AttributeError:
+    except Exception:
         return ''
 

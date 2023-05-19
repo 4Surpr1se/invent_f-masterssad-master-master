@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-qm+0sh1k_9qtc_+0-z++wfbl+jb#m-2!!4x)#9&0dsvo$je1ps
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -88,6 +88,7 @@ DATABASES = {
         'PORT': '1433',
 
     }}
+
 
 
 # DATABASES = {

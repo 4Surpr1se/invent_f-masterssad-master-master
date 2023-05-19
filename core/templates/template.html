@@ -388,94 +388,122 @@ form:hover:not(#empty) {
           <a href="../lk/">Личный Кабинет</a>
         </li>
         <li>
+            {% if retrieve %}
+          <a href="../../hol/">Холдинги</a>
+            {% else %}
           <a href="../hol/">Холдинги</a>
-          <ul>
-            <li>
-              <a href="https://www.w3docs.com/quiz-start/html-basic">HTML Bacis</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/quiz-start/css-basic">CSS Bacis</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/quiz-start/javascript-basic">JavaScript Bacis</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/quiz-start/php-basic">PHP Bacis</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/quiz-start/es6-basic">ES6 Bacis</a>
-            </li>
-          </ul>
+            {% endif %}
+{#          <ul>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/quiz-start/html-basic">HTML Bacis</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/quiz-start/css-basic">CSS Bacis</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/quiz-start/javascript-basic">JavaScript Bacis</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/quiz-start/php-basic">PHP Bacis</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/quiz-start/es6-basic">ES6 Bacis</a>#}
+{#            </li>#}
+{#          </ul>#}
         </li>
         <li>
+            {% if retrieve %}
+          <a href="../../org/">Организации</a>
+            {% else %}
           <a href="../org/">Организации</a>
-          <ul>
-            <li>
-              <a href="https://www.w3docs.com/snippets/angularjs.html">Angular JS</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/snippets/apache.html">Apache</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/snippets/git.html">Git</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/snippets/linux.html">Linux</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/snippets/nodejs.html">Node.Js</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/snippets/symfony.html">Symfony</a>
-            </li>
-          </ul>
+            {% endif %}
+{#          <ul>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/snippets/angularjs.html">Angular JS</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/snippets/apache.html">Apache</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/snippets/git.html">Git</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/snippets/linux.html">Linux</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/snippets/nodejs.html">Node.Js</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/snippets/symfony.html">Symfony</a>#}
+{#            </li>#}
+{#          </ul>#}
         </li>
         <li>
+            {% if retrieve %}
+          <a href="../../dep/">Отделы</a>
+            {% else %}
           <a href="../dep/">Отделы</a>
-          <ul>
-            <li>
-              <a href="https://www.w3docs.com/tools/html-encoder/">HTML ENCODER/DECODER</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/css3-maker/border-radius">CSS MAKER</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/tools/password-generator">PASSWORD GENERATOR</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/tools/image-base64">Base 64</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/tools/code-diff/">CODE DIFF</a>
-            </li>
-          </ul>
+            {% endif %}
+{#          <ul>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/tools/html-encoder/">HTML ENCODER/DECODER</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/css3-maker/border-radius">CSS MAKER</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/tools/password-generator">PASSWORD GENERATOR</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/tools/image-base64">Base 64</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/tools/code-diff/">CODE DIFF</a>#}
+{#            </li>#}
+{#          </ul>#}
         </li>
         <li>
+            {% if retrieve %}
+          <a href="../../mol">МОЛЫ</a>
+            {% else %}
           <a href="../mol">МОЛЫ</a>
-          <ul>
-            <li>
-              <a href="https://www.w3docs.com/tools/string-revers">STRING REVERSE</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/tools/string-word-count">STRING WORD COUNT</a>
-            </li>
-            <li>
-              <a href="https://www.w3docs.com/tools/string-remove-empty-lines">EMPTY LINES REMOVER</a>
-            </li>
-          </ul>
+            {% endif %}
+{#          <ul>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/tools/string-revers">STRING REVERSE</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/tools/string-word-count">STRING WORD COUNT</a>#}
+{#            </li>#}
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/tools/string-remove-empty-lines">EMPTY LINES REMOVER</a>#}
+{#            </li>#}
+{#          </ul>#}
         </li>
         <li>
+            {% if retrieve %}
+          <a href="../../inv">Инвентарный Список</a>
+            {% else %}
           <a href="../inv">Инвентарный Список</a>
+            {% endif %}
           <ul>
             <li>
-              <a href="../prop">Имущества</a>
+            {% if retrieve %}
+          <a href="../../prop">Имущества</a>
+            {% else %}
+          <a href="../prop">Имущества</a>
+            {% endif %}
             </li>
             <li>
+            {% if retrieve %}
+              <a href="../../oper">Операции</a>
+            {% else %}
               <a href="../oper">Операции</a>
+            {% endif %}
             </li>
-            <li>
-              <a href="https://www.w3docs.com/tools/string-remove-empty-lines">EMPTY LINES REMOVER</a>
-            </li>
+{#            <li>#}
+{#              <a href="https://www.w3docs.com/tools/string-remove-empty-lines">EMPTY LINES REMOVER</a>#}
+{#            </li>#}
           </ul>
         </li>
 
@@ -592,7 +620,6 @@ form:hover:not(#empty) {
             <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
                  {% elif k == "pdf_file" %}
             <th><a style="color: black" class = "btn {{ q.id }}" href = '{{v}}'>{{ v|pdf_name }}</a></th>
-
                 {% else %}
             <th><a style="color: black" class = "{{ q.id }}"><span>{{ v }}</span></a></th>
                 {% endif %}
@@ -614,9 +641,12 @@ form:hover:not(#empty) {
     var extra_step_{{ forloop.counter }} = {{ query.0.keys | selection_step:instance }}
     {% endfor %}
  {% endif %}
+    {% if pdf_file %}
+    var pdf_step = {{ query.0.keys | selection_step:'pdf_file' }}
+    {% endif %}
     window.onload = function() {
     var success = sessionStorage.getItem("success");
-    console.log(success)
+
     var error = sessionStorage.getItem("error");
     var error_response = sessionStorage.getItem("error_response")
     var show_reponse = sessionStorage.getItem("show_reponse");
@@ -744,7 +774,29 @@ function sendNotification(type, text) {
                         extra_svg_image_{{ forloop.counter }}.id = el + 'extra_add_svg_{{ forloop.counter }}'
                         extra_svg_image_{{ forloop.counter }}.setAttribute('onclick', `ExtraCreate_{{ forloop.counter }}()`)
                         select_element.after(extra_svg_image_{{ forloop.counter }})
-            }
+                }
+            {% if pdf_file %}
+                else if (step === pdf_step){
+                    var d = document.createElement('input');
+                    var currently = document.createElement('a')
+                    var p_obj = document.createElement('p')
+
+
+                    currently.href = e.href
+                    d.type = 'file'
+                    d.innerHTML = e.innerHTML
+                    d.placeholder = e.textContent;
+                    d.className = el + 'textfield'
+                    p_obj.innerHTML = `Currently: <a target="_blank" href="${e.href}">${e.href.split('http://127.0.0.1:8000/media/uploads/')[1]}</a>
+                                       <span class="clearable-file-input">
+                                       <input type="checkbox" name="pdf_file-clear" id="pdf_file_clear_${el}">
+                                       <label for="pdf_file-clear_id">Clear</label></span><br>
+                                       Change:
+                                       <input type="file" style="font-size: x-small" name="pdf_file" id="id_pdf_file" class='${el + 'textfield'}'></p>`
+                    p_obj.style.fontSize = 'x-small'
+                    e.parentNode.replaceChild(p_obj, e);
+                }
+            {% endif %}
                 {% endfor %}
             {% endif %}
 
@@ -908,11 +960,6 @@ function sendNotification(type, text) {
                 modal.style.display = "none"
                 xhr.send(JSON.stringify(dict));
 
-
-
-
-                console.log(123)
-
     }
 
             function ChangeButtonReturn(el){
@@ -975,7 +1022,11 @@ function sendNotification(type, text) {
                     for (const elem of submit){
                         if (elem['id'] === el){
                             {% for l in query.0.keys|dict_id_pop %}
-                                elem['{{l}}'] = element[{{ forloop.counter0 }}].value
+                                {% if l != 'pdf_file' %}
+                                    elem['{{l}}'] = element[{{ forloop.counter0 }}].value
+                                {% else %}
+                                    elem['{{l}}'] = element[{{ forloop.counter0 }}].files[0]
+                                {% endif %}
                             {% endfor %}
                             is_required_tocreate = false
                         }
@@ -984,7 +1035,11 @@ function sendNotification(type, text) {
                     if (is_required_tocreate === true) {
                         dict['id'] = el
                         {% for i in query.0.keys|dict_id_pop %}
-                            dict['{{i}}'] = element[{{ forloop.counter0 }}].value
+                            {% if i != 'pdf_file' %}
+                                dict['{{i}}'] = element[{{ forloop.counter0 }}].value
+                            {% else %}
+                                dict['{{i}}'] = element[{{ forloop.counter0 }}].files[0]
+                            {% endif %}
                         {% endfor %}
                         submit.push(dict)
                     }
@@ -1031,8 +1086,9 @@ function sendNotification(type, text) {
 
             function PageReload() {
                 // if (flag)
-                window.location.href = '.'
-
+                {#window.location.href = '.'#}
+                location.reload()
+                return false
     }
 
                     // document.write(submit.get('name'), submit.get('address'), submit.get('holding'));
@@ -1042,25 +1098,50 @@ function sendNotification(type, text) {
                     let {{ field }} = document.getElementById('current_{{ field }}')
                 {% endfor %}
                 {# TODO поля могут быть не текст филд а селектион #}
-
-
+                {# TODO ЕСЛИ ВРЕМЯ ТО input type='time' or smth like that #}
+                {% if pdf_file %}
+                    let formData = new FormData();
+                    {% for field in query.0.keys %}
+                        {% if field != 'id' and field != 'pdf_file'%}
+                            formData.append('{{field}}', {{field}}.value)
+                        {% elif field == 'pdf_file' %}
+                            formData.append('{{field}}', {{field}}.files[0])
+                        {% endif %}
+                    {% endfor %}
+                            let file_response = new XMLHttpRequest();
+                    file_response.open("POST", './');
+                    file_response.onload = post_error_handler(file_response)
+                    file_response.send(formData)
+                    console.log(file_response.status)
+                {% else %}
                 var dict = {
                     {% for field in query.0.keys %}
-                        {% if field != 'id' %}
+                        {% if field != 'id' and field != 'pdf_file'%}
                             '{{ field }}': {{ field }}.value,
+                        {% elif field == 'pdf_file' %}
+                            '{{ field }}': {{ field }}, {# TODO нужно ли про pdf_file что либо? #}
                         {% endif %}
                     {% endfor %}
                 }
                 console.log(dict)
-
-                let create_response = fetch('', {
+                {% if retrieve %}
+                let create_response = fetch('../', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(dict)
                 }).then(response => post_error_handler(response))
-
+                {% else %}
+                let create_response = fetch('', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                },
+                body: JSON.stringify(dict)
+                }).then(response => post_error_handler(response))
+                {% endif %}
+                {% endif %}
             }
 
 
@@ -1081,15 +1162,55 @@ function sendNotification(type, text) {
                   sessionStorage.setItem("response", response.statusText)
                   PageReload()
       }
-
-            }
-            if (sessionStorage.getItem("error") === "true") {
+              if (sessionStorage.getItem("error") === "true") {
                 sessionStorage.setItem("success", "false");
             }
+            }
+
 
              function SaveChanges(){
                 // window.alert(submit)
                 {#console.log(submit)#}
+                {% if pdf_file %}
+
+                 let update_no_file_response = fetch('./update/', {
+                    method: 'PUT',
+                    headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(submit) {# todo удалить pdf_file inst отсюдова #}
+                    }).then((response) => {
+                    console.log(response.status)
+                    if (response.status === 200) {
+                    let file_update_response = new XMLHttpRequest();
+                    let file_formData = new FormData();
+                    var sub_dict = []
+
+                    for (const elem of submit){
+                        var id = elem['id']
+                        if (document.getElementById('pdf_file_clear_' + id).checked !== true){
+                            var file = elem['pdf_file']
+                            }
+                        else {
+                            file = None
+                        }
+                        {#sub_dict.push({id : file})#}
+                        file_formData.append(id, file)
+                    }
+
+                    file_update_response.open("POST", './file_update/');
+                    file_update_response.onload = function () {
+                        if (file_update_response.status === 200 && response.status === 200)
+                            post_error_handler(200)
+                        else
+                            post_error_handler(400)
+                    }
+                    file_update_response.send(file_formData)}
+                    })
+                {% else %}
+
+
+
                 let update_response = fetch('./update/', {
                 method: 'PUT',
                 headers: {
@@ -1105,7 +1226,8 @@ function sendNotification(type, text) {
                 var xhr1_list = []
 
                 elements.forEach(element =>{
-                    xhr1_list.push(element.id)
+                    if (element.class === 'dip') {
+                        xhr1_list.push(element.id})
                 })
 
                 let delete_reponse = fetch('./delete/', {
@@ -1117,7 +1239,9 @@ function sendNotification(type, text) {
 
 
                 //    TODO Здесь тоже хандлить ошибки
+                 {% endif %}
                 }
+
 
             {#const form = document.getElementById('current_form')#}
             {#form.addEventListener("submit", CreateObj())#}
@@ -1133,7 +1257,6 @@ function sendNotification(type, text) {
 
 
         </script>
-    {{ extra_select }}
     <div id="createform" >
     <form action = "javascript:void(0)" id = 'current_form' style="background-color: white; box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" >
     {% for i in query.0.keys|dict_id_pop %}
@@ -1162,6 +1285,9 @@ function sendNotification(type, text) {
         {% endfor %}
         </select>
         </div>
+    {% elif i == 'pdf_file' %}
+    <label for="current_{{ i }}">{{ model | verbose_name:i }}</label><br>
+    <input type='file' name="current_{{ i }}" id="current_{{ i }}"/>
     {% else %}
     <label for="current_{{ i }}">{{ model | verbose_name:i }}</label><br>
     <input name="current_{{ i }}" id="current_{{ i }}"/>

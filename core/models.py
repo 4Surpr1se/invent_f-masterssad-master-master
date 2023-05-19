@@ -82,10 +82,9 @@ class OperationType(models.IntegerChoices):
 class Operation(models.Model):
     inventory_list = models.ForeignKey(InventoryList, verbose_name='Инвертарная запись', on_delete=models.PROTECT)
     data_time = models.DateTimeField(verbose_name='аккаунт_дата', null=True)
-    waybill = models.CharField(verbose_name='Накладная', max_length=255)
     fromm = models.ForeignKey(Department, verbose_name='Из отдела', related_name='fromm', on_delete=models.PROTECT)
     to = models.ForeignKey(Department, verbose_name='В отдел', on_delete=models.PROTECT)
     type = models.PositiveSmallIntegerField(verbose_name='Тип операции', choices=OperationType.choices,
                                             default=OperationType.displacement)
-    pdf_file = models.FileField(upload_to="uploads/", default='', blank=True, null=True)  # uploads/%Y/%m/%d/ = MEDIA_ROOT/uploads/2015/01/30
+    pdf_file = models.FileField(verbose_name='Накладная', upload_to="uploads/", default='', blank=True, null=True)  # uploads/%Y/%m/%d/ = MEDIA_ROOT/uploads/2015/01/30
     is_deleted = models.BooleanField(verbose_name='Удален', default=False)

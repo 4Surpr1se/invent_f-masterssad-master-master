@@ -23,7 +23,7 @@ from core import views
 from core.views import OrganizationRetrieve, OrganizationList, DepartmentRetrieve, DepartmentList, \
     DepartmentCreate, HoldingRetrieve, HoldingList, HoldingCreate, OrganizationDelete, OrganizationUpdate, Inner, \
     InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, DepartmentModelViewSet, HoldingModelViewSet, \
-    MolModelViewSet, InventoryListModelViewSet, PropertyModelViewSet, OperationModelViewSet
+    MolModelViewSet, InventoryListModelViewSet, PropertyModelViewSet, OperationModelViewSet, FileUpload
 from invent import settings
 
 router = DefaultRouter()
@@ -46,6 +46,11 @@ router.register('prop', PropertyModelViewSet, basename='prop')
 
 router_operation = DefaultRouter()
 router.register('oper', OperationModelViewSet, basename='oper')
+
+router_file = DefaultRouter()
+router.register('ua', FileUpload, basename='oper')
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -71,6 +76,7 @@ urlpatterns = [
     path('', include(router_inventorylist.urls)),
     path('', include(router_property.urls)),
     path('', include(router_operation.urls)),
+    path('', include(router_file.urls)),
 ]
 
 if settings.DEBUG:

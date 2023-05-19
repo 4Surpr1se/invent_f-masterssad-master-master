@@ -1,5 +1,6 @@
 import json
 from abc import abstractmethod
+from time import sleep
 
 from django.db import transaction, models
 from django.http import JsonResponse, HttpResponse, QueryDict
@@ -8,10 +9,13 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import filters, status, serializers
 from rest_framework.decorators import action
+from rest_framework.exceptions import ParseError
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView
+from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from core.serializer import OrganizationSerializer, DepartmentSerializer, \
@@ -53,7 +57,7 @@ class ModelViewSetMixin(ModelViewSet):
         self.lower_url = f'../{self.lower_url}'
         self.upper_url = f'../{self.upper_url}'
 
-        return Response(self.template_dict(request), template_name='template.html')
+        return Response(self.template_dict(request, retrieve=True), template_name='template.html')
 
     def list(self, request, *args, **kwargs):
         self.queryset = self.filtered_queryset(request, *args, **kwargs)  # Нужен ли здесь *args, **kwargs
@@ -67,7 +71,7 @@ class ModelViewSetMixin(ModelViewSet):
             queryset = self.queryset.filter(**{f'{self.upper_query_filter}__id': upper_query})
         return queryset
 
-    def template_dict(self, request, *args, **kwargs):
+    def template_dict(self, request, retrieve=False, *args, **kwargs):
         serializer = self.get_serializer(self.queryset, many=True)
         upper_serializer = self.upper_serializer(many=True)
         return_dict = {
@@ -85,7 +89,8 @@ class ModelViewSetMixin(ModelViewSet):
             # TODO если можно будет достававть имя в шаблоне
             'upper_model': self.upper_model,
             'success_create': bool(request.query_params.get('success_create')),
-            'serializer': self.serializer_class(self.queryset.first()).data.keys()  # TODO переделать
+            'serializer': self.serializer_class(self.queryset.first()).data.keys(),  # TODO переделать
+            'retrieve': True if retrieve is True else False
         }
 
         return return_dict
@@ -243,6 +248,7 @@ class Beta:
     def __iter__(self):
         return self
 
+
 class OperationModelViewSet(ModelViewSetMixin):
     queryset = Operation.objects.filter(is_deleted=False)
     model = Operation  # TODO НУЖНО ЛИ?
@@ -273,10 +279,38 @@ class OperationModelViewSet(ModelViewSetMixin):
             # TODO Чтобы он сам брал ключи из кверисета, но можно было бы переопределить
             "type": Beta.type[0].keys()}
         return_dict["extra_url"] = {"fromm": 'dep'}
+        return_dict["pdf_file"] = True
 
         return return_dict
 
+    def create(self, request, *args, **kwargs):
+        try:
+            file = request.data['pdf_file']
+        except KeyError:
+            raise ParseError('Request has no resource file attached')
+        Operation.objects.create(
+            inventory_list=InventoryList.objects.get(pk=request.data['inventory_list']),
+            data_time=request.data['data_time'],
+            fromm=Department.objects.get(pk=request.data['fromm']),
+            to=Department.objects.get(pk=request.data['to']),
+            type=request.data['type'],
+            pdf_file=file
+        )
+        return Response(status=200)
 
+    @action(methods=['POST'], detail=False)
+    def file_update(self, request):
+        print(request.data)
+        try:
+            for id, file in request.data.items():
+                if 'undefined' not in file:
+                    operation = Operation.objects.get(pk=id)
+                    operation.pdf_file = file
+                    print(operation.pdf_file)
+                    operation.save()
+            return Response(status=200)
+        except Exception as e:
+            return Response(str(e), status=400)
 # ==================================================================================== #
 
 
@@ -288,6 +322,25 @@ class OrganizationRetrieve(RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         queryset = Organization.objects.get(pk=kwargs['pk'])
         return Response({'organizations': [queryset]}, template_name='organization.html')
+
+
+class FileUpload(ModelViewSet):
+    serializer_class = OperationSerializer
+    model = Operation
+    renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
+
+    def create(self, request, *args, **kwargs):
+        try:
+            file = request.data.get('file')
+        except KeyError:
+            raise ParseError('yaaaaa')
+        asi = Operation.objects.get(pk=10)
+        asi.pdf_file = file
+        asi.save()
+        return Response('dsa', status=201)
+
+    def list(self, request, *args, **kwargs):
+        return Response(template_name='file_upload.html')
 
 
 class OrganizationList(ListAPIView):

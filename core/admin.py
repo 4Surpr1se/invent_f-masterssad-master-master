@@ -33,7 +33,7 @@ class InventoryListAdmin(admin.ModelAdmin):
 
 
 class OperationAdmin(admin.ModelAdmin):
-    list_display = ("inventory_list", "data_time", "waybill", "fromm", "to", "type")
+    list_display = ("inventory_list", "data_time", "pdf_file", "fromm", "to", "type")
     search_fields = ("inventory_list",)
 
 
