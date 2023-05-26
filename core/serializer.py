@@ -200,12 +200,17 @@ class OperationSerializer(serializers.ModelSerializer):
     inventory_list = InventoryListWithNameSerializer(read_only=True)
     fromm = DepartmentSerializer(read_only=True)
     to = DepartmentSerializer(read_only=True)
-
+    # property = serializers.SlugRelatedField(
+    #     read_only=True,
+    #     slug_field='property',
+    #     allow_null=True
+    # )
+    property = serializers.CharField(source='inventory_list.property.name')
     type = TypeRepr(source='*')
 
     class Meta:
         model = Operation
-        fields = ['id', 'inventory_list', 'data_time', 'fromm', 'to', 'pdf_file', 'type']
+        fields = ['id', 'inventory_list', 'property', 'data_time', 'fromm', 'to', 'pdf_file', 'type']
 
 
 # ==================================================================================== #

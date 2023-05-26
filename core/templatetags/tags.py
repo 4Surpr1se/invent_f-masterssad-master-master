@@ -19,9 +19,11 @@ def verbose_name(the_object, the_field):
     elif the_object is InventoryList and the_field == 'name':
         return the_object._meta.get_field('invent_num').verbose_name
     elif the_object.__class__ == Operation().__class__ and the_field == 'name':
-        print(321312)
         return 'Тип Операции'
+    elif the_field == 'property':
+        return 'Наименование'
     else:
+        print(type(the_object), '|', the_field)
         return the_object._meta.get_field(the_field).verbose_name
 
 
@@ -51,8 +53,8 @@ def dict_get(the_dict, the_key):
 
 @register.simple_tag
 def get_query_keys(the_serializer):
-    print(the_serializer)
-    return [{'keys': the_serializer}]
+    return [the_serializer]
+
 @register.filter
 def pdf_name(file: str):
     try:

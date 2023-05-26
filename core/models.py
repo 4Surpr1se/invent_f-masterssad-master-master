@@ -65,7 +65,7 @@ class InventoryList(models.Model):
     amount = models.IntegerField(verbose_name='Количество')  # переделать на другой тайп филд
     account_date = models.DateTimeField(verbose_name='аккаунт_дата', null=True, blank=True)
     mol = models.ForeignKey(Mol, verbose_name='МОЛ', on_delete=models.PROTECT)
-    property = models.ForeignKey(Property, verbose_name='Имущество', on_delete=models.PROTECT)
+    property = models.ForeignKey(Property, related_name='prop', verbose_name='Имущество', on_delete=models.PROTECT)
     description = models.CharField(verbose_name='Описание', max_length=255, default='')
     is_deleted = models.BooleanField(verbose_name='Удален', default=False)
 

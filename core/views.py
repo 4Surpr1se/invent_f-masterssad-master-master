@@ -2,11 +2,14 @@ import json
 from abc import abstractmethod
 from time import sleep
 
+import django_filters
 from django.db import transaction, models
+from django.db.models import QuerySet, CharField, ForeignKey
 from django.http import JsonResponse, HttpResponse, QueryDict
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, status, serializers
 from rest_framework.decorators import action
 from rest_framework.exceptions import ParseError
@@ -24,9 +27,11 @@ from core.serializer import OrganizationSerializer, DepartmentSerializer, \
     HoldingCreateUpdateSerializer, MolCreateUpdateSerializer, MolSerializer, InventoryListSerializer, \
     InventoryListCreateUpdateSerializer, PropertyCreateUpdateSerializer, OperationSerializer, \
     OperationCreateUpdateSerializer, MolWithNameSerializer, InventoryListWithNameSerializer
+from .filters import MDSADSA, MixinFilter, own_backend
 from .fixture import script
 from core.models import Holding, Organization, Department, Mol, Property, InventoryList, Operation
 from rest_framework.utils.serializer_helpers import ReturnList
+
 
 # ModelViewSet
 class ModelViewSetMixin(ModelViewSet):
@@ -35,10 +40,18 @@ class ModelViewSetMixin(ModelViewSet):
     dep_field = None
     lower_name = None
     upper_queryset = None
+    UNEDITABLE_FIELDS = ['is_deleted']
+    filter_backends = [DjangoFilterBackend]
+
 
     @property
     @abstractmethod
     def create_update_serializer_class(self):
+        pass
+
+    @property
+    @abstractmethod
+    def model(self):
         pass
 
     @property
@@ -53,7 +66,7 @@ class ModelViewSetMixin(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         self.queryset = self.get_queryset().filter(
-            pk=kwargs['pk'])  # TODO сделать чтобы вместо filter был get и many = False
+                pk=kwargs['pk'])  # TODO сделать чтобы вместо filter был get и many = False
         self.lower_url = f'../{self.lower_url}'
         self.upper_url = f'../{self.upper_url}'
 
@@ -69,11 +82,14 @@ class ModelViewSetMixin(ModelViewSet):
             queryset = self.queryset.filter(**{f'{self.search_filter}__contains': query_name})  # TODO
         if upper_query := request.query_params.get(f'{self.upper_query_filter}_id'):
             queryset = self.queryset.filter(**{f'{self.upper_query_filter}__id': upper_query})
+        ModelViewSetMixin.filterset_class = self.filterset_class_render(queryset=queryset)
         return queryset
 
     def template_dict(self, request, retrieve=False, *args, **kwargs):
-        serializer = self.get_serializer(self.queryset, many=True)
+        serializer = self.get_serializer(self.queryset, many=True).data if self.queryset else self.empty_queryset(request)
         upper_serializer = self.upper_serializer(many=True)
+
+
         return_dict = {
             'btn_fields': {
                 'lower_name': self.lower_name or self.search_filter,
@@ -82,18 +98,24 @@ class ModelViewSetMixin(ModelViewSet):
                 'upper_url': self.upper_url
             },
             'dep_field': self.dep_field,
-            'query': serializer.data,
+            'query': serializer,
             'upper_query': upper_serializer.data if upper_serializer is not None else None,
-            'model': self.queryset.model,  # TODO мб все-таки стоит оставить self.model
-            'model_name': self.queryset.model.__name__.lower(),  # TODO мб можно избавиться
+            'model': self.model,  # TODO мб все-таки стоит оставить self.model
+            'model_name': self.model.__name__.lower(),  # TODO мб можно избавиться
             # TODO если можно будет достававть имя в шаблоне
             'upper_model': self.upper_model,
             'success_create': bool(request.query_params.get('success_create')),
-            'serializer': self.serializer_class(self.queryset.first()).data.keys(),  # TODO переделать
+            'serializer': list(self.get_serializer(self.queryset.first()).data.keys()),  # TODO переделать
             'retrieve': True if retrieve is True else False
         }
 
         return return_dict
+
+    def empty_queryset(self, request, *args, **kwargs):
+        return {x.name: '' for x in self.model._meta._get_fields(reverse=False) if x.name not in self.UNEDITABLE_FIELDS}
+
+    def filterset_class_render(self, queryset=None):
+        return MixinFilter(self.model, queryset)
 
     def upper_model(self):
         if self.upper_queryset is not None:
@@ -218,11 +240,20 @@ class PropertyModelViewSet(ModelViewSetMixin):
     serializer_class = PropertySerializer
     create_update_serializer_class = PropertyCreateUpdateSerializer
     upper_query_filter = ''
-    search_filter = ''
+    search_filter = 'name'
     lower_url = ''
     upper_url = ''
+
     # upper_queryset = Organization.objects.filter(is_deleted=False)
     # upper_serializer_class = OrganizationSerializer
+
+    def filtered_queryset(self, request, *args, **kwargs):
+        queryset = super().filtered_queryset(request, *args, **kwargs)
+        if query_name := request.query_params.get('inventorylist_id'):
+            inv_queryset = InventoryList.objects.get(pk=query_name)
+            return Property.objects.filter(id=inv_queryset.property.id)
+        else:
+            return queryset
 
 
 class Beta:
@@ -273,12 +304,13 @@ class OperationModelViewSet(ModelViewSetMixin):
                                       "to": Department.objects.filter(is_deleted=False),
                                       "type": Beta
                                       }
+
         return_dict["extra_query_keys"] = {
             "fromm": DepartmentSerializer(Department.objects.filter(is_deleted=False).first()).data.keys(),
             "to": DepartmentSerializer(Department.objects.filter(is_deleted=False).first()).data.keys(),
             # TODO Чтобы он сам брал ключи из кверисета, но можно было бы переопределить
             "type": Beta.type[0].keys()}
-        return_dict["extra_url"] = {"fromm": 'dep'}
+        return_dict["extra_url"] = {"fromm": 'dep', "to": 'dep'}
         return_dict["pdf_file"] = True
 
         return return_dict
@@ -300,17 +332,17 @@ class OperationModelViewSet(ModelViewSetMixin):
 
     @action(methods=['POST'], detail=False)
     def file_update(self, request):
-        print(request.data)
         try:
             for id, file in request.data.items():
                 if 'undefined' not in file:
                     operation = Operation.objects.get(pk=id)
                     operation.pdf_file = file
-                    print(operation.pdf_file)
                     operation.save()
             return Response(status=200)
         except Exception as e:
             return Response(str(e), status=400)
+
+
 # ==================================================================================== #
 
 
@@ -343,43 +375,47 @@ class FileUpload(ModelViewSet):
         return Response(template_name='file_upload.html')
 
 
-class OrganizationList(ListAPIView):
-    queryset = Organization.objects.filter(is_deleted=False)
-    model = Organization
-    serializer_class = OrganizationSerializer
-    renderer_classes = [TemplateHTMLRenderer]
-
-    def list(self, request, *args, **kwargs):
-        if query_name := request.query_params.get('search'):
-            queryset = self.get_queryset().filter(name__contains=query_name)  # TODO МБ ПОЛУЧШЕ РЕШЕНИЕ ЕСТЬ
-        elif holding_query := request.query_params.get('holding_id'):
-            queryset = self.get_queryset().filter(holding__id=holding_query)
-        else:
-            queryset = self.get_queryset()
-        holding_queryset = Holding.objects.all()  # TODO мб придется переделывать,/
-        # TODO потому что 2 кверисета в одной вьюшке такое себе,/
-        # TODO либо не все поля возвращать
-
-        return Response({'organizations': queryset, 'holdings': holding_queryset,
-                         'success_create': bool(request.query_params.get('success_create'))},  # TODO переделать
-                        template_name='organization.html')
-
-
-# class OrganizationCreate(CreateAPIView):
+# class OrganizationList(ListAPIView):
+#     queryset = Organization.objects.filter(is_deleted=False)
 #     model = Organization
-#     serializer_class = OrganizationCreateSerializer
+#     serializer_class = OrganizationSerializer
+#     renderer_classes = [TemplateHTMLRenderer]
 #
-#     def post(self, request, *args, **kwargs):
-#
-#         organization = self.create(request, *args, **kwargs)
-#
-#         if request.META.get('HTTP_REFERER').split('?')[
-#             0] == 'http://127.0.0.1:8000/organization/':  # TODO убрать отношение к МЕТА данным
-#             return redirect("http://127.0.0.1:8000/organization/?success_create=True")
+#     def list(self, request, *args, **kwargs):
+#         if query_name := request.query_params.get('search'):
+#             queryset = self.get_queryset().filter(name__contains=query_name)  # TODO МБ ПОЛУЧШЕ РЕШЕНИЕ ЕСТЬ
+#         elif holding_query := request.query_params.get('holding_id'):
+#             queryset = self.get_queryset().filter(holding__id=holding_query)
 #         else:
-#             return organization
+#             queryset = self.get_queryset()
+#         holding_queryset = Holding.objects.all()  # TODO мб придется переделывать,/
+#         # TODO потому что 2 кверисета в одной вьюшке такое себе,/
+#         # TODO либо не все поля возвращать
+#
+#         return Response({'organizations': queryset, 'holdings': holding_queryset,
+#                          'success_create': bool(request.query_params.get('success_create'))},  # TODO переделать
+#                         template_name='organization.html')
 
-# def perform_des
+class OrganizationList(ListAPIView):
+    queryset = Operation.objects.filter(is_deleted=False)
+    model = Operation  # TODO НУЖНО ЛИ?
+    serializer_class = OperationSerializer
+    # filter_backends = [DjangoFilterBackend.filter_queryset]
+    # filterset_class = MixinFilter
+
+
+        # def __new__(cls, *args, **kwargs):
+    #     foreign_fields = [x.name for x in cls.model._meta._get_fields(reverse=False) if x.__class__ is ForeignKey]
+    #     not_foreign_fields = [x.name for x in cls.model._meta._get_fields(reverse=False) if x.__class__ is not ForeignKey]
+    #
+    #     for foreign_field in foreign_fields:
+    #         setattr(cls.filterset_class, foreign_field, django_filters.CharFilter(lookup_expr='icontains', field_name='name'))
+    #
+    #     cls.filterset_class.Meta.model = cls.model
+    #     cls.filterset_class.Meta.fields = dict.fromkeys(not_foreign_fields, ['contains'])
+    #     print(cls.filterset_class.Meta.model)
+    #
+    #     return super().__new__(cls, *args, **kwargs)
 
 
 class OrganizationDelete(CreateAPIView):

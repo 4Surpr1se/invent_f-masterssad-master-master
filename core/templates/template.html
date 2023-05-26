@@ -171,7 +171,7 @@ nav ul ul {
         background: rgba(19, 20, 123, 0.67);
       }
       nav ul li:hover a {
-        color: #fff;
+        color: lightgrey;
 
 
       }
@@ -180,7 +180,8 @@ nav ul ul {
         padding: 20px 30px;
         color: #ffffff;
         text-decoration: none;
-        background-color: rgba(35, 17, 134, 0.8);
+        background-color: rgba(44, 184, 181, 0.8);
+        {#background-color: lightgrey;#}
         font-family: sans-serif;
         text-align: left;
       }
@@ -203,7 +204,11 @@ nav ul ul {
         text-transform: uppercase;
       }
       nav ul ul li a:hover {
-        background: rgba(19, 20, 123, 0.67);
+        background: rgb(44, 184, 181, 0.67);
+      }
+      li a:hover{
+          background-color: rgba(44, 184, 181, 0.67);
+
       }
 
     .modal {
@@ -302,7 +307,7 @@ nav ul ul {
 }
 
     form:not(#empty) {
-  --c: #FF908B;
+  --c: rgb(44, 184, 181, 1);
   {#--c: rgba(0, 0, 0, 1);    /* the border color */#}
   --b: 10px;    /* the border thickness*/
   --g: 5px;     /* the gap on hover */
@@ -368,9 +373,8 @@ form:hover:not(#empty) {
 
 
     </style>
-
-{% if query.0.keys is None %}
-    {% get_query_keys serializer as query %}
+{% if not query.0.keys %}
+    {% get_query_keys query as query %}
 
 {% endif %}
     <body>
@@ -599,6 +603,7 @@ form:hover:not(#empty) {
 {#            <th style="width: 40%">Имущество</th>#}
 {#            <th style="width: 40px">Кол-во</th>#}
 {#            <th style="width: 30%">Описание</th>#}
+
             {% endfor %}
             <th style="color: red; display:none" class="dip">Удалить</th>
             <th style="color: red; width: 30%; display:none" class="dip">Изменить</th>
@@ -872,7 +877,25 @@ function sendNotification(type, text) {
                     option.value = jsonResponse['id']
                     option.text = name.value
                     option.selected = true
-                    extra_property_select_{{ forloop.counter }}.appendChild(option)
+                    {#extra_property_select_{{ forloop.counter }}.appendChild(option)#}
+                    if ([200, 201].includes(xhr.status)) {
+                        var alert_div = document.getElementById("alert_button")
+                        var alert_span = document.getElementById("alert_span")
+                        alert_div.style.display = "block"
+                        alert_div.style.backgroundColor = "green"
+                        alert_div.textContent = "{{ btn_fields.upper_name }} успешно создан"
+                        alert_div.appendChild(alert_span)
+                        extra_property_select_{{ forloop.counter }}.appendChild(option)
+                    }
+                    else {
+                        var alert_div = document.getElementById("alert_button")
+                        var alert_span = document.getElementById("alert_span")
+                        alert_div.style.display = "block"
+                        alert_div.style.backgroundColor = "#f44336"
+                        alert_div.textContent = "Не удалось создать {{ btn_fields.upper_name }}"
+                        alert_div.appendChild(alert_span)
+
+                    }
                 }
                 var modal = document.getElementById("extra_myModal_{{ forloop.counter }}");
                 modal.style.display = "none"
@@ -943,6 +966,12 @@ function sendNotification(type, text) {
                     option.text = name.value
                     option.selected = true
                     if ([200, 201].includes(xhr.status)) {
+                        var alert_div = document.getElementById("alert_button")
+                        var alert_span = document.getElementById("alert_span")
+                        alert_div.style.display = "block"
+                        alert_div.style.backgroundColor = "green"
+                        alert_div.textContent = "{{ btn_fields.upper_name }} успешно создан"
+                        alert_div.appendChild(alert_span)
                         property_select.appendChild(option)
                     }
                     else {
@@ -1206,7 +1235,7 @@ function sendNotification(type, text) {
                             post_error_handler(400)
                     }
                     file_update_response.send(file_formData)}
-                    })
+                    })}
                 {% else %}
 
 
@@ -1225,10 +1254,10 @@ function sendNotification(type, text) {
 
                 var xhr1_list = []
 
-                elements.forEach(element =>{
+                elements.forEach(element => {
                     if (element.class === 'dip') {
-                        xhr1_list.push(element.id})
-                })
+                        xhr1_list.push(element.id)
+                }})
 
                 let delete_reponse = fetch('./delete/', {
                 method: 'DELETE',
@@ -1237,10 +1266,10 @@ function sendNotification(type, text) {
                 body: JSON.stringify({'id': xhr1_list})
                 }).then(response => post_error_handler(response))
 
-
+                }
                 //    TODO Здесь тоже хандлить ошибки
                  {% endif %}
-                }
+
 
 
             {#const form = document.getElementById('current_form')#}
