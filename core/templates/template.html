@@ -51,7 +51,7 @@ p {
 #createform{
 
     position: sticky;
-    padding: 4% 3%;
+    padding: 5% 3% 0 0;
     float: right;
     text-align: center;
     display: block;
@@ -605,6 +605,9 @@ form:hover:not(#empty) {
 {#            <th style="width: 30%">Описание</th>#}
 
             {% endfor %}
+            {% if pdf_file == True %}
+                <th>История</th>
+            {% endif %}
             <th style="color: red; display:none" class="dip">Удалить</th>
             <th style="color: red; width: 30%; display:none" class="dip">Изменить</th>
 
@@ -625,11 +628,16 @@ form:hover:not(#empty) {
             <th><a style="color: black" class = "btn {{ q.id }}" href = '../{{ btn_fields.lower_url }}/{{ v.id }}'><span class = "btn_text">{{ v.name }}</span></a></th>
                  {% elif k == "pdf_file" %}
             <th><a style="color: black" class = "btn {{ q.id }}" href = '{{v}}'>{{ v|pdf_name }}</a></th>
+
                 {% else %}
             <th><a style="color: black" class = "{{ q.id }}"><span>{{ v }}</span></a></th>
                 {% endif %}
             {% endfor %}
-            <th style = 'display:none; z-index: 1; text-align: center' class="dip"><input style="text-align: center; width: 20px; height: 20px; align-content: center; align-self: center" name="{{q.id}}" id="{{q.id}}" type="checkbox"></th>
+            {% if pdf_file == True %}
+            <th><a href="./?inventorylist_id={{ q.inventory_list.id }}"><svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.528"><g  id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#2CB8B50" stroke-width="0.144"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.4" d="M16.1898 2H7.81978C4.17978 2 2.00977 4.17 2.00977 7.81V16.18C2.00977 19.82 4.17978 21.99 7.81978 21.99H16.1898C19.8298 21.99 21.9998 19.82 21.9998 16.18V7.81C21.9998 4.17 19.8298 2 16.1898 2Z" fill="#2CB8B5"></path> <path d="M9.17156 14.0899C9.36156 14.0899 9.55155 14.0199 9.70155 13.8699L14.0816 9.48992V11.9199C14.0816 12.3299 14.4216 12.6699 14.8316 12.6699C15.2416 12.6699 15.5816 12.3299 15.5816 11.9199V7.67992C15.5816 7.57992 15.5616 7.48992 15.5216 7.38992C15.4416 7.20992 15.3016 7.05993 15.1116 6.97993C15.0216 6.93993 14.9216 6.91992 14.8216 6.91992H10.5816C10.1716 6.91992 9.83156 7.25992 9.83156 7.66992C9.83156 8.07992 10.1716 8.41992 10.5816 8.41992H13.0116L8.63156 12.7999C8.34156 13.0899 8.34156 13.5699 8.63156 13.8599C8.79156 14.0199 8.98156 14.0899 9.17156 14.0899Z" fill="#2CB8B5"></path> <path d="M18.7107 16.28C18.5807 15.89 18.1607 15.68 17.7607 15.81C14.0407 17.05 9.95066 17.05 6.23066 15.81C5.84066 15.68 5.41067 15.89 5.28067 16.28C5.15067 16.67 5.36067 17.1 5.75067 17.23C7.76067 17.9 9.87067 18.24 11.9907 18.24C14.1107 18.24 16.2207 17.9 18.2307 17.23C18.6307 17.09 18.8407 16.67 18.7107 16.28Z" fill="#2CB8B5"></path> </g></svg>
+            </a></th>
+                {% endif %}
+                <th style = 'display:none; z-index: 1; text-align: center' class="dip"><input style="text-align: center; width: 20px; height: 20px; align-content: center; align-self: center" name="{{q.id}}" id="{{q.id}}" type="checkbox"></th>
             <th style='display:none; z-index: 1; text-align: center' class="dip"><input type="button" onclick="editable_field(this, '{{q.id}}')" value="Изменить"></th>
             </tr>
         {% endfor %}
@@ -637,7 +645,7 @@ form:hover:not(#empty) {
         </div>
         </form>
 
- <script>{#  TODO НЕ РАБОТАЕТ!!!#}
+ <script>
     var submit = []
     var steps = {{ query.0|length }} - 1 {# TODO при пустом квери упадет, поэтому нужно не прогружатть таблицу в таком случае#}
     var selection_step = {{ query.0.keys | selection_step:btn_fields.upper_name }}
@@ -799,6 +807,7 @@ function sendNotification(type, text) {
                                        Change:
                                        <input type="file" style="font-size: x-small" name="pdf_file" id="id_pdf_file" class='${el + 'textfield'}'></p>`
                     p_obj.style.fontSize = 'x-small'
+                    p_obj.className = 'pdf_textfield'
                     e.parentNode.replaceChild(p_obj, e);
                 }
             {% endif %}
@@ -1139,7 +1148,8 @@ function sendNotification(type, text) {
                     {% endfor %}
                             let file_response = new XMLHttpRequest();
                     file_response.open("POST", './');
-                    file_response.onload = post_error_handler(file_response)
+                    {#file_response.onload = post_error_handler(file_response)#}
+                    file_response.onload = (progress) => post_error_handler(file_response)
                     file_response.send(formData)
                     console.log(file_response.status)
                 {% else %}
@@ -1165,7 +1175,7 @@ function sendNotification(type, text) {
                 let create_response = fetch('', {
                 method: 'POST',
                 headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(dict)
                 }).then(response => post_error_handler(response))
@@ -1282,9 +1292,12 @@ function sendNotification(type, text) {
             function insertAfter(referenceNode, newNode) {
   referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
-
-
-
+    {% if property_in == True %}
+        function PropertyCreateChanger() {
+            var current_inventory_list = document.getElementById('current_inventory_list')
+            var current_property = document.getElementById('current_property')
+            current_property.value = current_inventory_list.value}
+    {% endif %}
         </script>
     <div id="createform" >
     <form action = "javascript:void(0)" id = 'current_form' style="background-color: white; box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;" >
@@ -1292,8 +1305,13 @@ function sendNotification(type, text) {
   <div>
     {% if i == btn_fields.upper_name %}
         {{ model | verbose_name:i }}<br>
+        {% if property_in == True %}
+        <input list="listsds" id="current_{{ i }}" name="current_{{ i }}" onChange="PropertyCreateChanger()">
+        {% else %}
         <input list="listsds" id="current_{{ i }}" name="current_{{ i }}">
+        {% endif %}
         <datalist id="listsds" name="current_{{ i }}" style="width: 177px">
+
         {% for instance in upper_query %}
             {% if instance.FIO != None%} {# TODO сделать нормально через tags #}
             <option value="{{instance.id}}">{{instance.FIO}}</option>
@@ -1317,6 +1335,9 @@ function sendNotification(type, text) {
     {% elif i == 'pdf_file' %}
     <label for="current_{{ i }}">{{ model | verbose_name:i }}</label><br>
     <input type='file' name="current_{{ i }}" id="current_{{ i }}"/>
+    {% elif i == 'property'%}
+    <label for="current_{{ i }}">{{ model | verbose_name:i }}</label><br>
+    <input name="current_{{ i }}" id="current_{{ i }}" readonly/>
     {% else %}
     <label for="current_{{ i }}">{{ model | verbose_name:i }}</label><br>
     <input name="current_{{ i }}" id="current_{{ i }}"/>

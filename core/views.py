@@ -15,6 +15,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ParseError
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -27,7 +28,7 @@ from core.serializer import OrganizationSerializer, DepartmentSerializer, \
     HoldingCreateUpdateSerializer, MolCreateUpdateSerializer, MolSerializer, InventoryListSerializer, \
     InventoryListCreateUpdateSerializer, PropertyCreateUpdateSerializer, OperationSerializer, \
     OperationCreateUpdateSerializer, MolWithNameSerializer, InventoryListWithNameSerializer
-from .filters import MDSADSA, MixinFilter, own_backend
+from .filters import OperationFilter, OrgFilter
 from .fixture import script
 from core.models import Holding, Organization, Department, Mol, Property, InventoryList, Operation
 from rest_framework.utils.serializer_helpers import ReturnList
@@ -35,13 +36,13 @@ from rest_framework.utils.serializer_helpers import ReturnList
 
 # ModelViewSet
 class ModelViewSetMixin(ModelViewSet):
+    # permission_classes = [IsAuthenticated]
     renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
     upper_serializer_class = None
     dep_field = None
     lower_name = None
     upper_queryset = None
     UNEDITABLE_FIELDS = ['is_deleted']
-    filter_backends = [DjangoFilterBackend]
 
 
     @property
@@ -82,7 +83,7 @@ class ModelViewSetMixin(ModelViewSet):
             queryset = self.queryset.filter(**{f'{self.search_filter}__contains': query_name})  # TODO
         if upper_query := request.query_params.get(f'{self.upper_query_filter}_id'):
             queryset = self.queryset.filter(**{f'{self.upper_query_filter}__id': upper_query})
-        ModelViewSetMixin.filterset_class = self.filterset_class_render(queryset=queryset)
+        # ModelViewSetMixin.filterset_class = self.filterset_class_render(queryset=queryset)
         return queryset
 
     def template_dict(self, request, retrieve=False, *args, **kwargs):
@@ -114,8 +115,8 @@ class ModelViewSetMixin(ModelViewSet):
     def empty_queryset(self, request, *args, **kwargs):
         return {x.name: '' for x in self.model._meta._get_fields(reverse=False) if x.name not in self.UNEDITABLE_FIELDS}
 
-    def filterset_class_render(self, queryset=None):
-        return MixinFilter(self.model, queryset)
+    # def filterset_class_render(self, queryset=None):
+    #     return MixinFilter(self.model, queryset)
 
     def upper_model(self):
         if self.upper_queryset is not None:
@@ -293,6 +294,15 @@ class OperationModelViewSet(ModelViewSetMixin):
     upper_url = 'inv'
     upper_queryset = InventoryList.objects.filter(is_deleted=False)
     upper_serializer_class = InventoryListWithNameSerializer
+    filter_backends = [DjangoFilterBackend, ]
+    filterset_class = OrgFilter
+    # filterset_fields = ('inventory_list', )
+
+    def filtered_queryset(self, request, *args, **kwargs):
+        queryset = super().filtered_queryset(request, *args, **kwargs)
+        if query_name := request.query_params.get('inventorylist_id'):
+            queryset = queryset.filter(inventory_list__pk=query_name)
+        return queryset
 
     def template_dict(self, request, *args, **kwargs):
 
@@ -312,6 +322,7 @@ class OperationModelViewSet(ModelViewSetMixin):
             "type": Beta.type[0].keys()}
         return_dict["extra_url"] = {"fromm": 'dep', "to": 'dep'}
         return_dict["pdf_file"] = True
+        return_dict["property_in"] = True
 
         return return_dict
 
@@ -322,7 +333,7 @@ class OperationModelViewSet(ModelViewSetMixin):
             raise ParseError('Request has no resource file attached')
         Operation.objects.create(
             inventory_list=InventoryList.objects.get(pk=request.data['inventory_list']),
-            data_time=request.data['data_time'],
+            data_time=request.data['data_time'] if request.data['data_time'] not in ['', '""', None, 'None'] else None,
             fromm=Department.objects.get(pk=request.data['fromm']),
             to=Department.objects.get(pk=request.data['to']),
             type=request.data['type'],
@@ -400,9 +411,9 @@ class OrganizationList(ListAPIView):
     queryset = Operation.objects.filter(is_deleted=False)
     model = Operation  # TODO НУЖНО ЛИ?
     serializer_class = OperationSerializer
-    # filter_backends = [DjangoFilterBackend.filter_queryset]
-    # filterset_class = MixinFilter
-
+    # filter_backends = [DjangoFilterBackend, ]
+    # filterset_class = OrgFilter
+    # def filtered_queryset(self):
 
         # def __new__(cls, *args, **kwargs):
     #     foreign_fields = [x.name for x in cls.model._meta._get_fields(reverse=False) if x.__class__ is ForeignKey]
@@ -525,7 +536,6 @@ class HoldingCreate(CreateAPIView):
     serializer_class = HoldingCreateSerializer
 
     def post(self, request, *args, **kwargs):
-        print(321321)
         holding = self.create(request, *args, **kwargs)
 
         # if request.META.get('HTTP_REFERER').split('?')[

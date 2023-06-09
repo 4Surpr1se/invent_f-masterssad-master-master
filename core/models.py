@@ -81,7 +81,7 @@ class OperationType(models.IntegerChoices):
 
 class Operation(models.Model):
     inventory_list = models.ForeignKey(InventoryList, verbose_name='Инвертарная запись', on_delete=models.PROTECT)
-    data_time = models.DateTimeField(verbose_name='аккаунт_дата', null=True)
+    data_time = models.DateTimeField(verbose_name='аккаунт_дата', null=True, blank=True)
     fromm = models.ForeignKey(Department, verbose_name='Из отдела', related_name='fromm', on_delete=models.PROTECT)
     to = models.ForeignKey(Department, verbose_name='В отдел', on_delete=models.PROTECT)
     type = models.PositiveSmallIntegerField(verbose_name='Тип операции', choices=OperationType.choices,

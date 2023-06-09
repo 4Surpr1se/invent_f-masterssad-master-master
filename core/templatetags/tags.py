@@ -23,7 +23,6 @@ def verbose_name(the_object, the_field):
     elif the_field == 'property':
         return 'Наименование'
     else:
-        print(type(the_object), '|', the_field)
         return the_object._meta.get_field(the_field).verbose_name
 
 

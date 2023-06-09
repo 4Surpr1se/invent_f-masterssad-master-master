@@ -176,13 +176,19 @@ class OperationCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Operation
-        exclude = ('id', 'pdf_file')
+        fields = (
+            'inventory_list',
+            'data_time',
+            'fromm',
+            'to',
+            'type',
+        )
         list_serializer_class = OperationListSerializer
 
     def validate(self, attrs):
-        if attrs.get('pdf_file') in ['', None, 'None']:
+        if attrs.get('pdf_file') in ['', '""', None, 'None']:
             attrs['pdf_file'] = None
-        if attrs.get('data_time') in ['', None, 'None']:
+        if attrs.get('data_time') in ['', '""', None, 'None']:
             attrs['data_time'] = None
             return super().validate(attrs)
         if re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z', attrs.get('data_time')) is None:
@@ -200,11 +206,6 @@ class OperationSerializer(serializers.ModelSerializer):
     inventory_list = InventoryListWithNameSerializer(read_only=True)
     fromm = DepartmentSerializer(read_only=True)
     to = DepartmentSerializer(read_only=True)
-    # property = serializers.SlugRelatedField(
-    #     read_only=True,
-    #     slug_field='property',
-    #     allow_null=True
-    # )
     property = serializers.CharField(source='inventory_list.property.name')
     type = TypeRepr(source='*')
 

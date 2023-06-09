@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+
+
 # from django_filters.conf import DEFAULT
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_filters',
+    'users',
     'core',
     'drf_api_logger',
 ]
@@ -61,9 +64,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'invent.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [
+                os.path.join(BASE_DIR, 'templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,25 +87,25 @@ WSGI_APPLICATION = 'invent.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'master',
-        'USER': 'sa',
-        'PASSWORD': 'Schalke_04',
-        'HOST': 'localhost',
-        'PORT': '1433',
-
-    }}
-
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+#         'ENGINE': 'mssql',
+#         'NAME': 'master',
+#         'USER': 'sa',
+#         'PASSWORD': 'Schalke_04',
+#         'HOST': 'localhost',
+#         'PORT': '1433',
+#
+#     }}
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -154,7 +159,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DRF_API_LOGGER_DATABASE = True  # Default to False
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Here
+AUTH_USER_MODEL = 'users.User'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 MEDIA_URL = '/media/'
 
 # DRF_API_LOGGER_SIGNAL = True  # Default to False
