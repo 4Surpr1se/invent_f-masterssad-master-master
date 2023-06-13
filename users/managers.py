@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, password, first_name="", last_name="", email="",
+    def create_user(self, username, password, first_name="", last_name="", email="", Mol=None,
                     is_superuser=False, is_staff=False):
 
         user = self.model(
@@ -10,6 +10,7 @@ class UserManager(BaseUserManager):
             last_name=last_name,
             username=username,
             email=email,
+            Mol=Mol,
             is_superuser=is_superuser,
             is_staff=is_staff
         )

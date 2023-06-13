@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #2cb8b6; background: linear-gradient(to left, #2cb8b6, #0b5454)">
+<head>
+  <meta charset="UTF-8">
+  <title>Modern Flat Design Login Form Example</title>
+  <link rel="stylesheet" href="../../media/css_stat/style.css">
+
+</head>
+<body style="background: transparent;
+">
+<!-- partial:index.partial.html -->
+<div class="login-page" style="background: transparent">
+  <div class="form">
+    <form class="register-form">
+      <input type="text" id="register_username" placeholder="name"/>
+      <input type="password" id ="register_password" placeholder="password"/>
+      <input type="password" id ="register_password_repeat" placeholder="password"/>
+      <input type="text" id="register_email" placeholder="email address"/>
+      <button onclick="create_operation()">create</button>
+      <p class="message">Already registered? <a onclick="Changer(false)" href="#">Sign In</a></p>
+    </form>
+    <form class="login-form">
+      <input type="text" placeholder="username" id="login_username"/>
+      <input type="password" placeholder="password" id="login_password"/>
+      <button onclick="login_operation()">login</button>
+      <p class="message">Not registered? <a href="#">Create an account</a></p>
+    </form>
+  </div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="../media/js_stat/script.js"></script>
+<script>
+    function create_operation() {
+        let username = document.getElementById('register_username').value
+        let password = document.getElementById('register_password').value
+        let password_repeat = document.getElementById('register_password_repeat').value
+        let email = document.getElementById('register_email').value
+        let create_response = fetch('./registration/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({'username' : username,
+                                  'password' : password,
+                                  'password_repeat': password_repeat,
+                                  'email' : email})
+
+        }).then(response => redirect_handler(response))
+    }
+    function login_operation() {
+        let username = document.getElementById('login_username').value
+        let password = document.getElementById('login_password').value
+        let login_response = fetch('./login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({'username' : username,
+                                  'password' : password})
+        }).then(response => redirect_handler(response))
+    }
+
+    function redirect_handler(response) {
+        {#console.log(response)#}
+        if (response.status === 200){
+            location.href = './profile/'
+        }
+    }
+</script>
+</body>
+</html>

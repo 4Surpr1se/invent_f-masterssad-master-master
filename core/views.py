@@ -36,7 +36,7 @@ from rest_framework.utils.serializer_helpers import ReturnList
 
 # ModelViewSet
 class ModelViewSetMixin(ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
     upper_serializer_class = None
     dep_field = None
@@ -353,6 +353,8 @@ class OperationModelViewSet(ModelViewSetMixin):
         except Exception as e:
             return Response(str(e), status=400)
 
+
+# ==================================================================================== #
 
 # ==================================================================================== #
 

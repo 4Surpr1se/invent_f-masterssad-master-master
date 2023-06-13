@@ -25,6 +25,7 @@ from core.views import OrganizationRetrieve, OrganizationList, DepartmentRetriev
     InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, DepartmentModelViewSet, HoldingModelViewSet, \
     MolModelViewSet, InventoryListModelViewSet, PropertyModelViewSet, OperationModelViewSet, FileUpload
 from invent import settings
+from users.views import AuthenticationCreateAPI, LoginAPIView, UserDestroyAPIView, UserProfileList
 
 router = DefaultRouter()
 router.register('org', OrganizationModelViewSet, basename='org')
@@ -50,6 +51,8 @@ router.register('oper', OperationModelViewSet, basename='oper')
 router_file = DefaultRouter()
 router.register('ua', FileUpload, basename='oper')
 
+router_registration = DefaultRouter()
+router.register('lk/registration', FileUpload, basename='registration')
 
 
 urlpatterns = [
@@ -69,6 +72,10 @@ urlpatterns = [
     path('inner/update/', InnerUpdate.as_view()),
     path('property/create/', PropertyCreate.as_view()),
     path('holding/update/', HoldingUpdate.as_view()),
+    path('lk/', LoginAPIView.as_view()),
+    path('lk/login/', AuthenticationCreateAPI.as_view()),
+    path('lk/profile/logout', UserDestroyAPIView.as_view()),
+    path('lk/profile/', UserProfileList.as_view()),
     path('', include(router.urls)),
     path('', include(router_department.urls)),
     path('', include(router_holding.urls)),
@@ -77,6 +84,7 @@ urlpatterns = [
     path('', include(router_property.urls)),
     path('', include(router_operation.urls)),
     path('', include(router_file.urls)),
+    path('', include(router_registration.urls)),
 ]
 
 if settings.DEBUG:
