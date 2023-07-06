@@ -1,3 +1,4 @@
+{% load users_tags %}
 <!DOCTYPE html>
 <html lang="en" style="background-color: #2cb8b6; background: linear-gradient(to left, #2cb8b6, #0b5454)">
 <head>
@@ -51,6 +52,7 @@
     border: solid 1px #BA68C8
 }
 </style>
+{% fio_constructor serializer.Mol.FIO as fio_validated %}
 <body style="background-color: #2cb8b6; background: linear-gradient(to left, #2cb8b6, #0b5454)">
 
 
@@ -65,21 +67,20 @@
                     <h4 class="text-right">Настройки Профиля</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-4"><label class="labels">Имя</label><input type="text" class="form-control" value="" placeholder="Имя" id="name"></div>
-                    <div class="col-md-4"><label class="labels">Фамилия</label><input type="text" class="form-control" value="" placeholder="Фамилия" id="surname"></div>
-                    <div class="col-md-4"><label class="labels">Отчество</label><input type="text" class="form-control" value="" placeholder="Отчество" id="patronymic"></div>
+                    <div class="col-md-4"><label class="labels">Имя</label><input type="text" class="form-control" value="{{ fio_validated.last_name }}" placeholder="" id="first_name"></div>
+                    <div class="col-md-4"><label class="labels">Фамилия</label><input type="text" class="form-control" value="{{ fio_validated.first_name }}" placeholder="" id="last_name"></div>
+                    <div class="col-md-4"><label class="labels">Отчество</label><input type="text" class="form-control" value="{{ fio_validated.father_name }}" placeholder="" id="father_name"></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Номер Телефона</label><input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" placeholder="Введите номер телефона" value="" id="phone_num"></div>
-                    <div class="col-md-12"><label class="labels">Должность</label><input type="text" class="form-control" placeholder="Введите должность" value="" id="department"></div>
-                    <div class="col-md-12"><label class="labels">Отдел</label><input type="text" class="form-control" placeholder="Выберите отдел" value="" id="post"></div>
-
+                    <div class="col-md-12"><label class="labels">Номер Телефона</label><input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" placeholder="" value="{{ serializer.Mol.phone_num }}" id="phone_num"></div>
+                    <div class="col-md-12"><label class="labels">Должность</label><input type="text" class="form-control" placeholder="" value="{{ serializer.Mol.post }}" id="post"></div>
+                    <div class="col-md-12"><label class="labels">Отдел</label><input type="text" class="form-control" placeholder="" value="{{ serializer.Mol.department.name }}" id="department"></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6"><label class="labels">ID</label><input type="text" class="form-control" placeholder="id" value=""></div>
                     <div class="col-md-6"><label class="labels">Что-то еще</label><input type="text" class="form-control" value="" placeholder="smth"></div>
                 </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onchange="sdsadsa()">Сохранить Измненений</button></div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onclick="update_profile()">Сохранить Измненений</button></div>
             </div>
         </div>
         <div class="col-md-4">
@@ -95,8 +96,30 @@
 </div>
 </body>
 <script>
-function sdsadsa () {
-    sda = document.getElementsByTagName('input')
-    sda.forEach(input => input.tag = 'a');
+function update_profile ()  {
+        let first_name = document.getElementById('first_name').value
+        let last_name = document.getElementById('last_name').value
+        let father_name = document.getElementById('father_name').value
+        let post = document.getElementById('post').value
+        let phone_num = document.getElementById('phone_num').value
+        let update_response = fetch('./api/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({'first_name' : first_name,
+                                  'last_name' : last_name,
+                                  'father_name' : father_name,
+                                  'post' : post,
+                                  'phone_num' : phone_num,
+            })
+        }).then(response => update_redirect_handler(response))
     }
+
+function update_redirect_handler(response) {
+        if (response.status === 200){
+            window.location.replace('../')
+        }
+    }
+
 </script>

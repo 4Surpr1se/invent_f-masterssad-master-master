@@ -25,7 +25,8 @@ from core.views import OrganizationRetrieve, OrganizationList, DepartmentRetriev
     InnerUpdate, PropertyCreate, HoldingUpdate, OrganizationModelViewSet, DepartmentModelViewSet, HoldingModelViewSet, \
     MolModelViewSet, InventoryListModelViewSet, PropertyModelViewSet, OperationModelViewSet, FileUpload
 from invent import settings
-from users.views import AuthenticationCreateAPI, LoginAPIView, UserDestroyAPIView, UserProfileList
+from users.views import AuthenticationCreateAPI, LoginAPIView, UserDestroyAPIView, UserProfileList, UserProfileEditList, \
+    UserProfileEditAPIUpdate
 
 router = DefaultRouter()
 router.register('org', OrganizationModelViewSet, basename='org')
@@ -74,7 +75,9 @@ urlpatterns = [
     path('holding/update/', HoldingUpdate.as_view()),
     path('lk/', LoginAPIView.as_view()),
     path('lk/login/', AuthenticationCreateAPI.as_view()),
-    path('lk/profile/logout', UserDestroyAPIView.as_view()),
+    path('lk/profile/logout/', UserDestroyAPIView.as_view()),
+    path('lk/profile/edit/', UserProfileEditList.as_view()),
+    path('lk/profile/edit/api/', UserProfileEditAPIUpdate.as_view()),
     path('lk/profile/', UserProfileList.as_view()),
     path('', include(router.urls)),
     path('', include(router_department.urls)),

@@ -15,7 +15,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .serializers import UserGetSerializer, UserCreateSerializer, ProfileInfoSerializer, ResetPasswordSerializer
+from .serializers import UserGetSerializer, UserCreateSerializer, ProfileInfoSerializer, ResetPasswordSerializer, \
+    ProfileUpdateSerializer
 
 from .models import User
 
@@ -47,7 +48,6 @@ class AuthenticationCreateAPI(CreateAPIView):
         if user is not None:
             login(request, user)
             return JsonResponse(UserGetSerializer(user).data, safe=False)
-
         else:
             raise exceptions.NotAuthenticated
 
@@ -69,7 +69,7 @@ class PasswordReset(UpdateAPIView):
 # TODO Как я эту **** обошел? Создал кастом класс, который не чекает csrf, но надо нормально понять что он делает и вернуть его обратно
 class UserDestroyAPIView(DestroyAPIView):
     """ implementing user logout view
-     and redefining get_object method to get user.id from session token
+     and redefining get_object method to get user. id from session token
      (same as we did in PasswordReset view)"""
     queryset = User.objects.all()
     serializer_class = ProfileInfoSerializer
@@ -105,8 +105,48 @@ class UserProfileList(ListAPIView):
     def list(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        print(serializer.data)
         return Response({'serializer': serializer.data}, template_name='lkredact.html')
+
+
+class UserProfileEditList(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = ProfileInfoSerializer
+    permission_classes = [IsAuthenticated, ]
+    renderer_classes = [TemplateHTMLRenderer]
+
+    def get_object(self) -> User:
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.get(pk=self.request.user.pk)
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def list(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({'serializer': serializer.data}, template_name='lk.html')
+
+
+class UserProfileEditAPIUpdate(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = ProfileUpdateSerializer
+    permission_classes = [IsAuthenticated, ]
+
+    def get_object(self) -> User:
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.get(pk=self.request.user.pk)
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def update(self, request, *args, **kwargs): # todo хэндлить ошибки
+        obj = self.get_object()
+        obj.Mol.FIO = request.data.get('first_name').strip() + ' ' + request.data.get('last_name').strip() + ' ' + request.data.get('father_name').strip()
+        obj.Mol.post = request.data.get('post', obj.Mol.post)
+        obj.Mol.phone_num = request.data.get('phone_num', obj.Mol.phone_num)
+        obj.Mol.save()
+        obj.save()
+        print(obj.Mol.FIO)
+        return Response(status=200)
+
 
 class LoginAPIView(ListAPIView):
     renderer_classes = [TemplateHTMLRenderer]

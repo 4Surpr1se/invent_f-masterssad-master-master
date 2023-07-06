@@ -11,15 +11,15 @@
 <!-- partial:index.partial.html -->
 <div class="login-page" style="background: transparent">
   <div class="form">
-    <form class="register-form">
+    <form action = "javascript:void(0)" class="register-form">
       <input type="text" id="register_username" placeholder="name"/>
       <input type="password" id ="register_password" placeholder="password"/>
       <input type="password" id ="register_password_repeat" placeholder="password"/>
       <input type="text" id="register_email" placeholder="email address"/>
       <button onclick="create_operation()">create</button>
-      <p class="message">Already registered? <a onclick="Changer(false)" href="#">Sign In</a></p>
+      <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
-    <form class="login-form">
+    <form action = "javascript:void(0)" class="login-form">
       <input type="text" placeholder="username" id="login_username"/>
       <input type="password" placeholder="password" id="login_password"/>
       <button onclick="login_operation()">login</button>
@@ -63,7 +63,7 @@
     function redirect_handler(response) {
         {#console.log(response)#}
         if (response.status === 200){
-            location.href = './profile/'
+            window.location.replace('./profile/')
         }
     }
 </script>

@@ -1,6 +1,8 @@
 from rest_framework import serializers
 import django.contrib.auth.password_validation as validators
 
+from core.models import Mol
+from core.serializer import MolSerializer
 from users.models import User
 
 
@@ -38,10 +40,29 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 
 class ProfileInfoSerializer(serializers.ModelSerializer):
-    # Mol =
+    Mol = MolSerializer(read_only=True)
+
     class Meta:
         model = User
-        fields = ("id", "username", "first_name", "last_name", "email")
+        # fields = ("id", "username", "first_name", "last_name", "email")
+        fields = '__all__'
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(write_only=True, required=True)
+    last_name = serializers.CharField(write_only=True, required=True)
+    father_name = serializers.CharField(write_only=True, required=True)
+    FIO = serializers.SlugRelatedField(queryset=Mol.objects.all(), slug_field='FIO')
+    post = serializers.SlugRelatedField(queryset=Mol.objects.all(), slug_field='post')
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+    def validate(self, attrs):
+        FIO = attrs.get('first_name').strip() + attrs.get('last_name').strip() + attrs.get('father_name').strip()
+        attrs['FIO'] = FIO
+        return super().validate(attrs)
 
 
 class ResetPasswordSerializer(serializers.ModelSerializer):
